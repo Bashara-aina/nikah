@@ -1,0 +1,212 @@
+@import "tailwindcss";
+
+/* ── Palette (docs/spec/09 §1) ───────────────────────────────────── */
+:root {
+  --ivory: #FBF7F0;
+  --cream: #F3E9DC;
+  --blush: #F3D9D6;
+  --dusty: #D9A7A0;
+  --peach: #F4C9A8;
+  --sage: #A9B89A;
+  --sky: #CFE0E8;
+  --ink: #4A4039;
+  --ink-soft: #7A6E63;
+
+  --shadow-sm: 0 2px 8px rgba(120, 90, 70, .06);
+  --shadow-md: 0 8px 24px rgba(120, 90, 70, .10);
+  --shadow-lg: 0 16px 40px rgba(120, 90, 70, .12);
+
+  --background: var(--ivory);
+  --foreground: var(--ink);
+}
+
+/* ── Theme tokens ─────────────────────────────────────────────────── */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-ivory: var(--ivory);
+  --color-cream: var(--cream);
+  --color-blush: var(--blush);
+  --color-dusty: var(--dusty);
+  --color-peach: var(--peach);
+  --color-sage: var(--sage);
+  --color-sky: var(--sky);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+
+  --font-serif: var(--font-fraunces);
+  --font-sans: var(--font-jakarta);
+}
+
+/* ── Base ─────────────────────────────────────────────────────────── */
+html, body {
+  background: var(--ivory);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* JS-driven animations start hidden via a class added after mount so
+ * no-JS / SSR fallback still shows content. */
+html.js-anim [data-anim] {
+  opacity: 0;
+}
+
+/* Type scale (SPEC 09 §2) */
+.t-display { font-family: var(--font-serif), serif; font-size: clamp(2.2rem, 8vw, 3.5rem); line-height: 1.15; letter-spacing: -0.01em; }
+.t-h1 { font-family: var(--font-serif), serif; font-size: clamp(1.6rem, 6vw, 2.4rem); line-height: 1.2; }
+.t-h2 { font-family: var(--font-serif), serif; font-size: clamp(1.25rem, 4.5vw, 1.6rem); line-height: 1.3; }
+.t-body { font-size: 1rem; line-height: 1.6; }
+.t-small { font-size: .85rem; line-height: 1.4; }
+
+/* Section rhythm (SPEC 12 §1) — generous whitespace */
+.section {
+  position: relative;
+  padding-block: clamp(64px, 12vw, 96px);
+  padding-inline: clamp(20px, 6vw, 32px);
+}
+
+/* Container width */
+.container-narrow {
+  width: 100%;
+  max-width: 480px;
+  margin-inline: auto;
+}
+
+/* Closing peek — keep it small and tucked in the bottom-left so it
+ * never crowds the closing text. Hidden on the smallest screens
+ * where the text needs every pixel. */
+.closing-peek {
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+@media (max-width: 479px) {
+  .closing-peek {
+    display: none;
+  }
+}
+
+/* Buttons (SPEC 09 §5) */
+.btn-primary {
+  background: var(--dusty);
+  color: var(--ivory);
+  border-radius: 999px;
+  padding: 14px 28px;
+  font-weight: 500;
+  box-shadow: var(--shadow-sm);
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 200ms;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 0;
+  cursor: pointer;
+}
+.btn-primary:hover { transform: translateY(-2px); }
+.btn-primary:active { transform: scale(.97); }
+.btn-primary:focus-visible {
+  outline: 2px solid var(--sage);
+  outline-offset: 3px;
+}
+.btn-primary:disabled { opacity: .5; box-shadow: none; cursor: not-allowed; }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid color-mix(in srgb, var(--sage) 60%, transparent);
+  border-radius: 999px;
+  padding: 12px 24px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 200ms ease;
+  cursor: pointer;
+}
+.btn-ghost:hover { background: color-mix(in srgb, var(--sage) 12%, transparent); }
+.btn-ghost:focus-visible {
+  outline: 2px solid var(--sage);
+  outline-offset: 3px;
+}
+
+/* Focus ring fallback for keyboard (SPEC 13 §2) */
+:focus-visible {
+  outline: 2px solid var(--sage);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Reduced motion: kill looping transforms (re-asserted further down with skip-link) */
+
+/* Page-content-visibility hint (SPEC 11 §5)
+ * Disabled: content-visibility: auto conflicts with GSAP ScrollTrigger —
+ * it can prevent IntersectionObserver from detecting offscreen sections,
+ * leaving scroll-triggered reveals permanently invisible. */
+.cv-auto {
+  contain-intrinsic-size: auto 600px;
+}
+
+/* Hide scrollbar visually but keep functional */
+html { scrollbar-width: thin; scrollbar-color: var(--dusty) transparent; }
+
+/* a11y visually-hidden */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Skip-to-content link (SPEC 13 §2 keyboard). */
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 200;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--ivory);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  text-decoration: none;
+  transform: translateY(-200%);
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.skip-link:focus-visible { transform: translateY(0); outline: 2px solid var(--sage); outline-offset: 2px; }
+
+/* Better contrast for sr-only skip when not focused */
+.skip-link:not(:focus):not(:active) {
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Reduced-motion variants for entrance & idle (re-assert from prefers) */
+@media (prefers-reduced-motion: reduce) {
+  html.js-anim [data-anim] { opacity: 0; }
+  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  .skip-link { transition: none; }
+}
