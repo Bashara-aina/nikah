@@ -1,6 +1,6 @@
 ---
 description: Security and safety rules for nikah-web. Apply whenever writing API routes, Server Actions, or handling user input.
-globs: **/*.ts, **/*.tsx, app/api/**/*.ts
+globs: "**/*.ts, **/*.tsx, app/api/**/*.ts"
 alwaysApply: true
 ---
 

@@ -1,6 +1,6 @@
 ---
 description: TypeScript, Zod 4, and general code-quality rules. Apply whenever writing or editing .ts/.tsx files.
-globs: **/*.ts, **/*.tsx
+globs: "**/*.ts, **/*.tsx"
 alwaysApply: true
 ---
 

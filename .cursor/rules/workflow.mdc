@@ -1,6 +1,6 @@
 ---
 description: Workflow, scope control, and MCP tool usage for this project. Apply at session start and whenever planning a non-trivial change.
-globs:
+globs: "**/*"
 alwaysApply: true
 ---
 

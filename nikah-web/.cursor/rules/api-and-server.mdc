@@ -1,6 +1,6 @@
 ---
 description: API routes and server-side code rules for nikah-web (Next.js 16 App Router, Zod 4, TypeScript).
-globs: **/api/**/*.ts, **/route.ts, **/route.tsx, **/actions.ts
+globs: "**/api/**/*.ts, **/route.ts, **/route.tsx, **/actions.ts"
 alwaysApply: false
 ---
 

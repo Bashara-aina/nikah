@@ -1,6 +1,6 @@
 ---
 description: Monorepo layout, top-level commands, and asset pipeline. Apply when working outside a specific package or when routing a task to the right place.
-globs:
+globs: "**/*"
 alwaysApply: true
 ---
 

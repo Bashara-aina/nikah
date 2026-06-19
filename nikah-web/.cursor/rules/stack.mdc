@@ -1,6 +1,6 @@
 ---
 description: Stack version pins and version-specific gotchas. Apply whenever writing or modifying nikah-web code.
-globs: **/*.ts, **/*.tsx
+globs: "**/*.ts, **/*.tsx"
 alwaysApply: true
 ---
 

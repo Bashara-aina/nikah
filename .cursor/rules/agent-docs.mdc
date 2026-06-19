@@ -1,6 +1,6 @@
 ---
 description: How to read and use the project's AGENTS.md / CLAUDE.md files. Apply on every session start.
-globs:
+globs: "**/*"
 alwaysApply: true
 ---
 

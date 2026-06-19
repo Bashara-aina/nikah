@@ -1,6 +1,6 @@
 ---
 description: Clean-code guidelines applied across the monorepo. Adapted from awesome-cursorrules/clean-code.mdc.
-globs: ["**/*"]
+globs: "**/*"
 alwaysApply: false
 ---
 

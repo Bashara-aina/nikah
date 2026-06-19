@@ -1,6 +1,6 @@
 ---
 description: Tailwind CSS 4 + shadcn/ui styling rules for nikah-web. Adapted from awesome-cursorrules TypeScript+Zod+Tailwind+Next.js, with Tailwind v4 specifics.
-globs: **/*.tsx, **/*.css, **/*.ts
+globs: "**/*.tsx, **/*.css, **/*.ts"
 alwaysApply: false
 ---
 

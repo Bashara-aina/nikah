@@ -1,6 +1,6 @@
 ---
 description: Next.js 16 + React 19 + TypeScript stack rules for the nikah-web app. Adapted from the TypeScript+Zod+Tailwind+Next.js and nextjs15-react19 cursorrules, but tuned for Next.js 16 (breaking changes vs. training data).
-globs: **/*.ts, **/*.tsx, **/*.mts
+globs: "**/*.ts, **/*.tsx, **/*.mts"
 alwaysApply: true
 ---
 
