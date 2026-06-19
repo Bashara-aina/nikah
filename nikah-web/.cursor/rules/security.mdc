@@ -1,0 +1,51 @@
+---
+description: Security and safety rules for nikah-web. Apply whenever writing API routes, Server Actions, or handling user input.
+globs: **/*.ts, **/*.tsx, app/api/**/*.ts
+alwaysApply: true
+---
+
+# Security (nikah-web)
+
+This is a public wedding site. There is no authenticated user data, but Server Actions and API routes still must follow baseline security practices.
+
+## Secrets & env
+
+- **Never commit secrets, API keys, or credentials** — even in `.env.local` (which is gitignored but still). Use Vercel environment variables for production
+- Reference env via `process.env.X`, never inline
+- Add any new env var to `.env.example` (create the file if it does not exist) with a placeholder value
+
+## Input handling
+
+- **Validate all user input with Zod** at the boundary (Server Action entry, API route handler, route param parsing)
+- Sanitize any user-controlled string before rendering as HTML. By default, React JSX escapes — but never use `dangerouslySetInnerHTML` with unsanitized input
+- For SQL: parameterized queries only. The project does not currently use a SQL DB, but if one is added, this rule applies
+
+## Auth & access control
+
+- The current site has no auth. If adding auth, use NextAuth.js (Auth.js) or Clerk, and **put auth checks in middleware** (`middleware.ts`) — not in route handlers
+- Never rely on client-side checks for access control. Server enforces
+
+## Rate limiting
+
+- Any public API route or Server Action that accepts user input should be rate-limited. Use Vercel's built-in rate limiting primitives or a small in-memory token bucket for low traffic
+- Contact-form submissions, RSVP endpoints, and similar must be rate-limited
+
+## CORS
+
+- CORS must be explicitly configured. **Never use wildcard (`*`) CORS in production.** List exact origins
+- Only relevant if the project exposes API routes consumed by third-party origins (currently none)
+
+## File uploads
+
+- If file uploads are added: validate type (allowlist), size limit, and scan for malware before storing
+- Store uploads outside `public/` (use a private bucket / Vercel Blob with `access: 'private'`)
+
+## Logging
+
+- **Never log** passwords, tokens, session IDs, email addresses, or any PII
+- Use a structured logger (e.g. `pino`) in production. `console.log` is acceptable in dev only
+- Logs must not include full request payloads that may contain sensitive data — log a summary + correlation ID
+
+## Headers
+
+- The Next.js app should set standard security headers via `next.config.ts` (`headers()`): `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `X-Frame-Options` (or `frame-ancestors` in CSP), and a content-security-policy appropriate for the site's needs

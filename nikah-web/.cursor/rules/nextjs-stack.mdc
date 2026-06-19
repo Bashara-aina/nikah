@@ -1,0 +1,127 @@
+---
+description: Next.js 16 + React 19 + TypeScript stack rules for the nikah-web app. Adapted from the TypeScript+Zod+Tailwind+Next.js and nextjs15-react19 cursorrules, but tuned for Next.js 16 (breaking changes vs. training data).
+globs: **/*.ts, **/*.tsx, **/*.mts
+alwaysApply: true
+---
+
+# Next.js 16 + React 19 + TypeScript — nikah-web
+
+> Adapted from `PatrickJS/awesome-cursorrules`:
+> - `typescript-zod-tailwind-nextjs-cursorrules-prompt-.mdc`
+> - `nextjs15-react19-vercelai-tailwind-cursorrules-prompt-file.mdc`
+> - `nextjs.mdc`
+>
+> Filtered to drop React-Remix refs, Pages-Router patterns, and old React 18 idioms that no longer apply on Next 16 / React 19.
+
+## Analysis Process
+
+Before responding, run this mental loop:
+
+1. **Request analysis** — task type, frameworks touched, explicit + implicit requirements, project context (monorepo, Vercel deploy, app-router only).
+2. **Solution planning** — break into steps, identify files / dependencies, evaluate alternatives, plan tests.
+3. **Implementation strategy** — pick design patterns, consider performance + error paths, ensure accessibility, verify against `AGENTS.md` and `CLAUDE.md`.
+
+## Code Style & Structure
+
+- Concise, technical TypeScript. No fluff, no narrative comments.
+- Functional and declarative patterns; avoid OOP classes.
+- DRY — extract repeated logic, no copy-paste blocks.
+- Early returns and guard clauses over nested `if`.
+- File order: exported component → subcomponents → helpers → static content → types.
+- Descriptive names with auxiliary verbs: `isLoading`, `hasError`, `isVisible`.
+- Event handlers prefixed with `handle`: `handleClick`, `handleSubmit`, `handleScroll`.
+- Lowercase-with-dashes for directories: `components/auth-wizard`, `app/api/upload`.
+- Prefer **named exports** for components. Only default-export Next.js page/layout files (App Router requirement).
+
+## TypeScript Usage
+
+- TypeScript everywhere. No `any` — use `unknown` and narrow.
+- Prefer **`interface`** for object shapes; use `type` for unions/intersections and mapped types.
+- Avoid `enum` — use `as const` maps or union string types.
+- Use `satisfies` for validated object literals (e.g. config objects).
+- All function parameters and return types explicit. No implicit `any` returns.
+- Use Zod for **runtime** validation at boundaries (API routes, form parsing, env access). Derive static types with `z.infer<typeof Schema>`.
+
+## Next.js 16 / React 19 Specifics
+
+> ⚠️ **This is NOT the Next.js you know.** Next 16 has breaking changes vs. older docs. Read `node_modules/next/dist/docs/` before relying on any API.
+
+- **App Router only.** No `pages/` directory.
+- **Server Components by default.** Mark client components explicitly with `'use client'` at the top of the file.
+- **Async runtime APIs are mandatory:**
+  ```ts
+  const cookieStore = await cookies()
+  const headersList = await headers()
+  const { isEnabled } = await draftMode()
+  ```
+- **Async route params / searchParams** — `params` and `searchParams` are Promises. `await` them:
+  ```ts
+  export default async function Page(props: { params: Promise<{ slug: string }> }) {
+    const { slug } = await props.params
+  }
+  ```
+- **Use `useActionState`** (NOT the deprecated `useFormState`) for form state in React 19.
+- **Use the new `useFormStatus`** with `data`, `method`, `action` properties.
+- **Server Actions** — prefer over API routes for mutations unless an external system needs an HTTP endpoint.
+- **Suspense boundaries** — wrap async client components and dynamic imports.
+- **Dynamic imports** for non-critical components (`next/dynamic` with `ssr: false` only when necessary).
+- **Image**: `next/image` with WebP sources, explicit `width`/`height` (or `fill` + sized parent), `priority` for above-the-fold.
+- **Fonts**: `next/font` for self-hosted, zero CLS.
+- **Web Vitals**: target LCP < 2.5s, CLS < 0.1, INP < 200ms.
+
+## File structure inside a component file
+
+For a typical `components/foo/Foo.tsx`:
+
+1. Exported component
+2. Local subcomponents (private to this file)
+3. Helper functions
+4. Static content / constants
+5. Types / interfaces (at the bottom)
+
+Use `function` declarations for components, not arrow functions. Use named exports unless the file is a single-purpose module.
+
+## Data fetching
+
+- Fetch in Server Components. Never fetch in a Client Component that could be a Server Component
+- Use `fetch()` with explicit `{ cache: 'force-cache' | 'no-store' | { next: { revalidate: N } } }` — never assume the default
+- For mutations: Server Actions. For external integrations: API routes (`app/api/.../route.ts`) returning `Response` with proper status codes
+- Never duplicate server state into client state — fetch on the server, pass as props
+
+## Routing
+
+- App Router only. No `pages/` directory
+- Use `loading.tsx` for route-level loading UI
+- Use `error.tsx` for route-level error boundaries (must be a Client Component)
+- Use `route.ts` (or `route.tsx`) in `app/api/<path>/` for API endpoints
+- Wrap async client components in `<Suspense fallback={...}>`
+- Use `not-found.tsx` for any route that may 404
+
+## URL state
+
+- Use `nuqs` (or `useSearchParams` + `useRouter`) for URL-bound state — avoid `useState` for things that should survive a refresh
+- For client state, reach for: `useState`, `useReducer`, then `nuqs` for URL state, then Zustand/Context only when shared across the tree
+- Minimize client state. Prefer URL state, server state, and Server Components.
+
+## Forms & Validation
+
+- Zod schemas for all form payloads and API request bodies.
+- Server-side validation in Server Actions / API routes — never trust the client.
+- Model expected errors as return values in Server Actions (`{ ok: false, error } | { ok: true, data }`).
+- Use `useActionState` to surface form errors in the UI.
+- Error boundaries (`error.tsx`) for unexpected errors at route segments.
+
+## Performance
+
+- Minimize `'use client'` surface. Default to RSC.
+- Lazy-load non-critical components.
+- Preload critical fonts; defer analytics.
+- Avoid `useEffect` for data fetching — fetch in the component (server) or via Server Actions.
+
+## Naming & Files
+
+- Components: `PascalCase.tsx`.
+- Hooks: `use-kebab-case.ts` (e.g. `use-scroll-progress.ts`).
+- Utilities: `kebab-case.ts`.
+- Types/interfaces: `PascalCase`, no `I` prefix, no `T` prefix.
+- Co-locate component-specific types in the same file under a `// types` section at the bottom.

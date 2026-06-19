@@ -1,0 +1,71 @@
+---
+description: Clean-code guidelines applied across the monorepo. Adapted from awesome-cursorrules/clean-code.mdc.
+globs: ["**/*"]
+alwaysApply: false
+---
+
+# Clean Code Guidelines (monorepo-wide)
+
+> Source: `PatrickJS/awesome-cursorrules` → `clean-code.mdc`. Verbatim, with project-specific callouts added.
+
+## Constants Over Magic Numbers
+
+- Replace hard-coded values with named constants.
+- Use descriptive constant names that explain the value's purpose.
+- Keep constants at the top of the file or in a dedicated constants module.
+
+## Meaningful Names
+
+- Variables, functions, and classes reveal their purpose.
+- Names explain *why* something exists and *how* it's used.
+- Avoid abbreviations unless universally understood.
+
+## Smart Comments
+
+- Don't comment on *what* the code does — make the code self-documenting.
+- Use comments to explain *why* something is done a certain way.
+- Document APIs, complex algorithms, and non-obvious side effects.
+- **In this project**: never narrate code, never add obvious comments.
+
+## Single Responsibility
+
+- Each function does exactly one thing.
+- Functions stay small and focused.
+- If a function needs a comment to explain what it does, split it.
+
+## DRY (Don't Repeat Yourself)
+
+- Extract repeated code into reusable functions / components.
+- Share common logic through proper abstraction.
+- Maintain single sources of truth.
+
+## Clean Structure
+
+- Keep related code together.
+- Organize code in a logical hierarchy.
+- Consistent file and folder naming conventions (kebab-case for files/dirs, PascalCase for components).
+
+## Encapsulation
+
+- Hide implementation details.
+- Expose clear interfaces.
+- Move nested conditionals into well-named functions.
+
+## Code Quality Maintenance
+
+- Refactor continuously.
+- Fix technical debt early.
+- Leave code cleaner than you found it.
+
+## Testing
+
+- Write tests before fixing bugs.
+- Keep tests readable and maintainable.
+- Test edge cases and error conditions.
+- **In this project**: every feature ships with at least one unit test (per project rules).
+
+## Version Control
+
+- Conventional Commits: `feat|fix|refactor|chore|docs|test|style: short description`.
+- Small, focused commits. Never commit directly to `main`.
+- Branch names: `feature/*`, `fix/*`, `refactor/*`, `chore/*`.

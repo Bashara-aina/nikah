@@ -1,0 +1,34 @@
+---
+description: Monorepo layout, top-level commands, and asset pipeline. Apply when working outside a specific package or when routing a task to the right place.
+globs:
+alwaysApply: true
+---
+
+# Project Structure
+
+This is a multi-package monorepo. The Next.js wedding site lives in `nikah-web/`. `assets/` and `tools/` are top-level shared resources. Do not assume a single-package layout.
+
+## Top-level layout
+
+- `nikah-web/` — Next.js 16 + React 19 app. **All app code lives here.** Run `dev`/`build`/`lint`/`type-check` from inside this directory.
+- `assets/` — Curated, production-ready assets (images, audio, scenes). Use these in code.
+- `assets/_source/` — Raw, unprocessed source files. Do not reference these from app code.
+- `assets regenerate/` — Regeneration pipeline outputs / work in progress. Do not consume from here.
+- `tools/` — One-off scripts and utilities. Not part of the runtime.
+- `docs/` — Project documentation.
+- `Recovered/` — Files recovered from an older state. Do not import or rebuild from these; verify against `assets/` first.
+
+## Routing a task to the right place
+
+- Frontend / Next.js / React / Tailwind code → `nikah-web/`
+- Asset regeneration, batch image processing → `tools/` (and outputs land in `assets/`)
+- Documentation, PRDs, launch plans → `docs/`
+- Anything that says "in the website" or "on the page" → `nikah-web/app` or `nikah-web/components`
+
+## Asset pipeline (nikah-web)
+
+`public/assets/` is populated by `scripts/copy-assets.mjs` (runs automatically on `predev` / `prebuild` via the `copy-assets` npm script). Never edit `public/assets/` directly — edit `assets/` at the monorepo root and let the copy script sync.
+
+## Environment
+
+This project is deployed on Vercel. Do not add `Dockerfile`, `docker-compose.yml`, or other deployment files unless explicitly requested. Use `vercel.json` if routing/build config is needed.

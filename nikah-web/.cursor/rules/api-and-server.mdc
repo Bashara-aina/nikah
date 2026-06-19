@@ -1,0 +1,105 @@
+---
+description: API routes and server-side code rules for nikah-web (Next.js 16 App Router, Zod 4, TypeScript).
+globs: **/api/**/*.ts, **/route.ts, **/route.tsx, **/actions.ts
+alwaysApply: false
+---
+
+# API & Server Code — nikah-web
+
+> Source: `typescript-zod-tailwind-nextjs-cursorrules-prompt-.mdc`, `nextjs-typescript-cursorrules-prompt-file.mdc`, `javascript-typescript-code-quality-cursorrules-pro.mdc`.
+
+## API Response Shape
+
+All responses **must** follow:
+
+```ts
+{ success: true, data: T, meta?: { ... } }
+// or
+{ success: false, error: { code: string, message: string, details?: unknown } }
+```
+
+Never return raw exceptions, stacks, or un-typed JSON to the client.
+
+## Status Codes (semantic)
+
+| Code | Use |
+|------|-----|
+| 200 | OK (read) |
+| 201 | Created (write that produces a resource) |
+| 204 | No content (delete) |
+| 400 | Bad request (malformed input) |
+| 401 | Unauthorized (no/invalid auth) |
+| 403 | Forbidden (authed but not allowed) |
+| 404 | Not found |
+| 409 | Conflict (duplicate, version mismatch) |
+| 422 | Unprocessable entity (Zod validation failure) |
+| 429 | Rate limited |
+| 500 | Server error (sanitized) |
+
+## Validation
+
+- **Zod** at the boundary of every route / Server Action.
+- Reject with **422** and a structured `error.details` (Zod issues) on failure.
+- Derive static types: `type Input = z.infer<typeof schema>`.
+
+```ts
+// app/api/contact/route.ts
+import { z } from "zod"
+import { NextResponse } from "next/server"
+
+const ContactSchema = z.object({
+  name: z.string().min(1).max(120),
+  email: z.email(),
+  message: z.string().min(10).max(2000),
+})
+
+export async function POST(req: Request) {
+  const body = await req.json().catch(() => null)
+  const parsed = ContactSchema.safeParse(body)
+  if (!parsed.success) {
+    return NextResponse.json(
+      { success: false, error: { code: "VALIDATION", message: "Invalid input", details: parsed.error.issues } },
+      { status: 422 }
+    )
+  }
+  // ... business logic ...
+  return NextResponse.json({ success: true, data: { id } }, { status: 201 })
+}
+```
+
+## Errors
+
+- Custom error classes: `AppError`, `ValidationError`, `NotFoundError`, `UnauthorizedError`, `ConflictError`, `RateLimitError`.
+- Top-level `try/catch` in every route handler / Server Action.
+- **Never expose raw DB / third-party error messages** to the client. Log full detail server-side, return a sanitized message.
+- Always log with context: `{ route, method, requestId, userId, durationMs }`.
+
+## Layered Architecture (server code)
+
+- `route.ts` / `actions.ts` — controller: parse, validate, delegate. **No business logic.**
+- `lib/server/services/*.service.ts` — service: business rules.
+- `lib/server/repositories/*.repository.ts` — repository: DB / external IO only.
+- Never call the DB outside a repository.
+- Never call an external API directly from a route handler — wrap in a service or client module.
+
+## Rate Limiting
+
+- Apply to every **public** route (no `req.auth` / no session cookie).
+- Use Upstash Ratelimit or equivalent; document the limit per route in a comment near the middleware.
+
+## Auth
+
+- Auth check happens in **middleware** (or at the very top of the route handler) — never buried in business logic.
+- Fail closed: any uncertainty → 401.
+
+## Secrets
+
+- Read from `process.env` only. Validate with Zod at boot.
+- Never log secrets, tokens, passwords, or PII.
+- Never return a secret (even partially) in an API response.
+
+## Logging
+
+- Structured JSON logs in production.
+- `console.log` is **forbidden** in production code. Use `lib/log.ts` (pino / winston / Next's built-in).
+- Log levels: `debug` (dev only), `info`, `warn`, `error`.

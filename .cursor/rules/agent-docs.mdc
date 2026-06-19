@@ -1,0 +1,30 @@
+---
+description: How to read and use the project's AGENTS.md / CLAUDE.md files. Apply on every session start.
+globs:
+alwaysApply: true
+---
+
+# Agent docs convention
+
+`AGENTS.md` and `CLAUDE.md` are project-specific rule files. When present in any directory, they are authoritative for code in that subtree.
+
+## Discovery
+
+Before writing code, check for `AGENTS.md` and/or `CLAUDE.md` in:
+
+1. The current working directory
+2. Each parent directory up to the repo root
+3. The directory where the file being edited lives
+
+The order of precedence is deepest-first (deeper file wins). The `nikah-web/AGENTS.md` currently warns: "**This is NOT the Next.js you know** — read `node_modules/next/dist/docs/` before writing any code." Heed it.
+
+## Rules of engagement
+
+- `AGENTS.md` content applies to **all** AI agents (Cursor, Claude, etc.)
+- `CLAUDE.md` is for Claude-specific overrides; if it is a one-liner that just `@AGENTS.md`, treat it as an alias
+- When adding a new rule that affects all agents, prefer `AGENTS.md`. Reserve `CLAUDE.md` for Claude-only behavior
+- Never delete or weaken rules in `AGENTS.md` / `CLAUDE.md` without explicit user approval
+
+## Don't drift
+
+These files are the source of truth for project-specific rules. Do not duplicate their content into a `.cursorrules` or `.cursor/rules/*.mdc` file — link or `@`-reference them instead so updates stay in one place.

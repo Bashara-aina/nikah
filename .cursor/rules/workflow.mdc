@@ -1,0 +1,54 @@
+---
+description: Workflow, scope control, and MCP tool usage for this project. Apply at session start and whenever planning a non-trivial change.
+globs:
+alwaysApply: true
+---
+
+# Workflow (nikah)
+
+## Plan first for non-trivial work
+
+- Multi-file changes, new features, refactors, migrations → use **Plan Mode** (Shift+Tab) in Cursor
+- Steps should be ordered with explicit dependencies. Call out open questions and the next owner at the end of a plan
+- Wait for explicit approval before writing code on a non-trivial plan
+
+## Scope discipline
+
+- **Stay in scope.** If asked to fix a bug, do not refactor the surrounding module
+- **Preserve existing style** unless explicitly asked to refactor
+- **Never delete or overwrite existing functionality silently.** If something must be removed, call it out in the change summary
+- If a task would change more than ~5 files, stop and confirm scope before proceeding
+
+## Context economy
+
+- Prefer `@<file>` / `@<folder>` over `@codebase`. Tag specific regions when relevant ("the function in `app/api/foo/route.ts` lines 12–30")
+- For framework lookups use `@docs:nextjs`, `@docs:react`, etc.
+- Reuse notepads for repeated context across turns
+- Batch related questions into a single round of `AskQuestion` calls
+
+## Terminal commands
+
+Safe to auto-run (YOLO): `npm install`, `npm run *` (test, build, lint, type-check, format), `git add`, `git status`, `git diff`, `git log`, `mkdir`, `touch`, `node scripts/*`.
+
+Always **ask first** for: `rm -rf`, `sudo`, `chmod`, `git push`, `git push --force`, `git reset --hard`, DB migrations, Vercel production deploys, publishing, anything that mutates a remote.
+
+## MCP tool usage
+
+- Read the tool's schema/descriptor **before** calling any MCP tool
+- Handoff format after a tool call: **goal → what changed → open questions → next owner → context**
+- Never log or print secrets, tokens, or PII when working with MCP tools
+
+## Pre-commit checklist
+
+1. `npm run type-check` passes
+2. `npm run lint` passes
+3. (If tests exist) `npm test` passes
+4. No `any` introduced, no secrets in code, no swallowed errors
+5. Commit message follows Conventional Commits (`feat|fix|refactor|chore|docs|test|style: short description`)
+6. Branch name follows the convention: `feature/*`, `fix/*`, `refactor/*`, `chore/*` — never commit directly to `main`
+
+## After every task — summarize
+
+1. What was changed (files + intent)
+2. What was **not** changed (and why)
+3. Recommended follow-ups (separate commit / separate PR / tech-debt log entry)

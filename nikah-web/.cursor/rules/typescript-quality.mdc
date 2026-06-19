@@ -1,0 +1,71 @@
+---
+description: TypeScript, Zod 4, and general code-quality rules. Apply whenever writing or editing .ts/.tsx files.
+globs: **/*.ts, **/*.tsx
+alwaysApply: true
+---
+
+# TypeScript & code quality (nikah-web)
+
+## Types
+
+- **No `any`.** Use `unknown` and narrow. If a third-party type is broken, write a typed wrapper instead of casting
+- **No `var`.** Use `const` by default, `let` only when reassignment is necessary
+- **Explicit return types** on exported functions and on any function whose body is non-trivial
+- **Interfaces for object shapes.** `type` for unions, intersections, mapped types, and utility types
+- **Avoid `as X` type assertions.** When you must use one, add a one-line comment explaining why
+- **Prefer `satisfies`** over type annotations when you want inference plus constraint checking
+- **Use the `never` check in `default:`** branches of `switch` over discriminated unions — newly added variants should cause compile-time failures
+
+## Zod 4 (validation)
+
+- Validate every external input (form data, API request bodies, URL params, env-derived config) with Zod
+- Use `z.infer<typeof Schema>` to derive TS types from schemas — never duplicate the type
+- In Server Actions, validate the `FormData` or JSON payload first, return a typed error result on failure, and **only then** run business logic
+- Model expected errors as return values (`{ ok: true, data } | { ok: false, error }`), not thrown exceptions
+
+## Error handling
+
+- Every `async` function: `try`/`catch` with typed error handling. Custom error classes (`AppError`, `NotFoundError`, `ValidationError`) over generic `Error`
+- Never swallow errors silently. At minimum, log with structured context (`{ userId, route, timestamp, payload }`)
+- Use early returns and guard clauses; avoid deep nesting
+- HTTP status codes must be semantically correct: 200 / 201 / 400 / 401 / 403 / 404 / 409 / 422 / 500
+- Never expose raw DB or third-party errors to the client — sanitize before returning
+
+## Naming
+
+- Variables and functions: descriptive names with auxiliary verbs (`isLoading`, `hasError`, `canSubmit`)
+- Event handlers: prefix with `handle` (`handleClick`, `handleSubmit`, `handleScroll`)
+- Boolean variables / props: start with `is` / `has` / `can` / `should`
+- Files: `kebab-case` for directories, `PascalCase.tsx` for components, `camelCase.ts` for utilities
+
+## Functions
+
+- Each function does **one thing**. If a function needs a comment to explain what it does, split it
+- Order functions in a file: composing functions appear **earlier** than the functions they compose
+- Use early returns to keep the happy path unindented
+- Prefer `function` declarations for named functions; arrow functions are fine for inline callbacks and components
+
+## Comments
+
+- Document **why**, not what. The code itself shows what
+- Add JSDoc to every exported function: parameters, return value, and any non-obvious behavior
+- Use `// TODO:` sparingly and only for genuine follow-ups, never as a placeholder for unimplemented code
+
+## DRY & reuse
+
+- Extract repeated code into reusable functions or components
+- If you find yourself copying a block, that's a signal to abstract — but only after the third occurrence (rule of three)
+- A single source of truth for shared types, constants, and configuration
+
+## Minimal-change discipline
+
+- **Only modify sections of the code related to the task.** Avoid refactoring adjacent code unless asked
+- **Do not change existing comments** unless they are wrong
+- **Do not "clean up" unrelated code** while implementing a feature
+- A change = a potential for bugs. Make the smallest correct change
+
+## Don't drift
+
+- Match the existing style of the file you're editing. If a file uses arrow functions, don't rewrite it to function declarations
+- If a pattern is established in the codebase, follow it — even if your instinct differs
+- When in doubt, ask one targeted clarifying question rather than guessing
