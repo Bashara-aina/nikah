@@ -1,115 +1,179 @@
 # 12 — Asset → Motion Map
 
-Peta tiap aset ke perannya: **entrance**, **idle (selalu hidup)**, **interaksi**, **depth/parallax**, **fallback REDUCED**. Token dari `08`. Ini referensi cepat saat coding tiap komponen.
+Peta tiap aset ke perannya. **Format baru:** setiap aset punya dua baris — **fal.ai layer** (apa yang video lakukan) + **GSAP layer** (apa yang GSAP tambahkan di atas). Jangan duplikasi motion antara keduanya.
 
-Format kolom:
-- **Entrance** = animasi masuk (reveal/assemble)
-- **Idle** = loop hidup terus-menerus (kunci "tidak kaku")
-- **Depth** = tier parallax (file 08 §4)
-- **Reduced** = perilaku saat REDUCED/LOW
+> **Aturan:** fal.ai owns ambient/idle. GSAP owns entrance/parallax/interaction.
 
 ---
 
-## Scenes (opaque, `public/assets/scenes/`)
-| Aset | Entrance | Idle | Depth | Reduced |
-| :-- | :-- | :-- | :-: | :-- |
-| `hero-bg.webp` (langit/padang) | fade + scale 1.06→1 | awan drift translateX 0→-2% 30s yoyo | 0–1 | fade saja |
-| `hero-main.webp` | — (sumber komposisi & fallback) | — | — | tampil utuh + fade |
-| `hero-tall.webp` | — | — | — | poster fallback LOW |
-| `countdown-bg.webp` | fade | breathing scale 1→1.01 8s | 1 | statis |
+## Scenes (Hero Living Backgrounds)
+
+### `hero-bg-loop.mp4` (fal.ai Tier 0)
+| Layer | Motion | Detail |
+| :-- | :-- | :-- |
+| **fal.ai** | Meadow breathes, wildflowers sway, petals drift, light shifts | Seamless 5s loop, static camera |
+| **GSAP** | Parallax translateY (factor 0.02) on scroll/tilt | Almost stationary — creates depth |
+| **Entrance** | Fade-in 800ms saat Gate dibuka | Poster = `hero-bg.webp` |
+| **Reduced** | Show poster static PNG, no video | |
+
+### `meadow-bottom-loop.mp4` (fal.ai Tier 1)
+| Layer | Motion | Detail |
+| :-- | :-- | :-- |
+| **fal.ai** | Wildflower meadow sways gently | Seamless loop |
+| **GSAP** | Parallax translateY (factor 0.06) | Slightly faster than sky |
+| **Reduced** | Static PNG | |
+
+### `countdown-bg.webp` (static)
+| Layer | Motion | Detail |
+| :-- | :-- | :-- |
+| **fal.ai** | None (static PNG) | |
+| **GSAP** | Breathing scale 1→1.01 8s `ease.float` | Subtle pulse |
+| **Reduced** | Statis | |
+
+---
 
 ## Couple (`/couple/`)
-| Aset | Entrance | Idle | Depth | Reduced |
-| :-- | :-- | :-- | :-: | :-- |
-| `couple-cutout.png` | assemble: opacity+ y40→0 + scale .96→1 (ease.settle) | breathing y±3 + scale→1.012 6s | 2 | fade |
 
-## Cats (`/cats/`) — 8 ekor
-Pola sama, **fase & durasi acak per ekor** (jangan sinkron).
-| Aset | Entrance | Idle | Depth | Reduced |
-| :-- | :-- | :-- | :-: | :-- |
-| `cat-jiro/meng/moju/shiro/simba/hoshi/kimho.png` | stagger.base, opacity + y30→0 + scale .9→1 (ease.settle); urut: dipangku → di rumput | breathing y±2–4 + scale→1.01 (4–7s acak) + settle-shift 1–2px tiap 6–12s; "lirik" rotate ±0.8° sesekali | 3 | fade |
-| `cat-peek.png` | closing: slide-in dari tepi bawah, intip | intip-sembunyi loop pelan (y peek↔hide) tiap ~8s | 4 | tampil diam |
+### `couple-idle.mp4` (fal.ai Tier 2)
+| Layer | Motion | Detail |
+| :-- | :-- | :-- |
+| **fal.ai** | Couple breathes, hair moves softly, gentle smile | 5s loop, transparent bg |
+| **GSAP entrance** | opacity + y40→0 + scale .96→1 `ease.settle` | |
+| **GSAP idle** | Parallax translateY (factor 0.12) on scroll | No extra breathing — fal.ai handles |
+| **Reduced** | Static `couple-cutout.png` | |
 
-> **Blink/ear/tail** = butuh aset tambahan (varian mata-tertutup / layer telinga-ekor). Backlog, lihat `09 §5`. Tanpa itu: breathing+sway+settle sudah "hidup".
+---
 
-## Florals & decor (`/florals/`)
-| Aset | Entrance | Idle | Depth | Reduced |
-| :-- | :-- | :-- | :-: | :-- |
-| `floral-corner-tl.png` / `-br.png` | scale 1.08→1 dari tepi, stagger sisi | sway rotate ±1.2° pivot pangkal 7s (beda fase) | 4 | statis |
-| `floral-sprig.png` | fade + y | sway ±1° 6s | 4 | statis |
-| `floral-border-full.png` (Gate) | draw/scale-in dari tepi, stagger | sway lembut keseluruhan | 4 | statis |
-| `drapery-divider.png` | reveal/wipe antar-section | ripple: mask gradient geser + scaleY mikro | 4 | statis |
-| `arch-frame.png` | reveal membingkai foto/teks | drapery sway ±0.8° | 4 | statis |
-| `accent-doves.png` | fade lalu mulai terbang | MotionPath melintas 12–16s, jalur/durasi variatif; 1–2 ekor | 5 | 1 diam atau hilang |
-| `accent-butterflies.png` | fade | bezier pendek + wing-flutter scaleX 1↔0.82 180ms | 5 | hilang |
+## Cats (`/cats/`) — Tier 3
+
+Semua kucing: fase & offset **acak** (jangan sinkron satu pun).
+
+### `cat-{name}-idle.mp4` (fal.ai)
+| Layer | Motion | Detail |
+| :-- | :-- | :-- |
+| **fal.ai** | Breathes, ear twitches once, tail sways, blink (organic) | 5–6s loop, transparent bg |
+| **GSAP entrance** | stagger.base, opacity + y30→0 + scale .9→1 `ease.settle` | Urut dipangku → di rumput |
+| **GSAP idle** | Parallax translateY (factor 0.20–0.32, random per cat) | No extra breathing |
+| **GSAP settle** | settle-shift ±1–2px tiap 8–14s (phase random) | Subtle ground presence |
+| **Reduced** | Static transparent PNG | |
+
+### `cat-peek.png` (Closing section — CSS only)
+| Layer | Motion | Detail |
+| :-- | :-- | :-- |
+| **CSS** | Peek-hide loop `@keyframes` translateY 0↔-60% tiap ~10s | No fal.ai video needed |
+| **GSAP entrance** | Slide dari bawah saat closing section enters viewport | |
+| **Reduced** | Diam | |
+
+---
+
+## Florals & Decor (`/florals/`)
+
+### Video loop florals (fal.ai Tier 1–4)
+| Aset | fal.ai Motion | GSAP Layer |
+| :-- | :-- | :-- |
+| `floral-garland-loop.mp4` | Sways gently in breeze, roses bob | Parallax 0.06, fade entrance |
+| `floral-swag-loop.mp4` | Breathes and sways | Parallax 0.08 |
+| `meadow-bottom-loop.mp4` | Wildflowers sway (lihat Scenes) | ← sama di atas |
+
+### CSS-animated florals (Tier 4)
+| Aset | CSS Motion | GSAP tambah |
+| :-- | :-- | :-- |
+| `floral-corner-tl.png` | `@keyframes` rotate ±1.2° pivot bottom-right, 7s | scale 1.08→1 entrance dari tepi |
+| `floral-corner-br.png` | `@keyframes` rotate ±1° mirror pivot, 8s (beda fase) | scale entrance |
+| `floral-sprig.png` | sway ±0.8° 6s | fade + y entrance |
+| `drapery-divider.png` | gradient mask shift + scaleY micro | reveal/wipe antar-section |
+| `arch-frame.png` | sway ±0.5° 9s | reveal membingkai |
+
+### Accent elements (GSAP only, Tier 5)
+| Aset | GSAP Motion | Detail |
+| :-- | :-- | :-- |
+| `accent-doves.png` | MotionPath bezier kiri→kanan, 12–16s, jalur random tiap loop | 1–2 ekor terbang |
+| `accent-butterflies.png` | bezier pendek + wing-flutter `scaleX 1↔0.82` 180ms | 2–3 instance |
+| `petals-anim.png` | particle canvas: jatuh + sway sinus + putar | 8–14 HIGH, 6 MID, 0 LOW |
+
+---
+
+## Gallery (`/gallery/` — Foto Asli Style-Harmonized)
+
+> Foto asli dari `FOTO INVITATION/` di-style-harmonize via fal.ai flux img2img (strength 0.3). Tidak pernah dijadikan video. Motion hanya dari GSAP + CSS.
+
+| Aset | fal.ai | GSAP |
+| :-- | :-- | :-- |
+| `gallery-0n.webp` | Style harmonize only (no video) | scrapbook scatter-in: opacity + rotate ±3° + y, stagger.loose; hover lift |
+| `gallery-frame.png` | None | static overlay |
+
+---
 
 ## Illustrations (`/illustrations/`)
-| Aset | Entrance | Idle | Depth | Reduced |
-| :-- | :-- | :-- | :-: | :-- |
-| `loading-motif.png` | fade-in instan | wreath rotate ±6° 3s yoyo + kucing breathing | — | rotate pelan / statis |
-| `welcome-accent.png` | fade + scale dari atas | doves accent float ±3px | 3 | fade |
-| `story-meeting.png` | slide dari sisi + settle | breathing; garis koneksi + hati pulse | 3 | fade |
-| `story-growing.png` | slide dari sisi + settle | breathing; kucing ikut bob | 3 | fade |
-| `japan-motif.png` | fade + scale | breathing; sakura petals ekstra (varian pink) | 3 | fade |
-| `event-accent.png` | reveal membingkai blok tanggal | drapery sway | 4 | fade |
-| `map-pin.png` | drop + bounce (ease.settle) | pulse halus (ajak tap) | 4 | statis |
-| `gift-accent.png` | reveal | pita breathing | 3 | fade |
-| `gallery-frame.png` | scale-in saat foto masuk | diam (foto di dalamnya yang hidup) | 4 | statis |
 
-## Gallery (`/gallery/`, foto ASLI)
-| Aset | Entrance | Idle | Depth | Reduced |
-| :-- | :-- | :-- | :-: | :-- |
-| `gallery-01..09.jpg` | scrapbook scatter-in: opacity + rotate ±2–4° → 0 + y, stagger.loose | hover/tap lift + rotate kecil; bila carousel: Lenis-smooth | 3 | fade tanpa rotate |
-
-## Audio (`/audio/`)
-| `la-vie-en-rose.mp3` | start setelah tap Gate, fade volume 0→~0.5 (1.2s), loop. Toggle mute selalu ada. | — | — | tetap (audio bukan motion) |
+| Aset | fal.ai | GSAP |
+| :-- | :-- | :-- |
+| `loading-motif.png` | None | wreath rotate ±6° 3s yoyo + breathing |
+| `story-motor.png` | None (Gemini generated) | slide dari sisi + settle; breathing |
+| `story-jakarta.png` | None | slide + breathing |
+| `story-ldr.png` | None | slide + breathing |
+| `story-keio.png` | None | slide + breathing; sakura petals tambah |
+| `story-married.png` | None | slide + settle + hati pulse |
+| `map-pin.png` | None | drop + bounce `ease.settle` |
 
 ---
 
-## Ambient particle config (`Particles.tsx`)
-Satu `<canvas>`, satu RAF. Partikel = sprite kecil (petal pastel / titik pollen). 
+## Audio
+| File | Start | Behavior |
+| :-- | :-- | :-- |
+| `la-vie-en-rose.mp3` | Setelah tap Gate | Fade 0→0.5 (1.2s), loop, toggle mute |
 
+---
+
+## Ambient Particle Config (`Particles.ts`)
+
+```typescript
+type Particle = { x, y, vx, vy, size, rot, vrot, swayPhase, opacity }
+
+// Spawn rates per tier
+const COUNTS = { HIGH: 13, MID: 6, LOW: 0, REDUCED: 0 }
+
+// Behavior
+vy = 8–20 px/s              // jatuh pelan
+swayX = amplitude * Math.sin(t * 0.5 + swayPhase)  // sway sinus
+rot += vrot                 // spin pelan
+// Fade-in spawn (atas) → fade-out dekat bawah → recycle
+
+// Warna: blush / cream / soft peach (random), size 6–16px
+// Section Japan: palet → pink sakura, count +2
 ```
-type Particle = { x,y, vx,vy, size, rot, vrot, swayPhase, opacity }
-spawn rate & count per tier:
-  HIGH: 12–14 aktif   MID: 6   LOW: 0   REDUCED: 0
-behavior:
-  vy = 8–20 px/s (jatuh pelan)
-  x sway = amplitude 10–24px * sin(t*0.5 + swayPhase)
-  rot += vrot (spin pelan)
-  opacity fade-in saat spawn (atas), fade-out saat dekat bawah → recycle ke atas
-warna: blush / cream / soft peach (acak), variasi ukuran 6–16px
-section khusus Japan: ganti palet ke pink sakura, count +2
-```
-- Pause saat tab `hidden` (visibilitychange) & saat canvas off-screen.
-- Z di atas konten? Tidak — taruh di layer 5 belakang teks penting, opacity ≤ 0.8, blur 0–1.5px (HIGH only) supaya tidak ganggu baca.
+
+Pause saat tab hidden & canvas off-screen. Z-layer: belakang teks penting, opacity ≤ 0.8.
 
 ---
 
-## Doves & Butterflies path (`Doves.tsx` / `Butterflies.tsx`)
-- **Doves:** GSAP MotionPath bezier dari (kiri,atas) melengkung ke (kanan,atas). Durasi 12–16s, `ease.float`. Tiap putaran: offset Y & durasi di-random ±15%. Saat REDUCED → 1 dove diam kecil atau dihapus.
-- **Butterflies:** 2–3 instance, path bezier pendek di area bunga, durasi 6–10s acak; overlay wing-flutter (`scaleX` cepat). Drift naik-turun kecil. REDUCED → hilang.
-- Keduanya: `transform`-only, pause off-screen.
+## Doves & Butterflies Path
+
+- **Doves:** MotionPath bezier (kiri,atas) → (kanan,atas), 12–16s, `ease.float`. Tiap putaran: offset Y & durasi random ±15%.
+- **Butterflies:** 2–3 instance, path bezier pendek area bunga, 6–10s, wing-flutter `scaleX` cepat.
+- Keduanya: `transform` only, pause off-screen.
 
 ---
 
-## Interaksi mikro (delight, bukan kaku)
+## Interaksi Mikro
+
 | Elemen | Interaksi |
 | :-- | :-- |
-| Tombol "Buka Undangan" | breathing idle; tap → ripple + page-turn reveal |
-| Pilihan RSVP (pill) | select → morph scale+warna (ease.settle) |
-| Input field | focus → underline grow dari tengah, label naik |
-| Submit RSVP | spinner bunga → checkmark draw + petals burst kecil |
+| Tombol "Buka Undangan" | breathing idle (CSS); tap → ripple + page-turn reveal |
+| Pilihan RSVP (pill) | select → morph scale+warna `ease.settle` |
+| Input field | focus → underline grow dari tengah |
+| Submit RSVP | spinner bunga → checkmark draw + petals burst |
 | "Salin rekening" | tap → toast "Tersalin ✓" pop |
-| FAQ accordion | buka → konten fade + reveal (transform, bukan height kaku) |
+| FAQ accordion | buka → fade + reveal (transform, bukan height) |
 | Wish terkirim | prepend slide-down + highlight sesaat |
-| Sticky RSVP / ScrollTop | muncul/sembunyi dengan fade+scale, breathing halus |
+| Sticky RSVP / ScrollTop | fade+scale, breathing halus |
 
 ---
 
-## Aturan akhir (recap "hidup, bukan kaku")
-1. Tiap aset penting **punya idle** (tak ada yang diam mati).
-2. Fase/durasi loop **di-random** (tak ada yang sinkron).
-3. Entrance **stagger + overlap + settle** (tak ada yang serempak/snap).
-4. Semua gerak **transform/opacity**, pause off-screen.
-5. **REDUCED/LOW** → ganti gerak posisi dengan fade lembut; tetap anggun.
+## Aturan Akhir
+1. **fal.ai video** = ambient idle. **GSAP** = entrance + parallax + interaction.
+2. Jangan duplikasi breathing antara fal.ai dan GSAP.
+3. Fase & durasi loop acak per elemen — tidak ada dua yang sinkron.
+4. Entrance: stagger + overlap + settle.
+5. Semua transform/opacity — pause off-screen.
+6. REDUCED → static PNG poster, no video, no loop.
