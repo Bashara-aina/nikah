@@ -8,58 +8,57 @@
 
 ## 1. Pernyataan Konsep
 
-Sebuah undangan pernikahan satu halaman (one-page) yang dibuka seperti **buku cerita (storybook)**: lembut, intim, romantis, dengan sentuhan playful lewat karakter kucing. Website membuka dengan ilustrasi hero kedua mempelai bersama kucing-kucing mereka, lalu perlahan terurai menjadi narasi emosional singkat sebelum akhirnya menampilkan detail acara di bagian akhir.
+Sebuah undangan pernikahan satu halaman (one-page) yang dibuka seperti **buku cerita (storybook)**: lembut, intim, romantis, dengan sentuhan playful lewat karakter kucing. Website membuka dengan **scene hero berlapis yang benar-benar hidup** — video loop fal.ai untuk langit, padang, dan karakter — disusun via GSAP assemble. Lalu perlahan terurai menjadi narasi emosional sebelum menampilkan detail acara.
 
 Rasa keseluruhan: **personal, lembut, fairytale, Indonesian dalam etika, modern dalam eksekusi, mobile-first, ringan, dan halus di setiap transisi.**
 
-> Dalam dunia yang ingin diwujudkan = dunia dari JPG referensi: pagi yang cerah, kehangatan, kucing, bunga, dan warna pastel yang tenang.
+> Dunia yang diwujudkan = dunia dari referensi AI (`correct/most correct/`): pagi yang cerah, kehangatan, kucing, bunga, dan warna pastel yang tenang. Aset AI adalah **referensi gaya** — semua diproses ulang via fal.ai sebelum dipakai.
 
 ---
 
 ## 2. Tone & Mood
 
-- Emosi 5 detik pertama: **menyambut (welcoming), intim, romantis, sedikit playful dengan kucing.**
-- Romansa yang **tenang dan understated**, bukan flashy.
+- Emosi 5 detik pertama: **menyambut, intim, romantis, sedikit playful dengan kucing.**
+- Romansa **tenang dan understated**, bukan flashy.
 - Terasa seperti **kisah cinta kami**, bukan sekadar "perayaan pernikahan".
 - Atmosfer **pagi hari dengan sinar matahari** (early-morning sunshine).
 - **Fairytale**, tapi tetap membumi.
-- Suara naratif: **hangat, puitis, bercerita (storytelling)** — Bahasa Indonesia.
+- Suara naratif: **hangat, puitis, storytelling** — Bahasa Indonesia.
 - Gender-neutral, global-modern dalam presentasi, Indonesian dalam etika.
 
 **Tiga kata kunci:** intim · romantis · playful (kucing).
 
 ---
 
-## 3. Identity Anchors (jangkar identitas)
+## 3. Identity Anchors
 
-1. Dunia ilustrasi whimsical (storybook).
-2. Romansa yang tenang, bukan mencolok.
+1. Dunia ilustrasi whimsical storybook — **hidup via fal.ai video loops**.
+2. Romansa tenang, tidak mencolok.
 3. **Kucing sebagai bagian dari kisah cinta**, bukan sekadar dekorasi.
 4. Atmosfer pagi hari yang cerah.
-5. Layout airy & minimal dengan transisi mengalir lembut.
-6. Elegansi drapery dari konsep dekorasi pernikahan (PDF).
+5. Layout airy & minimal, transisi mengalir lembut via GSAP.
+6. Elegansi drapery dari konsep dekorasi PDF.
+7. **Foto asli (FOTO INVITATION/) = jiwa site** — dipertahankan utuh, di-style-harmonize saja.
 
 ---
 
 ## 4. Visual Direction
 
-Menerjemahkan bahasa dekorasi PDF ke dalam antarmuka:
+- **Drapery-inspired dividers** (kain putih mengalir) antar section.
+- **Asymmetrical floral framing** (bunga satu sisi).
+- **Arch shapes** untuk frame gambar & kartu.
+- Permukaan **ivory & blush** terang.
+- Aksen pastel; **greenery sebagai pendukung**.
+- Gaya **illustrated** — bukan fotografis murni (foto asli di-harmonize ke palette).
+- Galeri bergaya **scrapbook** (scatter + rotate kecil).
 
-- **Drapery-inspired dividers** (kain putih mengalir) sebagai pembatas section.
-- **Asymmetrical floral framing** (bunga di satu sisi, tidak simetris).
-- **Arch shapes** (lengkungan) untuk frame gambar, kartu, dan crop.
-- Permukaan **ivory & blush** yang terang.
-- Aksen pastel; **greenery sebagai pendukung**, bukan warna dominan.
-- Gaya **illustrated**, bukan fotografis.
-- Galeri bergaya **scrapbook**.
-
-### Palette (final, 5–7 warna)
+### Palette (5–7 warna)
 | Warna | Peran |
 | :-- | :-- |
 | Ivory / Cream | Background dominan |
 | Blush pink | Aksen lembut |
 | Dusty pink | Aksen sekunder |
-| Soft peach | Highlight hangat (sinar pagi) |
+| Soft peach | Highlight hangat |
 | Greenery (sage) | Pendukung botani |
 | White drapery | Dividers / overlay |
 | Soft charcoal/taupe | Teks (bukan hitam pekat) |
@@ -67,40 +66,56 @@ Menerjemahkan bahasa dekorasi PDF ke dalam antarmuka:
 ### Typography
 - **Headings:** elegant serif.
 - **Body:** clean premium sans-serif.
-- Boleh ada satu script accent yang halus untuk nama / hashtag (opsional, jangan berlebihan).
-- Rasa: clean & premium, brighter & airy.
+- Script accent halus untuk nama / hashtag (opsional, jangan berlebihan).
 
-### Motion
-- Hanya **fade, float, reveal** yang sangat lembut.
-- Tidak ada parallax berat, tidak heavy.
-- Gentle motion — orang tidak kaget.
+### Motion — Dua Lapisan
+- **fal.ai:** menghidupkan semua idle/ambient (video loop karakter & scene).
+- **GSAP:** orchestration entrance, parallax, interaksi.
+- **CSS:** aksen kecil (floral divider, corner).
+- Hasil: setiap elemen **benar-benar bernapas** — bukan simulasi di atas gambar diam.
 
 ---
 
-## 5. Yang HARUS dihindari
+## 5. Yang HARUS Dihindari
 
 - Warna **bold / pink terang / fuchsia**.
-- Estetika pernikahan generik & template-like.
-- Terlalu banyak emas, terlalu glittery.
-- Animasi/aset berat yang bikin lambat di HP kentang.
-- Dark mode — **satu tema terkontrol saja**.
-- Kesan transaksional/maksa di bagian hadiah.
+- Estetika pernikahan generik & template.
+- Terlalu banyak emas, glittery.
+- Video berat tanpa fallback (wajib ada poster PNG + REDUCED mode).
+- Animasi/aset yang bikin lambat di HP kentang — semua video pause saat off-screen.
+- Dark mode — satu tema terkontrol.
+- Kesan transaksional/memaksa di bagian hadiah.
+- **Foto asli dijadikan video** — dilarang keras. Style harmonize saja.
 
 ---
 
-## 6. Constraints Teknis (ringkas)
+## 6. Constraints Teknis
 
 - **Mobile-first**, phone portrait sebagai acuan utama.
-- Prioritaskan **koneksi lambat & HP kentang** → aset terkompresi, animasi ringan.
-- Loading screen subtle **1–2 detik** saja.
-- Musik **La Vie en Rose** autoplay lembut (volume rendah, tidak mengagetkan) setelah interaksi pembuka.
-- Link undangan personal per tamu + sapaan otomatis nama tamu.
-- RSVP tersimpan ke **Google Sheets**.
-- Dibangun dengan **Claude Code & Cursor**.
+- Koneksi lambat & HP kentang — semua video pause off-screen, poster fallback selalu ada.
+- Loading screen subtle 1–2 detik.
+- `prefers-reduced-motion` → ganti semua video dengan static PNG poster.
+- Musik **La Vie en Rose** start setelah tap Gate, loop, volume rendah.
+- Link undangan personal per tamu + sapaan otomatis.
+- RSVP ke **Google Sheets** via Apps Script.
+- Dibangun dengan **Claude Code & Cursor** (setelah Phase 0 asset generation selesai).
 
 ---
 
-## 7. Referensi
+## 7. Sumber Aset & Pipeline
 
-- **JPG** (`WhatsApp Image 2026-06-08`): referensi emosi utama — komposisi kucing, gaya ilustrasi, komposisi bunga, warna keseluruhan, "dunia" gambar.
-- **PDF** (`Wedding Concept - Hani & Basha`): bahasa dekorasi — white drapery, asymmetrical florals, dusty/blush/peach/ivory, greenery, finish premium understated.
+| Sumber | Isi | Treatment |
+| :-- | :-- | :-- |
+| `FOTO INVITATION/` | Foto asli Bashara & Hanifah | fal.ai img2img style-harmonize strength 0.25–0.35 — wajah dipertahankan |
+| `correct/most correct/` | AI reference illustrations | fal.ai rmbg + img2vid / img2img |
+| `scenes/` | Hero scene references | fal.ai img2vid (living video loop) |
+
+> Detail pipeline lengkap → `13-fal-generation-plan.md`.
+
+---
+
+## 8. Referensi
+
+- **AI reference JPGs** (`correct/most correct/`): referensi gaya ilustrasi, komposisi, warna, karakter kucing.
+- **PDF** (`Wedding Concept - Hani & Basha`): bahasa dekorasi — white drapery, asymmetrical florals, dusty/blush/peach/ivory, finish premium understated.
+- **FOTO INVITATION/**: foto asli — jiwa emosional site, gallery scrapbook.

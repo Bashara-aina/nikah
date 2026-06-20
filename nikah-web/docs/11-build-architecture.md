@@ -1,140 +1,247 @@
-# 11 — Build Architecture (Next.js + GSAP)
+# 11 — Build Architecture (Next.js + GSAP + fal.ai)
 
-Cetak biru teknis untuk Claude Code / Cursor. Stack terkunci: **Next.js (App Router) + GSAP/ScrollTrigger + Lenis**, mobile-first, rich + smart fallback.
+Cetak biru teknis untuk Claude Code / Cursor. Stack terkunci: **Next.js (App Router) + GSAP/ScrollTrigger + Lenis + fal.ai video loops**.
 
----
-
-## 1. Stack & dependency
-
-- **Next.js (App Router, TypeScript)** — satu halaman (`/`), plus API route untuk RSVP.
-- **GSAP** + **ScrollTrigger** (+ MotionPathPlugin untuk doves/butterflies). GSAP kini free penuh.
-- **Lenis** (`@studio-freight/lenis`) — smooth scroll, lerp ≈ 0.09; sinkron ke `ScrollTrigger.update`.
-- **next/image** — semua aset (webp/png) dengan sizing eksplisit, `priority` untuk hero.
-- Tanpa UI framework berat. CSS = CSS Modules atau Tailwind (pilih Tailwind untuk kecepatan; aman).
-- Font: serif elegan (heading) + sans bersih (body) via `next/font` (self-host, no layout shift).
-
-```
-package: next, react, react-dom, gsap, @studio-freight/lenis, (tailwindcss)
-```
+> **Urutan kerja:** Phase 0 asset generation (`13-fal-generation-plan.md`) HARUS selesai sebelum mulai build site. Semua `assets/video/*.mp4` harus ada.
 
 ---
 
-## 2. Struktur folder
+## 1. Stack & Dependency
 
 ```
-/ (repo)
+next, react, react-dom
+gsap (ScrollTrigger, MotionPathPlugin)
+@studio-freight/lenis
+(tailwindcss atau CSS Modules)
+@fal-ai/client  — hanya untuk scripts/generate-assets.mjs, tidak di-bundle ke site
+```
+
+- **Next.js App Router, TypeScript.**
+- **GSAP** + ScrollTrigger + MotionPathPlugin (doves/butterflies).
+- **Lenis** smooth scroll, lerp ±0.09, sinkron ke `ScrollTrigger.update`.
+- **next/image** untuk semua PNG/WebP. `priority` untuk hero poster.
+- **`<video autoplay loop muted playsinline>`** untuk semua fal.ai video loops.
+- Font: serif heading + sans body via `next/font` (self-host, zero layout shift).
+
+---
+
+## 2. Struktur Folder
+
+```
+/ (repo root: nikah-web/)
 ├── app/
-│   ├── layout.tsx            # font, <html lang="id">, metadata, OG (hero-card)
+│   ├── layout.tsx            # font, <html lang="id">, metadata, OG image
 │   ├── page.tsx              # rakit semua <Section/> berurutan
 │   ├── globals.css
 │   └── api/rsvp/route.ts     # POST → Google Sheets
 ├── components/
 │   ├── motion/
-│   │   ├── MotionProvider.tsx # context: tier (HIGH/MID/LOW/REDUCED), reduced flag
-│   │   ├── useTier.ts         # deteksi kemampuan device
-│   │   ├── useGyro.ts         # DeviceOrientation + permission + lerp
-│   │   ├── useParallax.ts     # daftar layer → transform (scroll+tilt)
-│   │   ├── useReveal.ts       # ScrollTrigger reveal helper (pola file 10 §0)
-│   │   ├── Lenis.tsx          # provider smooth scroll
-│   │   └── Particles.tsx      # canvas petals/pollen (config file 12)
+│   │   ├── MotionProvider.tsx   # context: tier (HIGH/MID/LOW/REDUCED)
+│   │   ├── useTier.ts           # deteksi kemampuan device sekali saat load
+│   │   ├── useGyro.ts           # DeviceOrientation + permission + lerp
+│   │   ├── useParallax.ts       # gabung scroll + gyro → translate3d per layer
+│   │   ├── useReveal.ts         # ScrollTrigger reveal helper
+│   │   ├── useVideoLayer.ts     # pause/resume video via IntersectionObserver
+│   │   ├── Lenis.tsx            # smooth scroll provider
+│   │   └── Particles.tsx        # canvas petals/pollen (config file 12)
 │   ├── hero/
-│   │   ├── Hero.tsx           # layer stack + assemble timeline + idle (file 09)
-│   │   ├── heroLayout.ts      # posisi % tiap layer (match hero-main.webp)
-│   │   ├── Doves.tsx  Butterflies.tsx
+│   │   ├── Hero.tsx             # layer stack + assemble timeline (file 09)
+│   │   ├── heroLayout.ts        # posisi % tiap video layer (match hero-main.webp)
+│   │   ├── Doves.tsx            # MotionPath doves
+│   │   └── Butterflies.tsx      # bezier butterflies
 │   ├── sections/
 │   │   ├── Loading.tsx Gate.tsx Welcome.tsx Countdown.tsx
-│   │   ├── Story.tsx Japan.tsx Event.tsx Rsvp.tsx Wishes.tsx Gift.tsx Closing.tsx
+│   │   ├── Story.tsx Japan.tsx Event.tsx Rsvp.tsx
+│   │   └── Wishes.tsx Gift.tsx Closing.tsx
 │   ├── ui/
-│   │   ├── AudioToggle.tsx StickyRsvp.tsx ScrollTop.tsx Divider.tsx (drapery)
-│   └── primitives/  (Reveal, FloatLoop, Sway — wrapper animasi reusable)
+│   │   └── AudioToggle.tsx StickyRsvp.tsx ScrollTop.tsx Divider.tsx
+│   └── primitives/
+│       └── Reveal.tsx FloatLoop.tsx Sway.tsx VideoLayer.tsx
 ├── lib/
-│   ├── motionTokens.ts        # easing/durasi/jarak (file 08 §3) — SATU sumber
-│   ├── guest.ts               # decode ?to= , format nama
+│   ├── motionTokens.ts        # easing/durasi/jarak (file 08 §3) — satu sumber
+│   ├── guest.ts               # decode ?to= , format nama tamu
 │   ├── sheets.ts              # helper tulis ke Google Sheets
-│   └── config.ts              # tanggal, venue, maps URL, bank, livestream, deadline D-7
-├── public/assets/             # MIRROR dari /assets (scenes,cats,couple,florals,illustrations,gallery,audio)
-└── docs/  (01–12)
+│   └── config.ts              # tanggal, venue, maps, bank, livestream, dll
+├── scripts/
+│   └── generate-assets.mjs    # fal.ai pipeline script (13-fal-generation-plan.md)
+├── public/assets/
+│   ├── video/                 # semua .mp4 dari fal.ai (hero, cats, couple, florals)
+│   ├── scenes/                # poster WebP
+│   ├── cats/                  # transparent PNG (poster fallback)
+│   ├── couple/                # transparent PNG
+│   ├── florals/               # PNG (rmbg)
+│   ├── illustrations/         # story, welcome, loading, event, gift
+│   ├── gallery/               # style-harmonized WebP photos
+│   └── audio/                 # la-vie-en-rose.mp3
+└── docs/  (01–13)
 ```
 
-> Salin folder `assets/{scenes,cats,...}` → `public/assets/...` saat build (script atau symlink). `_source/` TIDAK ikut ke public.
+> `assets/` di root = working copy. `public/assets/` = build output. `npm run copy-assets` mirrors them.
 
 ---
 
-## 3. MotionProvider & tier (smart fallback)
+## 3. MotionProvider & Tier (Smart Fallback)
 
-`useTier()` jalan sekali di client:
+```typescript
+// useTier.ts
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
+const saveData = (navigator.connection as any)?.saveData
+const slow = ['slow-2g','2g','3g'].includes((navigator.connection as any)?.effectiveType)
+const weak = ((navigator.deviceMemory ?? 8) < 4) || ((navigator.hardwareConcurrency ?? 8) <= 4)
+
+export type Tier = 'HIGH' | 'MID' | 'LOW' | 'REDUCED'
+export const tier: Tier =
+  reduced ? 'REDUCED' :
+  (saveData || slow) ? 'LOW' :
+  weak ? 'MID' : 'HIGH'
 ```
-reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
-saveData = navigator.connection?.saveData
-slow = ['slow-2g','2g','3g'].includes(navigator.connection?.effectiveType)
-weak = (navigator.deviceMemory ?? 8) < 4 || (navigator.hardwareConcurrency ?? 8) <= 4
-tier = reduced ? 'REDUCED' : (saveData||slow) ? 'LOW' : weak ? 'MID' : 'HIGH'
-```
-Tabel fitur per tier = file 08 §7. Semua komponen animasi **baca `useMotion()`** sebelum memutuskan loop/particle/tilt. Default SSR = 'MID' (aman) sampai client menentukan.
+
+| Fitur | HIGH | MID | LOW | REDUCED |
+| :-- | :-: | :-: | :-: | :-: |
+| fal.ai video loops | on | on | off (poster) | off (poster) |
+| Tilt parallax | on | on | off | off |
+| Scroll parallax | full | dikurangi | minimal | off |
+| Doves/butterflies | on | on (sedikit) | off | off |
+| Petals canvas | 12–14 | 6 | 0 | 0 |
+| GSAP fallback breathing | off | on | on | off |
+| CSS floral sway | on | on | on | off |
+
+Default SSR = `'MID'` (aman) sampai client hydrate.
 
 ---
 
-## 4. Hooks kunci
+## 4. `useVideoLayer.ts` (hook baru — wajib)
 
-- **useGyro()** — pasang listener `deviceorientation`; iOS: expose `requestPermission()` dipanggil saat tap Gate. Output `{x,y}` ter-lerp (smoothing 0.08), nol bila ditolak/REDUCED.
-- **useParallax(layers)** — gabung scroll progress (ScrollTrigger) + gyro → set `translate3d` per layer pakai `factor` depth (file 08 §4). RAF tunggal.
-- **useReveal(ref, opts)** — bungkus ScrollTrigger reveal standar (file 10 §0); auto stagger anak; auto no-op di REDUCED (ganti fade).
-- **FloatLoop / Sway / Breathing** — komponen primitive yang menambah idle loop dgn **fase acak** (seeded) + pause saat off-screen.
+```typescript
+// Pause/resume video saat masuk/keluar viewport
+import { useEffect, useRef } from 'react'
+import { useMotion } from './MotionProvider'
+
+export function useVideoLayer(videoRef: React.RefObject<HTMLVideoElement>) {
+  const { tier } = useMotion()
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    // REDUCED/LOW → never play, show poster
+    if (tier === 'REDUCED' || tier === 'LOW') {
+      video.pause()
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => entry.isIntersecting ? video.play() : video.pause(),
+      { threshold: 0.1 }
+    )
+    observer.observe(video)
+    return () => observer.disconnect()
+  }, [tier, videoRef])
+}
+```
+
+Gunakan `useVideoLayer` di SETIAP `<video>` komponen (`VideoLayer.tsx` primitive).
 
 ---
 
-## 5. Data & integrasi
+## 5. Hooks Kunci
 
-### Guest link
-- URL: `/?to=Nama%20Tamu` (atau `?to=base64`). `lib/guest.ts` decode → tampil di Gate ("Kepada, **Nama**" gaya lembut). Default bila kosong: "Bapak/Ibu/Saudara/i".
-- **Generator link** (kebutuhan user): halaman/utility `/admin` sederhana ATAU skrip lokal yang menghasilkan daftar URL dari daftar nama (CSV → list link). Tidak perlu auth berat; bisa static.
+- **useGyro()** — pasang `deviceorientation` listener; iOS: `requestPermission()` saat tap Gate; output `{x,y}` ter-lerp (0.08); nol bila ditolak/REDUCED.
+- **useParallax(layers)** — gabung ScrollTrigger + gyro → `translate3d` per layer via `factor`. RAF tunggal.
+- **useReveal(ref, opts)** — ScrollTrigger reveal standar; auto stagger anak; no-op di REDUCED.
+- **useVideoLayer(ref)** — pause/resume video berdasarkan visibility + tier.
+- **FloatLoop / Sway** — GSAP idle fallback (LOW/MID saat video off). Fase acak per elemen.
+
+---
+
+## 6. `VideoLayer.tsx` Primitive
+
+```tsx
+interface VideoLayerProps {
+  src: string
+  poster: string
+  className?: string
+  'data-depth'?: string
+}
+
+export function VideoLayer({ src, poster, className, ...props }: VideoLayerProps) {
+  const ref = useRef<HTMLVideoElement>(null)
+  useVideoLayer(ref)
+
+  return (
+    <video
+      ref={ref}
+      className={className}
+      autoPlay loop muted playsInline
+      poster={poster}
+      src={src}
+      {...props}
+    />
+  )
+}
+```
+
+---
+
+## 7. Data & Integrasi
+
+### Guest Link
+- URL: `/?to=Nama%20Tamu`. `lib/guest.ts` decode → tampil di Gate. Default: "Bapak/Ibu/Saudara/i".
+- Link generator: script lokal CSV → list URL.
 
 ### RSVP → Google Sheets
-- Cara termudah & gratis: **Google Apps Script Web App** sebagai endpoint. Sheet kolom: `timestamp, guest(to), nama, kehadiran(Hadir/Tidak/Diusahakan), jumlah(≤4), pesan`.
-- Flow: form → `POST /api/rsvp` (Next route) → fetch ke Apps Script URL (server-side, sembunyikan URL) → tulis row. Balikan ok → animasi sukses (file 10 §9).
-- Alternatif: Google Sheets API + service account (lebih ribet, kalau butuh keamanan lebih).
+- **Google Apps Script Web App** sebagai endpoint.
+- Sheet kolom: `timestamp, guest, nama, kehadiran, jumlah(≤4), pesan`.
+- Flow: form → `POST /api/rsvp` (Next route, server-side) → fetch Apps Script → tulis row.
 
-### Wishes (guestbook publik)
-- Sheet/tab terpisah `wishes`: `timestamp, nama, pesan`. GET (cache pendek) untuk render list; POST untuk kirim. Moderasi opsional (kolom `approved`).
+### Wishes
+- Tab terpisah `wishes`: `timestamp, nama, pesan`. GET cache pendek; POST kirim. Moderasi opsional.
 
 ### Audio
-- `<audio loop preload="none">` La Vie en Rose. **Start hanya setelah tap Gate** (kebijakan autoplay). Fade volume via WebAudio/GSAP 0→~0.5. `AudioToggle` selalu tampil (mute/unmute), state di localStorage.
+- `<audio loop preload="none">`. Start hanya setelah tap Gate. Fade via GSAP 0→0.5. Toggle di localStorage.
 
 ### Save to Calendar
-- Generate `.ics` (Google/Apple) dari `config.ts` (22 Agt 2026, 10:00–13:00 WIB, venue).
+- `.ics` + Google Calendar link dari `config.ts` (22 Agt 2026, 10:00–13:00 WIB).
 
 ### Maps
-- Embed lazy (load saat section Event masuk) atau tombol link ke `maps.app.goo.gl/...` (ringan; default tombol + map-pin custom).
+- Tombol link ke `maps.app.goo.gl/...` (ringan). Embed lazy opsional.
 
 ---
 
-## 6. Config tunggal (`lib/config.ts`)
-Tanggal/jam, venue+alamat, maps URL, dress code (pastel), etiquette list, livestream (YouTube/Zoom/IG/FB), bank (ID & JP) + alamat hadiah, deadline RSVP (D-7), nama mempelai, hashtag. Semua teks final ambil dari `docs/03-copywriting.md`.
+## 8. Config Tunggal (`lib/config.ts`)
+
+Tanggal/jam, venue+alamat, maps URL, dress code, etiquette list, livestream (YouTube/Zoom/IG/FB), bank (ID & JP) + alamat hadiah, deadline RSVP (D-7), nama mempelai, hashtag. Teks final dari `03-copywriting.md`.
 
 ---
 
-## 7. Performance budget (potato phone)
-- Hanya `transform`/`opacity` (file 08 §8). `content-visibility:auto` untuk section bawah.
-- `next/image` sizes tepat; hero layers `priority`; sisanya lazy.
-- Satu RAF global untuk parallax+particles (jangan banyak loop).
-- Pause animasi off-screen (ScrollTrigger/IO).
-- Target: LCP < 2.5s di 3G mid-tier; bundle JS < ~150KB gz (GSAP+Lenis muat); hero transfer < 600KB.
-- Lighthouse mobile ≥ 90 perf/accessibility sebagai gate rilis.
+## 9. Performance Budget (Potato Phone)
+
+- Hanya `transform`/`opacity` untuk GSAP (file 08 §9).
+- Video: MP4 H.264, < 2MB per file, `preload="none"` kecuali hero.
+- Pause semua video off-screen (useVideoLayer).
+- Satu RAF global parallax+particles.
+- `content-visibility: auto` untuk section bawah.
+- Target: LCP < 2.5s di 3G; bundle JS < 150KB gz; hero transfer < 800KB.
+- Lighthouse mobile ≥ 90 sebagai gate rilis.
 
 ---
 
-## 8. Deploy
-- **Vercel** (Next.js native). Env: `APPS_SCRIPT_URL` (RSVP), dll.
-- Preview deploy untuk verifikasi gerak di HP asli (buka di ponsel low-end untuk cek tier LOW).
+## 10. Deploy
+
+- **Vercel** (Next.js native).
+- Env: `APPS_SCRIPT_URL`, `FAL_KEY` (hanya untuk scripts/, bukan runtime site).
+- Preview deploy: wajib test di HP low-end untuk verifikasi tier LOW.
 - Domain custom opsional.
 
 ---
 
-## 9. Urutan build (disarankan)
+## 11. Urutan Build (setelah Phase 0 selesai)
+
 1. Scaffold Next + Tailwind + font + Lenis + MotionProvider/useTier.
-2. `config.ts` + copy aset ke `public/`.
-3. **Hero** (file 09) sebagai prototipe pembuktian gerak → tes di HP.
-4. Gate + audio + guest link.
-5. Section sisanya (file 10) berurutan.
-6. RSVP + Wishes (Apps Script).
-7. Polish: tier fallback, reduced-motion, Lighthouse, QA HP lemah.
+2. `config.ts` + copy aset ke `public/assets/`.
+3. **`VideoLayer` primitive + `useVideoLayer` hook** (fondasi semua video).
+4. **Hero** (file 09) sebagai prototipe pembuktian — tes di HP asli.
+5. Gate + audio + guest link.
+6. Section sisanya berurutan (file 10).
+7. RSVP + Wishes (Apps Script).
+8. Polish: tier fallback, REDUCED mode, Lighthouse, QA HP kentang.
