@@ -147,3 +147,18 @@ Lihat `02-site-structure.md` untuk detail tiap section, `03-copywriting.md` untu
 4. Sambungkan GSAP orchestration (09 + 10 + 12).
 5. Sambungkan Google Sheets + logika link tamu.
 6. Uji di HP beneran (koneksi lambat) → poles.
+
+---
+
+## Appendix — Stack reconciliation (added 2026-06-21, feature/motion-ui-ux-pro-max)
+
+This document originally proposed **Astro** as the framework. The actual scaffolded project is **Next.js 16 App Router + React 19 + TypeScript strict + Tailwind v4**. The decision was driven by:
+
+- `docs/11-build-architecture.md` (authoritative build architecture) specifies Next.js.
+- `README.md` line 1 and `project-structure.mdc` (workspace rule) both name Next.js as the stack.
+- The repo ships a `.next/dev/` cache that only exists when Next.js is the runtime.
+
+This file's stack notes are kept for historical context. For current build decisions, follow `docs/11` and `nikah-web/AGENTS.md`.
+
+The Phase 0 fal.ai pipeline section remains valid — that work runs from `scripts/generate-assets.mjs` independently of the framework choice.
+

@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+/* Tailwind v4 — CSS-first theme. These tokens are exposed as utility classes
+ * (bg-paper, text-ink, border-gold, etc.) and CSS variables (--color-paper).
+ * OKLCH used for perceptually-uniform steps. */
+@theme {
+  --color-paper: oklch(0.985 0.012 80);
+  --color-cream: oklch(0.965 0.018 80);
+  --color-surface: oklch(0.995 0.005 80);
+  --color-border: oklch(0.88 0.014 80);
+  --color-ink: oklch(0.28 0.02 50);
+  --color-muted: oklch(0.55 0.018 60);
+  --color-blush: oklch(0.86 0.04 25);
+  --color-sage: oklch(0.78 0.04 150);
+  --color-gold: oklch(0.82 0.08 75);
+
+  --font-serif: var(--font-serif-stack);
+  --font-sans: var(--font-sans-stack);
+}
+
+/* Design tokens also mirrored as plain CSS variables for non-Tailwind
+ * consumers (e.g. inline styles, JS). */
+:root {
+  --color-paper: oklch(0.985 0.012 80);
+  --color-cream: oklch(0.965 0.018 80);
+  --color-surface: oklch(0.995 0.005 80);
+  --color-border: oklch(0.88 0.014 80);
+  --color-ink: oklch(0.28 0.02 50);
+  --color-muted: oklch(0.55 0.018 60);
+  --color-blush: oklch(0.86 0.04 25);
+  --color-sage: oklch(0.78 0.04 150);
+  --color-gold: oklch(0.82 0.08 75);
+
+  /* Z-index scale — `impeccable` reference. */
+  --z-dropdown: 50;
+  --z-sticky: 100;
+  --z-modal-backdrop: 200;
+  --z-modal: 300;
+  --z-toast: 400;
+  --z-tooltip: 500;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply min-h-[100svh] bg-paper text-ink font-sans;
+    text-wrap: pretty;
+  }
+
+  h1, h2, h3 {
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+  }
+
+  /* Focus visible — required ring for accessibility (ui-ux-pro-max priority 1). */
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
+  }
+
+  /* Tap targets — minimum 44x44 (ui-ux-pro-max priority 2). */
+  a, button {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+}
+
+/* Reduced motion — collapses both Motion and GSAP to instant.
+ * Both libraries check `prefers-reduced-motion` directly; this guard handles
+ * any CSS animations we use (floral sway, drapery ripple, etc.). */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes sway {
+  from { transform: rotate(-1.2deg); }
+  to { transform: rotate(1.2deg); }
+}
