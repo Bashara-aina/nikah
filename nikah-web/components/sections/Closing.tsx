@@ -2,7 +2,7 @@
 
 /**
  * Closing — emotional symmetry with Hero (docs/10 §12).
- * Mini-assemble: couple-cutout + a few cats + cat-peek.
+ * Mini-assemble: couple illustration + a few cats + cat-peek.
  * cat-peek peeks; doves fly up; audio continues.
  */
 
@@ -17,7 +17,7 @@ import { useMotion } from "@/components/motion/MotionContext";
 import { hashString, mulberry32 } from "@/lib/seed";
 import Breathing from "@/components/primitives/Breathing";
 
-const CLOSING_CATS: readonly string[] = ["cat-jiro", "cat-meng", "cat-shiro"];
+const CLOSING_CATS: readonly string[] = ["cat-tuxedo-black", "cat-grey-white", "cat-cream-longhair"];
 
 export default function Closing() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -226,7 +226,7 @@ export default function Closing() {
             }}
           >
             <Image
-              src="/assets/couple/couple-cutout.png"
+              src="/assets/couple/couple-illustration.png"
               alt="Bashara dan Hanifah"
               width={400}
               height={500}
@@ -305,7 +305,7 @@ export default function Closing() {
             }}
           >
             <Image
-              src="/assets/cutout/story-growing.png"
+              src="/assets/cutout/illustration-figure-front.png"
               alt="Bashara, Hanifah, dan kucing-kucing mereka"
               width={320}
               height={200}

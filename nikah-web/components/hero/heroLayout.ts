@@ -21,13 +21,13 @@ export const HERO_LAYOUT: Record<string, HeroLayerPosition> = {
   couple: { x: 22, y: 30, w: 56, z: 2 },
 
   // 7 cats arranged loosely around the couple; matches hero-main comp.
-  "cat-jiro": { x: 14, y: 56, w: 14, z: 3 },
-  "cat-meng": { x: 32, y: 62, w: 14, z: 3 },
-  "cat-moju": { x: 56, y: 60, w: 14, z: 3 },
-  "cat-shiro": { x: 76, y: 58, w: 14, z: 3 },
-  "cat-simba": { x: 8, y: 70, w: 12, z: 3 },
-  "cat-hoshi": { x: 38, y: 76, w: 12, z: 3 },
-  "cat-kimho": { x: 68, y: 76, w: 12, z: 3 },
+  "cat-tuxedo-black": { x: 14, y: 56, w: 14, z: 3 },
+  "cat-grey-white": { x: 32, y: 62, w: 14, z: 3 },
+  "cat-tuxedo-bw": { x: 56, y: 60, w: 14, z: 3 },
+  "cat-cream-longhair": { x: 76, y: 58, w: 14, z: 3 },
+  "cat-tabby-grey": { x: 8, y: 70, w: 12, z: 3 },
+  "cat-tabby-peaceful": { x: 38, y: 76, w: 12, z: 3 },
+  "cat-tabby-sleeping": { x: 68, y: 76, w: 12, z: 3 },
 
   "floral-tl": { x: -4, y: -2, w: 36, z: 4 },
   "floral-br": { x: 68, y: 68, w: 36, z: 4 },

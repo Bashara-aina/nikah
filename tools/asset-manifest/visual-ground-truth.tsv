@@ -1,0 +1,78 @@
+path	sha256_short	actual_content	filename_match
+couple/couple-cutout.png	(needs hash)	cat in flower wreath	WRONG (component expects couple illustration; couple-illustration.png has the actual couple)
+couple/couple-illustration.png	(needs hash)	couple illustration (man + woman)	OK
+cats/cat-hoshi.png	930f55a6	orange tabby w/ white chest, eyes closed	OK-by-appearance (could be hoshi)
+cats/cat-jiro.png	c207e0b7	black tuxedo cat, yellow eyes	OK-by-appearance (could be jiro)
+cats/cat-kimho.png	ff81838a	orange tabby, sleeping pose	OK-by-appearance (could be kimho)
+cats/cat-meng.png	e473195c	grey/white cat (Russian Blue-ish)	OK-by-appearance (could be meng)
+cats/cat-moju.png	23b63961	black-and-white tuxedo, eyes open	OK-by-appearance (could be moju)
+cats/cat-shiro.png	fa67bb5b	white/cream long-haired	OK-by-appearance (could be shiro)
+cats/cat-simba.png	b22c0790	grey tabby	OK-by-appearance (could be simba)
+cats/cat-grass-frontal.png	0eaa5632	tuxedo cat face-on in grass	OK
+cats/cat-hoshi-kimho-playing.png	0e87f308	ONE orange tabby lying in flowers (no "playing", no two cats)	WRONG-name (should be cat-X-sleeping-flowers or similar)
+cats/cat-in-flowers.png	50d2dc8a	cat in flowers	OK-generic
+cats/cat-in-heart-flowers.png	b66c2e7c	cat with flower-heart	OK
+cats/cat-jiro-in-flowers.png	4af04e2d	ORANGE tabby in flowers (jiro is BLACK tuxedo)	WRONG-cat
+cats/cat-jiro-with-dove.png	0e99e0e5	black-and-white cat w/ dove on head	WRONG-cat (moju-matching coloring)
+cats/cat-meng-with-flowers.png	2b98b152	WHITE/cream cat w/ flowers (meng is GREY)	WRONG-cat
+cats/cat-moju-sleeping-flowers.png	23a05b35	black-and-white cat sleeping w/ flowers	OK-by-appearance (plausible moju)
+cats/cat-shiro-butterfly.png	490baf94	white cat w/ butterfly	OK-by-appearance (plausible shiro)
+cats/cat-simba-with-dove.png	5bfe07e2	BLACK tuxedo cat w/ dove (simba is GREY tabby)	WRONG-cat
+cats/cat-sleeping-flowers.png	a8167711	cat sleeping w/ flowers (orange tabby)	OK-generic
+cats/cat-sleeping-wreath.png	8b110b85	cat in wreath (orange tabby)	OK-generic
+cats/cat-peek.png	15bceec7	cat peeking	OK
+cats/cats-couple-wreath.png	c3c21345	TWO cats in wreath	OK
+cutout/accent-butterflies.png	(needs hash)	WHITE DOVES	WRONG-content (should be accent-doves.png — but accent-doves.png already has this content)
+cutout/accent-doves.png	(needs hash)	white doves	OK
+cutout/accent-doves-arch.png	(needs hash)	white doves in arch	OK
+cutout/accent-doves-heart.png	(needs hash)	two doves forming heart	OK
+cutout/accent-doves-pair.png	(needs hash)	pair of white doves	OK
+cutout/couple-cutout-alt.png	(needs hash)	cat in flower wreath (DUPE of couple-cutout.png)	WRONG-content (and a near-duplicate of the wrong-named couple-cutout.png)
+cutout/couple-under-arch.png	(needs hash)	bride+groom silhouette under floral arch	OK
+cutout/drapery-divider.png	(needs hash)	floral drapery divider	OK
+cutout/floral-cluster-mixed.png	(needs hash)	mixed floral cluster	OK
+cutout/floral-cluster-pink.png	(needs hash)	pink floral cluster	OK
+cutout/floral-cluster-pinkwhite.png	(needs hash)	pink-and-white floral cluster	OK
+cutout/floral-cluster-redroses.png	(needs hash)	red roses cluster	OK
+cutout/floral-corner-br.png	(needs hash)	floral corner bottom-right	OK
+cutout/floral-corner-tl.png	(needs hash)	floral corner top-left	OK
+cutout/floral-sprig.png	(needs hash)	floral sprig	OK
+cutout/floral-wisteria-frame.png	(needs hash)	wisteria-style floral frame	OK
+cutout/forest-scene-bear.png	(needs hash)	cat in flower arch (no bear)	WRONG-content (cat, not bear)
+cutout/gate-arch-floral.png	(needs hash)	floral gate arch	OK
+cutout/gate-scene-cat.png	(needs hash)	cat in gate/arch scene	OK
+cutout/gate-scene-cats-wide.png	(needs hash)	wide shot of cats in floral gate	OK
+cutout/gate-scene-cats.png	(needs hash)	cats in gate scene	OK
+cutout/paw-prints-trail-straight.png	(needs hash)	paw prints trail (straight)	OK
+cutout/peacock-arch-couple.png	(needs hash)	arch w/ peacock + couple silhouette	OK
+cutout/section-wash-cool.png	(needs hash)	cool-toned section wash	OK
+cutout/section-wash-pink.png	(needs hash)	pink section wash	OK
+cutout/section-wash-warm.png	(needs hash)	warm-toned section wash	OK
+cutout/story-books-plane.png	(needs hash)	woman illustration, no books, no plane	WRONG-content
+cutout/story-bus-couple.png	(needs hash)	man in commuter scene, no couple	WRONG-content
+cutout/story-growing.png	(needs hash)	person illustration	OK-generic
+cutout/story-jakarta-map.png	(needs hash)	Jakarta map with cat	OK
+cutout/story-jakarta-motor.png	(needs hash)	woman illustration, no motor	WRONG-content
+cutout/story-keio-tower.png	(needs hash)	woman illustration, no tower	WRONG-content
+cutout/story-meeting-2.png	(needs hash)	cat in flower wreath (DUPE of wedding-rings.png)	WRONG-content
+cutout/wedding-rings.png	(needs hash)	cat in flower wreath (NOT rings)	WRONG-content (3rd copy of cat-in-wreath)
+cutout/welcome-accent.png	(needs hash)	welcome cat accent	OK
+scene/arch-frame.png	(needs hash)	arch frame	OK
+scene/countdown-bg.png + .webp	(needs hash)	countdown background	OK
+scene/event-accent.png	(needs hash)	event accent	OK
+scene/floral-border-full.png	(needs hash)	floral border	OK
+scene/gallery-frame.png	(needs hash)	gallery frame	OK
+scene/gift-accent.png	(needs hash)	gift accent	OK
+scene/hero-bg.webp	(needs hash)	soft gradient/floral hero bg	OK
+scene/hero-main.webp	(needs hash)	hero scene (floral arch + cats)	OK
+scene/hero-tall.webp	(needs hash)	tall hero scene	OK
+scene/japan-motif.png	(needs hash)	Japan motif (torii + mountain)	OK
+scene/loading-motif.png	(needs hash)	loading motif (cat)	OK
+scene/map-pin.png	(needs hash)	map pin (cat in floral)	OK
+scene/meadow-daisies.png	(needs hash)	meadow daisies	OK
+scene/scene-bridge-cat.png	(needs hash)	bridge w/ cats	OK
+scene/section-bg-wash.png + .webp	(needs hash)	section bg wash	OK
+scene/section-meadow-bottom-daisies.png	(needs hash)	section meadow bottom daisies	OK
+scene/section-wash.webp	(needs hash)	section wash	OK
+scene/story-meeting.png	(needs hash)	cat in flower wreath (NOT a meeting scene)	WRONG-content (component expects online meeting illustration)
+scene/welcome-cats-meadow.png	(needs hash)	welcome scene w/ cats and meadow	OK

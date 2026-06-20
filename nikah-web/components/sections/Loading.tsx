@@ -3,7 +3,7 @@
 /**
  * Loading — 1–2s pre-gate screen.
  * Wreath rotate + motif breathing. Cross-fades to Gate when ready.
- * Preloads hero layers (hero-bg, couple-cutout, all cat-*) + audio metadata.
+ * Preloads hero layers (hero-bg, couple illustration, all cat-*) + audio metadata.
  */
 
 import { useEffect, useRef, useState } from "react";
@@ -17,7 +17,7 @@ import { config } from "@/lib/config";
 const PRELOAD_SRCS = [
   "/assets/scene/hero-bg.webp",
   "/assets/scene/hero-main.webp",
-  "/assets/couple/couple-cutout.png",
+  "/assets/couple/couple-illustration.png",
   ...config.cats.map((c) => `/assets/cats/${c}.png`),
 ];
 

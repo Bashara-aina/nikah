@@ -104,13 +104,13 @@ export const config = {
 
   /** Cat assets — order matters for hero stagger (dipeluk → duduk di rumput). */
   cats: [
-    "cat-jiro",
-    "cat-meng",
-    "cat-moju",
-    "cat-shiro",
-    "cat-simba",
-    "cat-hoshi",
-    "cat-kimho",
+    "cat-tuxedo-black",
+    "cat-grey-white",
+    "cat-tuxedo-bw",
+    "cat-cream-longhair",
+    "cat-tabby-grey",
+    "cat-tabby-peaceful",
+    "cat-tabby-sleeping",
   ] as const,
 } as const;
 

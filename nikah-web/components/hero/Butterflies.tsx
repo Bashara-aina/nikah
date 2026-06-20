@@ -112,7 +112,7 @@ export default function Butterflies() {
           }}
         >
           <Image
-            src="/assets/cutout/accent-butterflies.png"
+            src="/assets/cutout/accent-doves.png"
             alt=""
             width={72}
             height={72}
