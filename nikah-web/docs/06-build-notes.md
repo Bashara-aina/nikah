@@ -1,149 +1,155 @@
 # 06 — Build Notes
 
-Catatan teknis untuk Claude Code / Cursor agar implementasi tetap selaras dengan brief. **Mulai dari file planning ini**, bukan dari prompt kosong.
-
----
-
-## Prinsip Utama
-1. **Mobile-first, phone portrait** sebagai acuan desain pertama.
-2. **Ringan & cepat** — prioritaskan koneksi lambat & HP kentang.
-3. **Satu tema** (single light), tanpa dark mode.
-4. **One-page**, scroll kontinu, transisi soft-flowing, tanpa nav bar terlihat.
-5. Motion berlapis: **fal.ai** menangani ambient/idle (video loop), **GSAP** menangani orchestration/parallax/entrance.
+> **Sebelum nulis kode apapun: baca `nikah-web/README.md` dulu.** Itu adalah top-of-mind anchor untuk semua keputusan.
 
 ---
 
 ## Stack
-- **Astro** (output HTML minim JS) + Vite. Atau HTML + CSS + JS vanilla bila lebih ringan.
-- GSAP (ScrollTrigger + MotionPath + Observer) untuk semua animation orchestration.
-- Lenis untuk smooth scroll (lerp ~0.09).
-- CSS custom properties untuk palette & spacing.
-- `<video autoplay loop muted playsinline>` untuk semua fal.ai video loop assets.
-- Tidak ada framework berat lain.
 
-## Performa (wajib)
-- Gambar: **WebP/AVIF**, `loading="lazy"`, `width/height` eksplisit (cegah CLS).
-- Video: **MP4 H.264**, `preload="none"` kecuali hero, poster = WebP screenshot frame 1.
-- Hero video preload: hanya `hero-bg-loop.mp4` + `couple-idle.mp4` (above fold).
-- Semua video off-screen: `pause()` via IntersectionObserver → hemat CPU drastis.
-- Audio: file kecil terkompresi, tidak autoplay sebelum interaksi.
-- Target: Lighthouse mobile sehat. Hero paint < 2.5s di 3G. Total transfer hero < 800KB.
-- Loading screen 1–2 detik, tidak blokir lebih lama dari aset siap.
-
-## Aksesibilitas & Etika
-- Kontras teks cukup (teks pakai taupe/charcoal di atas ivory).
-- Tombol mute/unmute musik selalu tersedia.
-- `prefers-reduced-motion`: matikan semua video loop, ganti dengan static PNG poster.
-- `prefers-reduced-motion`: matikan parallax & tilt.
-
----
-
-## Phase 0 — Asset Generation Pipeline (SEBELUM BUILD)
-
-> Cursor tidak boleh mulai build sebelum Phase 0 selesai. Semua aset video harus sudah di `assets/video/`.
-
-### Step 0.1 — Background Removal (fal.ai bria/rmbg)
-```
-Input:  nikah-web/correct/most correct/cat-*.png
-        nikah-web/correct/most correct/couple-scooter-vespa-wedding.png
-Output: nikah-web/assets/cats/cat-*-transparent.png
-        nikah-web/assets/couple/couple-cutout.png
-Model:  fal-ai/bria/rmbg
-```
-
-### Step 0.2 — Hero Scene Video Loops (fal.ai minimax)
-```
-Input:  nikah-web/scenes/hero-main.webp  (first frame reference)
-Output: nikah-web/assets/video/hero-bg-loop.mp4
-Model:  fal-ai/minimax/video-01-live
-Prompt: "Soft meadow breathes gently, wildflowers sway in morning
-         breeze, dappled sunlight shifts, petals drift, storybook
-         watercolor illustration, seamless loop [Static shot]"
-```
-
-### Step 0.3 — Cat Idle Video Loops (fal.ai wan-2.6)
-```
-Input:  Per-cat transparent PNG dari Step 0.1
-Output: nikah-web/assets/video/cat-{name}-idle.mp4
-Model:  fal-ai/wan-2.6
-Prompt: "{cat} breathes slowly, ear twitches once, tail sways gently,
-         storybook watercolor style, transparent background [Static shot]"
-```
-
-### Step 0.4 — Floral Video Loops (fal.ai minimax)
-```
-Input:  floral-garland-full-swag.png, floral-swag-full.png,
-        wildflower-meadow-full.png
-Output: nikah-web/assets/video/floral-*-loop.mp4
-Model:  fal-ai/minimax/video-01-live
-```
-
-### Step 0.5 — Gallery Photo Style Harmonize (fal.ai flux img2img)
-```
-Input:  FOTO INVITATION/*.jpg (foto asli)
-Output: nikah-web/assets/gallery/gallery-0n.webp
-Model:  fal-ai/flux/dev/image-to-image
-Strength: 0.25–0.35 (rendah — jaga wajah)
-Prompt: "Harmonize into soft watercolor storybook style, ivory cream
-         blush palette, preserve faces and expressions, airy light"
-```
-
-### Step 0.6 — Story Illustrations (lihat TODO_ASSETS.md)
-```
-Generate 5 ilustrasi story via Gemini 2.5 Flash Image
-Lihat: docs/07-gemini-asset-prompts.md §5
-```
-
----
-
-## Struktur Halaman (urutan render)
-`Loading → Gate → Hero → Welcome → Countdown → Story → Event → RSVP → Wishes & Gift → FAQ → Closing`
-
-Lihat `02-site-structure.md` untuk detail tiap section, `03-copywriting.md` untuk teks.
-
----
-
-## Fitur & Implementasi
-
-| Fitur | Catatan teknis |
+| Layer | Tool |
 | :-- | :-- |
-| Video loop assets | `<video autoplay loop muted playsinline poster="...">` — pause bila off-screen |
-| Personalized link | Baca `?to=` / `?g=slug`, render nama di Gate. Fallback aman. |
-| Music autoplay | Mulai setelah tap Gate. Loop, volume rendah. Toggle visible. |
-| Countdown | Target `2026-08-22T10:00:00+07:00`, format hari·jam·menit·detik. |
-| RSVP | POST ke Google Apps Script / Sheets. Validasi jumlah ≤ 4. |
-| Wishes wall | GET wishes publik, render feed, lazy-load. |
-| Gift | Statis dari config, tombol "Salin" rekening. |
-| Save to Calendar | Google Calendar link + `.ics`. |
-| Map | Embed ringan atau tombol link ke `maps_url`. |
-| Sticky RSVP | Button mobile mengarah ke section RSVP. |
-| Scroll-to-top | Muncul setelah scroll, smooth. |
-| Livestream | Tombol-tombol; YouTube utama. |
-
-## Data
-- Semua konten dinamis & rahasia → **config + env**, bukan hardcode di repo publik.
-- Lihat `05-data-fields.md` untuk skema Sheets, field, dan config.
+| Framework | Next.js 14 App Router (static export) |
+| Styling | Tailwind CSS + CSS custom props (motion tokens) |
+| Animation | GSAP 3 + ScrollTrigger |
+| Video (living characters) | fal.ai → `.mp4` loops → native `<video>` |
+| Image gen (story illustrations) | Gemini 2.5 Flash Image |
+| Data | Google Sheets + Apps Script Web App |
+| Deploy | Vercel (static) |
+| Asset generation | `scripts/generate-assets.mjs` (Node, `@fal-ai/client`) |
 
 ---
 
-## Definition of Done (prototype pertama)
-- [ ] Phase 0 selesai — semua video di `assets/video/`
-- [ ] One-page mobile semua section tampil
-- [ ] Gate membaca nama tamu dari link
-- [ ] Musik La Vie en Rose start setelah tap
-- [ ] Countdown jalan ke 22 Agustus 2026, 10.00 WIB
-- [ ] RSVP tersimpan ke Google Sheets
-- [ ] Wishes publik tampil & bisa kirim
-- [ ] Gift + tombol salin
-- [ ] Map, Save to Calendar, Livestream berfungsi
-- [ ] Video loop assets pause saat off-screen
-- [ ] `prefers-reduced-motion` → static PNG fallback
-- [ ] Lighthouse mobile lulus
+## The 5 Ideas (non-negotiable)
 
-## Urutan Kerja
-1. Lock semua planning docs (selesai).
-2. **Phase 0:** Generate semua aset via fal.ai (lihat steps di atas + `13-fal-generation-plan.md`).
-3. Bangun prototype HTML/CSS/JS dengan video layers.
-4. Sambungkan GSAP orchestration (09 + 10 + 12).
-5. Sambungkan Google Sheets + logika link tamu.
-6. Uji di HP beneran (koneksi lambat) → poles.
+1. **Storybook World** — setiap section adalah chapter, dunia visual konsisten
+2. **Living Characters via fal.ai** — kucing dan pasangan adalah video loop nyata
+3. **GSAP Cinematic Orchestration** — fal.ai bikin hidup, GSAP yang jadi sutradara
+4. **Real Photos as Emotional Core** — `FOTO INVITATION/` adalah jiwa situs, faces preserved
+5. **Smart Graceful Degradation** — HIGH/MID/LOW/REDUCED, indah di semua device
+
+---
+
+## Folder Source vs Build Output
+
+```
+[SOURCE — jangan disentuh langsung oleh Cursor]
+nikah-web/FOTO INVITATION/   → real photos, fal.ai flux/img2img saja
+nikah-web/correct/           → AI reference, fal.ai rmbg + video dulu
+nikah-web/scenes/            → hero composition reference
+
+[OUTPUT — hasil generate, masuk ke public/]
+public/assets/video/         → semua .mp4 fal.ai output
+public/assets/cats/          → PNG transparan (poster fallback)
+public/assets/couple/        → PNG transparan (poster fallback)
+public/assets/florals/       → PNG transparan (CSS-animated)
+public/assets/story/         → PNG Gemini (GSAP scroll trigger)
+public/assets/gallery/       → WebP style-harmonized gallery
+public/assets/scenes/        → hero-main, hero-bg, hero-tall
+public/assets/audio/         → la-vie-en-rose.mp3
+```
+
+---
+
+## Build Phases (urutan wajib)
+
+### Phase 0 — Background Removal (fal.ai `bria/rmbg`)
+Input: `correct/` cat PNGs + couple PNG
+Output: `public/assets/{cats,couple}/` transparent PNGs
+```bash
+node scripts/generate-assets.mjs --phase=0
+```
+
+### Phase 1 — Hero Scene Video (fal.ai `minimax/video-01-live`)
+Input: `scenes/hero-main.webp`
+Output: `public/assets/video/hero-bg-loop.mp4`
+```bash
+node scripts/generate-assets.mjs --phase=1
+```
+
+### Phase 2 — Cat + Couple Idle Videos (fal.ai `wan-2.6`)
+Input: transparent PNGs from Phase 0
+Output: `public/assets/video/cat-*-idle.mp4`, `couple-idle.mp4`
+```bash
+node scripts/generate-assets.mjs --phase=2
+```
+
+### Phase 3 — Floral Videos + Closing (fal.ai `minimax/video-01-live`)
+Input: `correct/` floral assets
+Output: `public/assets/video/floral-*.mp4`, `closing-loop.mp4`
+```bash
+node scripts/generate-assets.mjs --phase=3
+```
+
+### Phase 4 — Gallery Style Harmonize (fal.ai `flux/dev/image-to-image`)
+Input: `FOTO INVITATION/` photos
+Output: `public/assets/gallery/gallery-*.webp`
+Strength: 0.25–0.35 ONLY.
+```bash
+node scripts/generate-assets.mjs --phase=4
+```
+
+### Phase 5 — Story Illustrations (Gemini manual)
+See `docs/07-gemini-asset-prompts.md`. Manual generation, then copy to `public/assets/story/`.
+
+### Phase 6 — Verify
+```bash
+npm run copy-assets   # mirror assets/ → public/assets/
+npm run dev           # check nothing is 404
+```
+
+### Phase 7 — Cursor Builds
+Follow `docs/11-build-architecture.md`.
+Order: `VideoLayer` primitive → `Hero` → `Gate` → sections in order.
+
+---
+
+## Motion Split (fal.ai vs GSAP)
+
+| Layer | Who animates it |
+| :-- | :-- |
+| Cat idle: ear twitch, blink, tail | **fal.ai** (baked into video) |
+| Couple idle: breathing, gentle sway | **fal.ai** (baked into video) |
+| Meadow: petal drift, light shift | **fal.ai** (baked into video) |
+| Hero assemble: layers enter one by one | **GSAP** |
+| Scroll parallax: depth layers | **GSAP** ScrollTrigger |
+| Section entrances: fade + float | **GSAP** ScrollTrigger |
+| All interactions: RSVP morph, map pin, submit | **GSAP** |
+| Story illustrations: scroll-driven | **GSAP** ScrollTrigger |
+
+**Rule: jangan tambah GSAP breathing di atas fal.ai video characters.** Mereka sudah bernapas.
+
+---
+
+## Performance Budget
+
+| Metric | Target |
+| :-- | :-- |
+| LCP | < 2.5s (LOW tier: static PNG only) |
+| Video file size | ≤ 3MB per loop |
+| Gallery images | WebP, max 200KB per image |
+| Total initial JS | < 150KB gzipped |
+| Audio | mono MP3, 96–128kbps |
+
+## Device Tiers
+
+| Tier | Condition | Behavior |
+| :-- | :-- | :-- |
+| HIGH | GPU + fast connection | Full video + parallax + tilt |
+| MID | Medium device | Video + parallax, no tilt |
+| LOW | Low-end / slow connection | Poster PNGs only, no video |
+| REDUCED | prefers-reduced-motion | Static only, zero loop |
+
+---
+
+## Definition of Done
+
+- [ ] All fal.ai video assets generated and in `public/assets/video/`
+- [ ] Gallery photos style-harmonized, faces match originals
+- [ ] Hero composition matches `scenes/hero-main.webp`
+- [ ] All 5 sections functional with correct copy from `docs/03-copywriting.md`
+- [ ] RSVP submits to Google Sheets
+- [ ] Wishes wall reads from Google Sheets (paginated)
+- [ ] All 4 tiers tested on real devices
+- [ ] `prefers-reduced-motion` shows zero motion
+- [ ] Video pauses off-screen (IntersectionObserver)
+- [ ] No console errors in production build

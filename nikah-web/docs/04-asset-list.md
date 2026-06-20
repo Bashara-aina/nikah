@@ -1,143 +1,130 @@
 # 04 — Asset List
 
-> **STATUS: Referensi aset AI ada di `correct/most correct/`. Foto asli ada di `FOTO INVITATION/`. Semua aset akan melalui pipeline fal.ai sebelum dipakai di site.**
-> Output final video: `assets/video/`. Output final PNG: `assets/{scenes,cats,couple,florals,illustrations,gallery}/`.
+> **Sumber aset: 3 folder, 3 peran berbeda. Jangan dicampur.**
+>
+> | Folder | Peran | Boleh langsung dipakai di site? |
+> | :-- | :-- | :-- |
+> | `FOTO INVITATION/` | Foto asli Bashara, Hanifah, dan kucing-kucing | **TIDAK** — harus fal.ai `flux/img2img` strength ≤0.35 dulu |
+> | `correct/` (dan `correct/most correct/`) | Ilustrasi AI reference — style & karakter | **TIDAK** — harus fal.ai (rmbg + video) dulu |
+> | `scenes/` | Hero komposisi final | `hero-main.webp` = reference visual; `hero-bg.webp` & `hero-tall.webp` = poster fallback |
 
 ---
 
-## Pipeline Tiga Sumber Aset
+## 1. Video Assets (output fal.ai — masuk `public/assets/video/`)
 
-```
-FOTO INVITATION/     → fal.ai img2img (style harmonize) → assets/gallery/
-correct/most correct/ → fal.ai (rmbg + img2vid + img2img) → assets/{cats,florals,scenes}/
-scenes/              → fal.ai img2vid (hero living bg)   → assets/video/
-```
+Semua video = seamless loop, WebM + MP4 fallback, max 6 detik, silent.
 
-> **Aturan keras:** Foto asli (`FOTO INVITATION/`) TIDAK PERNAH dijadikan video. Hanya style-transfer ke palette storybook. Wajah & momen asli dipertahankan.
-
----
-
-## Aturan Umum Prompt fal.ai
-
-- **Palette:** ivory, cream, blush pink, dusty pink, soft peach, sage greenery. Hindari pink terang/fuchsia, warna bold.
-- **Gaya:** whimsical illustration, storybook, soft watercolor/gouache, airy, early-morning sunshine.
-- **Background PNG:** Semua kucing & karakter wajib transparent PNG (via `bria/rmbg` dulu).
-- **Video loop:** 5–6 detik, seamless loop, static camera shot, ambient motion only.
-- **Mobile-first:** Ekspor WebP untuk gambar statis, MP4 H.264 untuk video.
-
----
-
-## assets/scenes/ — Hero Living Backgrounds
-
-| File | Sumber Referensi | fal.ai Treatment | Output |
+| File | Source | fal.ai model | Keterangan |
 | :-- | :-- | :-- | :-- |
-| `hero-bg.webp` | `scenes/hero-main.webp` | img2vid → living meadow | `video/hero-bg-loop.mp4` |
-| `hero-tall.webp` | `scenes/` versi 9:16 | img2vid → poster mobile | `video/hero-tall-loop.mp4` |
-| `countdown-bg.webp` | `correct/` gradient bg | img2img (refine) → static | `scenes/countdown-bg.webp` |
+| `hero-bg-loop.mp4` | `scenes/hero-main.webp` | `minimax/video-01-live` | Living meadow background |
+| `couple-idle.mp4` | `correct/` couple cutout | `wan-2.6` | Couple gentle idle breathing |
+| `cat-jiro-idle.mp4` | `correct/` cat-jiro | `wan-2.6` | Jiro idle: ear twitch, tail sway |
+| `cat-meng-idle.mp4` | `correct/` cat-meng | `wan-2.6` | Meng idle: blink, whisker |
+| `cat-moju-idle.mp4` | `correct/` cat-moju | `wan-2.6` | Moju idle: belly rise/fall (sleeping) |
+| `cat-shiro-idle.mp4` | `correct/` cat-shiro | `wan-2.6` | Shiro idle: head tilt, butterfly watch |
+| `cat-simba-idle.mp4` | `correct/` cat-simba | `wan-2.6` | Simba idle: tail wag, yawn |
+| `cat-hoshi-idle.mp4` | `correct/` cat-hoshi | `wan-2.6` | Hoshi idle: big-eye curious look |
+| `cat-kimho-idle.mp4` | `correct/` cat-kimho | `wan-2.6` | Kimho idle: calm sitting |
+| `floral-corner-loop.mp4` | `correct/` floral-corner | `minimax/video-01-live` | Gentle petal drift |
+| `floral-garland-loop.mp4` | `correct/` floral garland | `minimax/video-01-live` | Gentle garland sway |
+| `closing-loop.mp4` | `correct/` closing illustration | `minimax/video-01-live` | Mirrors hero, warm evening light |
 
-**Prompt hero-bg-loop:** `"Soft meadow breathes gently, wildflowers sway in morning breeze, dappled sunlight shifts, petals drift, storybook watercolor illustration style, seamless loop [Static shot]"` 
-**Model:** `fal-ai/minimax/video-01-live`
-
----
-
-## assets/cats/ — Character Sprites (Transparent)
-
-Semua kucing dari `correct/most correct/` harus melalui dua tahap:
-1. **Step 1:** `fal-ai/bria/rmbg` → hapus background → transparent PNG
-2. **Step 2:** `fal-ai/wan-2.6` → animate idle loop → transparent video (WebM/MP4)
-
-| File Output | Referensi Sumber | Nama Asli | Karakter |
-| :-- | :-- | :-- | :-- |
-| `cat-jiro.png` + `cat-jiro-idle.mp4` | `cat-jiro-in-flowers.png` | Jiro | Duduk di bunga |
-| `cat-meng.png` + `cat-meng-idle.mp4` | `cat-meng-with-flowers.png` | Meng | Dengan bunga |
-| `cat-moju.png` + `cat-moju-idle.mp4` | `cat-moju-sleeping-flowers.png` | Moju | Tidur |
-| `cat-shiro.png` + `cat-shiro-idle.mp4` | `cat-shiro-butterfly.png` | Shiro | Dengan kupu-kupu |
-| `cat-simba.png` + `cat-simba-idle.mp4` | `cat-simba-with-dove.png` | Simba | Dengan merpati |
-| `cat-hoshi.png` + `cat-hoshi-idle.mp4` | `cat-hoshi-kimho-playing.png` | Hoshi | Bermain |
-| `cat-peek.png` + `cat-peek-idle.mp4` | `tuxedo-cat-reaching-flower.png` | Peek | Mengintip/meraih |
-| `cats-hero-group.png` + `cats-hero-group-idle.mp4` | `cats-white-tuxedo-arch-frame.png` | Group hero | Tuxedo + white di arch |
-| `cats-meadow.png` + `cats-meadow-idle.mp4` | `five-cats-golden-meadow-sunset.png` | Meadow group | 5 kucing di padang |
-
-**Prompt idle (per kucing):** `"[cat name] breathes slowly, ear twitches once gently, tail sways softly, storybook watercolor illustration style preserved, transparent background [Static shot]"` 
-**Model Step 1:** `fal-ai/bria/rmbg` 
-**Model Step 2:** `fal-ai/wan-2.6` atau `fal-ai/minimax/video-01-live`
+**Full prompts & script → `docs/13-fal-generation-plan.md`**
 
 ---
 
-## assets/couple/ — Karakter Utama
+## 2. Static PNG Assets (output Gemini / post-rmbg fal.ai — masuk `public/assets/`)
 
-| File Output | Sumber Referensi | Treatment |
+Semua PNG = transparent background kecuali yang disebutkan.
+
+| File | Source | Notes |
 | :-- | :-- | :-- |
-| `couple-cutout.png` | `couple-scooter-vespa-wedding.png` | rmbg → transparent PNG |
-| `couple-idle.mp4` | `couple-scooter-vespa-wedding.png` | rmbg → img2vid idle loop |
-| `cats-arch.png` | `white-and-tuxedo-cats-under-arch.png` | rmbg → transparent PNG |
-| `cats-arch-idle.mp4` | `white-and-tuxedo-cats-under-arch.png` | rmbg → idle video loop |
-
-**Prompt couple-idle:** `"Couple breathes warmly together, gentle hair movement, soft smile, baju pengantin Melayu, storybook watercolor style preserved, transparent background [Static shot]"`
-
----
-
-## assets/florals/ — Dekorasi
-
-Dibagi dua kategori: **video loop** (hero-visible, large) dan **CSS animation** (divider, aksen kecil).
-
-### Florals → fal.ai video loop (besar, di hero/section headers)
-
-| File Output | Sumber Referensi | Prompt fal.ai |
-| :-- | :-- | :-- |
-| `floral-garland-loop.mp4` | `floral-garland-full-swag.png` | `"Floral garland sways gently in soft breeze, pastel roses and greenery, seamless loop [Static shot]"` |
-| `floral-swag-loop.mp4` | `floral-swag-full.png` | `"Floral swag breathes and sways softly, ivory and blush palette, seamless loop [Static shot]"` |
-| `meadow-bottom-loop.mp4` | `wildflower-meadow-full.png` | `"Wildflower meadow bottom sways in morning breeze, pastel colors, seamless loop [Static shot]"` |
-
-**Model:** `fal-ai/minimax/video-01-live`
-
-### Florals → CSS animation (divider, aksen kecil)
-
-| File | Sumber Referensi | Motion |
-| :-- | :-- | :-- |
-| `floral-corner-tl.png` | `vertical-floral-spray.png` | CSS `@keyframes` rotate ±1.2° |
-| `floral-corner-br.png` | `vertical-rose-spray.png` | CSS `@keyframes` rotate ±1° mirror |
-| `floral-sprig.png` | `vertical-garden-spray.png` | CSS sway ±0.8° |
-| `drapery-divider.png` | `flowing-floral-divider-wavy.png` | CSS ripple mask |
-| `arch-frame.png` | `cats-white-tuxedo-arch-frame.png` | CSS sway ±0.5° |
-| `petals-anim.png` | `falling-petals-scattered.png` | GSAP particle system |
-| `accent-doves.png` | `doves-with-flowing-flowers.png` | GSAP MotionPath |
-| `accent-butterflies.png` | `cat-shiro-butterfly.png` (crop) | GSAP bezier flutter |
+| `cats/cat-jiro.png` | `correct/` → fal.ai `bria/rmbg` | Poster fallback untuk video |
+| `cats/cat-meng.png` | `correct/` → fal.ai `bria/rmbg` | Poster fallback |
+| `cats/cat-moju.png` | `correct/` → fal.ai `bria/rmbg` | Poster fallback |
+| `cats/cat-shiro.png` | `correct/` → fal.ai `bria/rmbg` | Poster fallback |
+| `cats/cat-simba.png` | `correct/` → fal.ai `bria/rmbg` | Poster fallback |
+| `cats/cat-hoshi.png` | `correct/` → fal.ai `bria/rmbg` | Poster fallback |
+| `cats/cat-kimho.png` | `correct/` → fal.ai `bria/rmbg` | Poster fallback |
+| `couple/couple-cutout.png` | `correct/` → fal.ai `bria/rmbg` | Poster fallback |
+| `florals/floral-corner-tl.png` | Gemini | CSS-only gentle float |
+| `florals/floral-corner-br.png` | Gemini | CSS-only gentle float |
+| `florals/floral-sprig.png` | Gemini | Section divider |
+| `florals/floral-border-full.png` | Gemini | Gate frame |
+| `florals/drapery-divider.png` | Gemini | Between-section soft divider |
+| `florals/arch-frame.png` | Gemini | Event / gallery frame |
+| `florals/accent-doves.png` | Gemini | Welcome accent |
+| `florals/accent-butterflies.png` | Gemini | Hero + closing accent |
 
 ---
 
-## assets/gallery/ — Foto Asli (Style-Harmonized)
+## 3. Gallery Assets (output fal.ai `flux/img2img` — masuk `public/assets/gallery/`)
 
-> Foto dari `FOTO INVITATION/` **tidak pernah dijadikan video**. Hanya di-style-transfer agar palette cocok dengan storybook site. Wajah, momen, dan identitas dipertahankan sepenuhnya.
+Source = **`FOTO INVITATION/`** photos. Style harmonized but **faces preserved**. Strength 0.25–0.35.
 
-| Treatment | Tool | Prompt |
-| :-- | :-- | :-- |
-| Style harmonize | `fal-ai/flux/dev/image-to-image` | `"Harmonize photo into soft watercolor storybook illustration style, ivory cream blush palette, preserve faces and expressions, airy early-morning light, do not change composition"` |
-| Strength | 0.25–0.35 (rendah) | Jaga kemiripan wajah, bukan full illustration |
-
-Output: `gallery-01.webp … gallery-0n.webp` (scrapbook frames via CSS overlay)
-
----
-
-## assets/audio/
-
-| File | Keterangan |
+| Output file | Source (FOTO INVITATION) |
 | :-- | :-- |
-| `la-vie-en-rose.mp3` | Dikompres, loop halus, start setelah tap Gate |
+| `gallery-couple-01.webp` | `couple-standing-smiling.jpg` |
+| `gallery-couple-02.webp` | `couple-standing-casual-pose.jpg` |
+| `gallery-couple-03.webp` | `couple-overhead-bride-bouquet.jpeg` |
+| `gallery-couple-04.webp` | `couple-overhead-lying-romantic.jpeg` |
+| `gallery-couple-05.webp` | `couple-overhead-romantic-pose.jpeg` |
+| `gallery-couple-06.webp` | `couple-overhead-side-by-side.jpeg` |
+| `gallery-couple-07.webp` | `couple-overhead-spotlight-1.jpeg` |
+| `gallery-couple-08.webp` | `couple-overhead-spotlight-2.jpeg` |
+| `gallery-couple-09.webp` | `couple-overhead-groom-above.jpeg` |
+| `gallery-cat-jiro.webp` | `cat-black-white-pendant-name-jiro.jpg` |
+| `gallery-cat-meng.webp` | `cat-black-white-lying-bw-name-meng.jpg` |
+| `gallery-cat-hoshi.webp` | `cat-gray-tabby-in-blankets-name-hoshi.png` |
+| `gallery-cat-kimho.webp` | `cat-kimho-portrait.png` |
+| `gallery-cat-simba.webp` | `cat-orange-white-on-couch-name-simba.png` |
+| `gallery-cat-moju.webp` | `cat-ragdoll-portrait-name-moju.png` |
+| `gallery-cat-shiro.webp` | `cat-white-closeup-pink-ears-name-shiro.png` |
 
 ---
 
-## Checklist Generate (urut)
+## 4. Story Illustrations (Gemini-generated — GSAP only, no fal.ai)
 
-- [ ] `bria/rmbg` semua kucing & couple (transparent PNG)
-- [ ] Hero bg video loops (scenes/) → `video/hero-bg-loop.mp4`
-- [ ] Cat idle video loops (wan-2.6) → `video/cat-*-idle.mp4`
-- [ ] Couple idle video loop → `video/couple-idle.mp4`
-- [ ] Floral garland + swag video loops
-- [ ] Meadow bottom video loop
-- [ ] Gallery photo style-harmonize (flux img2img, strength 0.3)
-- [ ] Story illustrations (5 dari `TODO_ASSETS.md` via `07-gemini-asset-prompts.md`)
-- [ ] CSS-only florals: rmbg saja, no video
-- [ ] Audio La Vie en Rose (terkompresi)
+Masuk `public/assets/story/`. PNG transparan. Semua Gemini, pakai `scenes/hero-main.webp` sebagai style anchor.
 
-> Semua output video ke `nikah-web/assets/video/`, semua PNG ke folder masing-masing.
+| File | Scene |
+| :-- | :-- |
+| `story-meeting.png` | Pertemuan online via organisasi kampus |
+| `story-growing.png` | Tumbuh bersama |
+| `story-motor.png` | Antar pulang ke kosan |
+| `story-jakarta.png` | Bekerja bersama di Jakarta |
+| `story-ldr.png` | LDR, Bashara di Tokyo |
+| `story-keio.png` | Hanifah diterima Keio Hiyoshi |
+| `story-married.png` | Keputusan menikah |
+| `story-together.png` | Melangkah bersama ke Jepang |
+| `japan-motif.png` | Motif Jepang — sakura, kampus, kereta |
+
+---
+
+## 5. Scene Posters / Backgrounds
+
+| File | Location | Role |
+| :-- | :-- | :-- |
+| `scenes/hero-main.webp` | `nikah-web/scenes/` | **PRIMARY composition reference** |
+| `scenes/hero-bg.webp` | `nikah-web/scenes/` | Sky/meadow poster fallback (LOW tier) |
+| `scenes/hero-tall.webp` | `nikah-web/scenes/` | 9:16 mobile poster fallback |
+| `countdown/countdown-bg.webp` | Gemini | Countdown section background |
+| `loading/loading-motif.png` | Gemini | Loading screen |
+| `gate/gate-illustration.png` | Gemini | Opening gate (no cats) |
+
+---
+
+## 6. Audio
+
+| File | Notes |
+| :-- | :-- |
+| `audio/la-vie-en-rose.mp3` | Instrumental, mono, 96–128kbps, loop-ready. Mulai saat tamu klik buka undangan. |
+
+---
+
+## 7. Hard Rules (repeat dari README)
+
+- **`correct/` files → fal.ai first, always.** Jangan pakai mentah.
+- **`FOTO INVITATION/` → style harmonize only, strength ≤0.35.** Faces must survive.
+- **`scenes/hero-main.webp` = satu-satunya style anchor** untuk semua keputusan visual.
+- Video semua → `public/assets/video/`. PNG → `public/assets/{cats,couple,florals,story}/`. Gallery → `public/assets/gallery/`.
