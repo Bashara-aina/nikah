@@ -66,7 +66,7 @@ export const copy = {
           "Berawal dari satu pertemuan daring, di sebuah program organisasi kampus.",
           "Layar yang sederhana, namun cukup untuk membuat hati berlabuh.",
         ],
-        illustration: "/assets/cutout/illustration-woman-phone.png",
+        illustration: "/assets/cutout/story-online.png",
         illustrationAlt: "Ilustrasi pertemuan daring di organisasi kampus",
       },
       {
@@ -77,7 +77,7 @@ export const copy = {
           "Makin dekat karena sering diantar pulang dengan motor ke kosan,",
           "membagi angin sore dan cerita yang tidak terasa habis.",
         ],
-        illustration: "/assets/cutout/illustration-woman-studying.png",
+        illustration: "/assets/cutout/story-motor.png",
         illustrationAlt: "Ilustrasi antar pulang ke kosan dengan motor",
       },
       {
@@ -87,7 +87,7 @@ export const copy = {
           "Cerita berlanjut ke Jakarta — bekerja bersama, menimba ilmu di bangku yang sama,",
           "dan menemukan bahwa kami adalah partner yang searah.",
         ],
-        illustration: "/assets/cutout/story-jakarta-map.png",
+        illustration: "/assets/cutout/story-together.png",
         illustrationAlt: "Ilustrasi bekerja bersama di Jakarta",
       },
       {
@@ -98,7 +98,7 @@ export const copy = {
           "Bashara harus sekolah lebih dulu di SIT, Tokyo — sebuah LDR yang tidak mudah,",
           "namun kami jaga dengan doa dan janji untuk segera bertemu lagi.",
         ],
-        illustration: "/assets/cutout/illustration-man-backpack.png",
+        illustration: "/assets/cutout/story-ldr.png",
         illustrationAlt: "Ilustrasi long distance — Bashara di Tokyo",
       },
       {
@@ -109,7 +109,7 @@ export const copy = {
           "Hiyoshi dan Tokyo bersebelahan — bukan lagi dua kota yang jauh,",
           "tapi satu area yang sama, dan jarak yang bisa kami jembatani setiap hari.",
         ],
-        illustration: "/assets/cutout/illustration-woman-looking.png",
+        illustration: "/assets/cutout/story-keio.png",
         illustrationAlt: "Ilustrasi Hanifah diterima di Keio, Hiyoshi",
       },
       {
@@ -120,7 +120,7 @@ export const copy = {
           "dan menempuh studi bersama setelahnya di Jepang.",
           "Perjalanan ini, baru saja dimulai — dan kami ingin kamu menjadi bagian dari awal yang baru.",
         ],
-        illustration: "/assets/cutout/illustration-figure-front.png",
+        illustration: "/assets/cutout/story-menikah.png",
         illustrationAlt: "Ilustrasi cincin dan dua tangan — keputusan untuk menikah",
       },
     ],

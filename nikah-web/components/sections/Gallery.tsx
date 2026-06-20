@@ -29,18 +29,16 @@ import Breathing from "@/components/primitives/Breathing";
 import FloralCorner from "@/components/primitives/FloralCorner";
 
 const PHOTOS: readonly { id: number; src: string; alt: string; span: 1 | 2 }[] = [
-  { id: 1, src: "/assets/gallery/gallery-01.jpg", alt: "Bashara dan Hanifah berdua", span: 1 },
-  { id: 2, src: "/assets/gallery/gallery-02.jpg", alt: "Senyum kami berdua", span: 1 },
-  { id: 3, src: "/assets/gallery/gallery-03.jpg", alt: "Tawa candid kami", span: 2 },
-  { id: 4, src: "/assets/gallery/gallery-04.jpg", alt: "Saling menatap", span: 1 },
-  { id: 5, src: "/assets/gallery/gallery-05.jpg", alt: "Buket kecil Hanifah", span: 1 },
-  { id: 6, src: "/assets/gallery/gallery-06.jpg", alt: "Momen Bashara memberi bunga", span: 1 },
-  { id: 7, src: "/assets/gallery/gallery-07.jpg", alt: "Godaan kecil", span: 1 },
-  { id: 8, src: "/assets/gallery/gallery-08.jpg", alt: "Tawa lepas kami", span: 2 },
-  { id: 9, src: "/assets/gallery/gallery-09.jpg", alt: "Berdua, tenang", span: 1 },
+  { id: 1, src: "/assets/gallery/gallery-01.png", alt: "Kami berdua dan kucing-kucing di padang bunga", span: 2 },
+  { id: 2, src: "/assets/gallery/gallery-02.png", alt: "Berjalan bersama, kucing mengikuti", span: 1 },
+  { id: 3, src: "/assets/gallery/gallery-03.png", alt: "Mengantar pulang naik motor", span: 1 },
+  { id: 4, src: "/assets/gallery/gallery-04.png", alt: "Mimpi kami ke Jepang", span: 1 },
+  { id: 5, src: "/assets/gallery/gallery-05.png", alt: "Kucing-kucing kami berkumpul", span: 1 },
+  { id: 6, src: "/assets/gallery/gallery-06.png", alt: "Jiro di antara bunga", span: 1 },
+  { id: 7, src: "/assets/gallery/gallery-07.png", alt: "Kucing dan merpati", span: 2 },
+  { id: 8, src: "/assets/gallery/gallery-08.png", alt: "Dua kucing saling bersentuhan hidung", span: 1 },
+  { id: 9, src: "/assets/gallery/gallery-09.png", alt: "Moju tertidur di antara bunga", span: 1 },
 ];
-
-const FRAME_PNG = "/assets/scene/gallery-frame.png";
 
 interface TileProps {
   src: string;
@@ -53,14 +51,12 @@ interface TileProps {
 
 function Tile({ src, alt, span, index, reduced, onOpen }: TileProps) {
   const tileRef = useRef<HTMLButtonElement | null>(null);
-  const frameRef = useRef<HTMLDivElement | null>(null);
 
   // Per-tile seeded random for entrance rotation (anti-sinkron).
   useLayoutEffect(() => {
     if (typeof window === "undefined") return;
     const tile = tileRef.current;
-    const frame = frameRef.current;
-    if (!tile || !frame) return;
+    if (!tile) return;
 
     const rng = mulberry32(hashString(`gallery-tile-${index}`));
     const baseRot = pickRange(rng, reduced ? 0 : -3.5, reduced ? 0 : 3.5);
@@ -72,37 +68,26 @@ function Tile({ src, alt, span, index, reduced, onOpen }: TileProps) {
       rotation: baseRot,
       scale: 0.95,
     });
-    gsap.set(frame, { scale: 0.92, autoAlpha: 0 });
 
     const st = ScrollTrigger.create({
       trigger: tile,
       start: "top 88%",
       once: true,
       onEnter: () => {
-        const tl = gsap.timeline({ defaults: { ease: ease.settle } });
-        tl.to(tile, {
+        gsap.to(tile, {
           autoAlpha: 1,
           y: 0,
           rotation: 0,
           scale: 1,
           duration: reduced ? dur.base : dur.enter,
+          ease: ease.settle,
         });
-        tl.to(
-          frame,
-          {
-            autoAlpha: 1,
-            scale: 1,
-            duration: reduced ? dur.base : dur.enter,
-            ease: ease.soft,
-          },
-          "-=0.45",
-        );
       },
     });
 
     return () => {
       st.kill();
-      gsap.killTweensOf([tile, frame]);
+      gsap.killTweensOf(tile);
     };
   }, [index, reduced]);
 
@@ -158,29 +143,8 @@ function Tile({ src, alt, span, index, reduced, onOpen }: TileProps) {
             : "(max-width: 480px) 50vw, 240px"
         }
         loading="lazy"
-        style={{ objectFit: "cover" }}
+        style={{ objectFit: "cover", objectPosition: "center 35%" }}
       />
-      {/* Soft scrapbook frame overlay (docs/12 §illustrations: scale-in,
-       *  diam setelahnya — foto di dalamnya yang hidup). */}
-      <div
-        ref={frameRef}
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          inset: 0,
-          pointerEvents: "none",
-        }}
-      >
-        <Image
-          src={FRAME_PNG}
-          alt=""
-          width={400}
-          height={400}
-          sizes="240px"
-          loading="lazy"
-          style={{ width: "100%", height: "100%", objectFit: "contain" }}
-        />
-      </div>
     </button>
   );
 }

@@ -57,3 +57,11 @@ tools/image-processing-mcp-server/node_modules/
 tools/image-processing-mcp-server/build/
 tools/birefnet-mcp-server/node_modules/
 tools/birefnet-mcp-server/build/
+
+# Recovery / staging areas (not source of truth — see /assets/)
+Recovered/
+"assets regenerate/"
+# Local archive of pre-rename assets — not for distribution
+archieved/
+# Source assets not for direct consumption
+assets/_source/
