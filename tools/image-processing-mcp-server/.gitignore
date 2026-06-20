@@ -1,0 +1,6 @@
+/.cursor
+/.qodo
+/node_modules
+/assets
+/build
+.DS_Store

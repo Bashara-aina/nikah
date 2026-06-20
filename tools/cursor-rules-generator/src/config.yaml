@@ -1,0 +1,27 @@
+paths:
+  mdc_instructions: "mdc-instructions.txt"
+  rules_json: "rules.nikah.json"
+  output_dir: "../../.cursor/rules"
+  exa_results_dir: "exa_results"
+
+api:
+  # MiniMax M3 is OpenAI-compatible. Set OPENAI_API_BASE in .env to your
+  # provider endpoint. Model name follows LiteLLM convention: "openai/<model>".
+  llm_model: "openai/MiniMax-M3"
+  rate_limit_calls: 60
+  rate_limit_period: 60
+  max_retries: 3
+  retry_min_wait: 4
+  retry_max_wait: 10
+
+exa_api:
+  rate_limit_calls: 5  # Exa rate limit is 5 requests per second
+  rate_limit_period: 1
+  max_retries: 3
+  retry_min_wait: 1
+  retry_max_wait: 5
+
+processing:
+  max_workers: 2  # Kept low to be polite to MiniMax + Exa rate limits
+  chunk_size: 50000
+  retry_failed_only: true

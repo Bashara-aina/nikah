@@ -1,0 +1,58 @@
+{
+  "_comment": "Curated library list for the nikah project (Next.js + GSAP wedding invitation). Edit this file — do NOT edit rules.json.",
+  "libraries": [
+    {
+      "name": "gsap",
+      "tags": [
+        "frontend",
+        "animation",
+        "motion",
+        "javascript"
+      ]
+    },
+    {
+      "name": "next-js",
+      "tags": [
+        "frontend",
+        "framework",
+        "javascript",
+        "react",
+        "ssr"
+      ]
+    },
+    {
+      "name": "react",
+      "tags": [
+        "frontend",
+        "framework",
+        "javascript"
+      ]
+    },
+    {
+      "name": "tailwind",
+      "tags": [
+        "ui",
+        "css",
+        "utility-first"
+      ]
+    },
+    {
+      "name": "typescript",
+      "tags": [
+        "web",
+        "javascript",
+        "type-checking",
+        "language"
+      ]
+    },
+    {
+      "name": "zod",
+      "tags": [
+        "web",
+        "typescript",
+        "validation",
+        "type-checking"
+      ]
+    }
+  ]
+}
