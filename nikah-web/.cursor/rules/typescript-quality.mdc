@@ -25,10 +25,11 @@ alwaysApply: true
 
 ## Error handling
 
-- Every `async` function: `try`/`catch` with typed error handling. Custom error classes (`AppError`, `NotFoundError`, `ValidationError`) over generic `Error`
-- Never swallow errors silently. At minimum, log with structured context (`{ userId, route, timestamp, payload }`)
+- Every `async` function with an `await` callsite that can throw: `try`/`catch` (the existing routes use a top-level try around the happy path; a bare early-return for input validation is fine)
+- **Aspirational:** Custom error classes (`AppError`, `NotFoundError`, `ValidationError`) over generic `Error`. **Not yet adopted in this codebase** — current routes use `NextResponse.json({ ok: false, error: "..." })` directly. If you introduce custom classes, do so across the affected surface in a single PR; do not mix styles within one route
+- Never swallow errors silently. At minimum, log with structured context (see `api-and-server.mdc` for the current logging convention)
 - Use early returns and guard clauses; avoid deep nesting
-- HTTP status codes must be semantically correct: 200 / 201 / 400 / 401 / 403 / 404 / 409 / 422 / 500
+- HTTP status codes must be semantically correct: 200 / 201 / 400 / 401 / 403 / 404 / 409 / 422 / 500. Note: existing API routes return `400` for Zod validation failures (not `422`); match the existing convention
 - Never expose raw DB or third-party errors to the client — sanitize before returning
 
 ## Naming
@@ -48,7 +49,7 @@ alwaysApply: true
 ## Comments
 
 - Document **why**, not what. The code itself shows what
-- Add JSDoc to every exported function: parameters, return value, and any non-obvious behavior
+- **Current state:** JSDoc on every exported function is **not yet enforced** in this codebase. Existing route handlers (`app/api/*/route.ts`) have a file-level `/** ... */` block but no per-function JSDoc. **Add JSDoc only when the behavior is non-obvious** (e.g. a Zod schema, a rate-limit choice, a workaround). Do not blanket-add JSDoc to all exports in a single PR — that creates a noisy diff unrelated to any change
 - Use `// TODO:` sparingly and only for genuine follow-ups, never as a placeholder for unimplemented code
 
 ## DRY & reuse

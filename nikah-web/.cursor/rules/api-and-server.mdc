@@ -10,13 +10,20 @@ alwaysApply: false
 
 ## API Response Shape
 
-All responses **must** follow:
+All responses **must** follow the project's actual convention (see `app/api/rsvp/route.ts`, `app/api/wishes/route.ts`):
 
 ```ts
-{ success: true, data: T, meta?: { ... } }
-// or
-{ success: false, error: { code: string, message: string, details?: unknown } }
+// Success (read or write)
+{ ok: true, data?: T, ...fields }
+
+// Success (idempotent acknowledgement, e.g. honeypot)
+{ ok: true }
+
+// Error
+{ ok: false, error: string, fields?: Record<string, string> }
 ```
+
+> **Note:** This deviates from the upstream awesome-cursorrules recipe (`{ success, data, error: { code, message, details? } }`). The codebase uses `{ ok, error, fields }` everywhere; do **not** invent a new shape for a single route — match the existing routes instead.
 
 Never return raw exceptions, stacks, or un-typed JSON to the client.
 
@@ -32,20 +39,20 @@ Never return raw exceptions, stacks, or un-typed JSON to the client.
 | 403 | Forbidden (authed but not allowed) |
 | 404 | Not found |
 | 409 | Conflict (duplicate, version mismatch) |
-| 422 | Unprocessable entity (Zod validation failure) |
+| 422 | Unprocessable entity (reserved — not used; Zod validation returns 400 in this codebase, see line below) |
 | 429 | Rate limited |
 | 500 | Server error (sanitized) |
 
 ## Validation
 
-- **Zod** at the boundary of every route / Server Action.
-- Reject with **422** and a structured `error.details` (Zod issues) on failure.
+- **Zod** at the boundary of every route / Server Action that has a body or query params.
+- On parse failure, return `400` with `{ ok: false, error: "validation", fields: { <path>: <message> } }` (see `rsvp/route.ts` for the canonical shape; do **not** invent a new 422/details variant).
 - Derive static types: `type Input = z.infer<typeof schema>`.
 
 ```ts
-// app/api/contact/route.ts
-import { z } from "zod"
+// app/api/contact/route.ts — matches existing /api/rsvp pattern
 import { NextResponse } from "next/server"
+import { z } from "zod"
 
 const ContactSchema = z.object({
   name: z.string().min(1).max(120),
@@ -57,22 +64,27 @@ export async function POST(req: Request) {
   const body = await req.json().catch(() => null)
   const parsed = ContactSchema.safeParse(body)
   if (!parsed.success) {
+    const fields: Record<string, string> = {}
+    for (const issue of parsed.error.issues) {
+      const key = issue.path.join(".") || "_"
+      if (!fields[key]) fields[key] = issue.message
+    }
     return NextResponse.json(
-      { success: false, error: { code: "VALIDATION", message: "Invalid input", details: parsed.error.issues } },
-      { status: 422 }
+      { ok: false, error: "validation", fields },
+      { status: 400 },
     )
   }
   // ... business logic ...
-  return NextResponse.json({ success: true, data: { id } }, { status: 201 })
+  return NextResponse.json({ ok: true }, { status: 201 })
 }
 ```
 
 ## Errors
 
-- Custom error classes: `AppError`, `ValidationError`, `NotFoundError`, `UnauthorizedError`, `ConflictError`, `RateLimitError`.
-- Top-level `try/catch` in every route handler / Server Action.
+- **Aspirational:** Custom error classes (`AppError`, `ValidationError`, `NotFoundError`, `UnauthorizedError`, `ConflictError`, `RateLimitError`). **Not yet adopted in this codebase** — current routes use plain `NextResponse.json({ ok: false, error: "..." })`. Do not introduce these classes in a single route; if you add one, add it across the affected surface and update the rule.
+- Top-level `try/catch` in every route handler / Server Action that has an `await` (the existing `rsvp` and `wishes` routes do this).
 - **Never expose raw DB / third-party error messages** to the client. Log full detail server-side, return a sanitized message.
-- Always log with context: `{ route, method, requestId, userId, durationMs }`.
+- When logging context, include at least `{ route, method }` and any safe request identifier (e.g. IP from `getClientIp`). `userId` and `durationMs` are encouraged but not required for public anonymous routes.
 
 ## Layered Architecture (server code)
 
@@ -84,7 +96,7 @@ export async function POST(req: Request) {
 
 ## Rate Limiting
 
-- Apply to every **public** route (no `req.auth` / no session cookie).
+- Apply to every **public** route (no `req.auth` / no session cookie) **that has a request body, query parameters, or other user input**. Read-only, side-effect-free, no-input routes (e.g. a `GET /api/health` liveness probe) are exempt by industry convention and need not be rate-limited. This aligns with `security.mdc`'s "accepts user input" scope.
 - Use Upstash Ratelimit or equivalent; document the limit per route in a comment near the middleware.
 
 ## Auth
@@ -100,6 +112,7 @@ export async function POST(req: Request) {
 
 ## Logging
 
-- Structured JSON logs in production.
-- `console.log` is **forbidden** in production code. Use `lib/log.ts` (pino / winston / Next's built-in).
+- **Current state:** the codebase uses `console.log` / `console.error` directly. There is no `lib/log.ts` yet.
+- **Aspirational:** Structured JSON logs in production via `lib/log.ts` (pino / winston / Next's built-in). When introducing the logger, replace all `console.*` in a single PR — do not migrate one route at a time.
+- Until the logger exists, prefer `console.log` / `console.error` with **structured payloads** (`JSON.stringify({ route, method, requestId, reason })`) so a future log shipper can parse them. Plain `console.log("something happened")` is still discouraged.
 - Log levels: `debug` (dev only), `info`, `warn`, `error`.

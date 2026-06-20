@@ -1,0 +1,522 @@
+# nikah asset manifest
+# generated: 2026-06-20T11:28:15.546Z
+# entries:    376
+# duplicates: 137
+
+sha256                              bytes   fmt   dim       alpha  path
+------------------------------------------------------------------------------------------------------------------------
+0eaa5632eae343195b308965b994584e  1621034  png   1536x1024  yes  assets/cats/cat-grass-frontal.png
+0e87f3086a9e93d9b8e7da1c21cfa720  2566437  png   1536x1024  yes  assets/cats/cat-hoshi-kimho-playing.png
+930f55a6e3e8b4f78492ce6d182bd830   357774  png    342x692   yes  assets/cats/cat-hoshi.png
+50d2dc8afa90485a3834fe03b9a23aa6  1646219  png   1536x1024  yes  assets/cats/cat-in-flowers.png
+b66c2e7cedd4e6a5cd77a7326c46c4fa  2141950  png   1536x1024  yes  assets/cats/cat-in-heart-flowers.png
+4af04e2dff170ce46ef44feea22c35d3   412564  png    612x408   yes  assets/cats/cat-jiro-in-flowers.png
+0e99e0e563616d825bb846caf52af9de  2246227  png   1536x1024  yes  assets/cats/cat-jiro-with-dove.png
+c207e0b7cc7959274efec709ae28c40e   271382  png    342x582   yes  assets/cats/cat-jiro.png
+ff81838a2917260cff15823345a7c892   373746  png    535x682   yes  assets/cats/cat-kimho.png
+2b98b152502f1c92af351a504ff69bac   377858  png    612x408   yes  assets/cats/cat-meng-with-flowers.png
+e473195c074df676774f9888e8c357ce   336590  png    351x720   yes  assets/cats/cat-meng.png
+23a05b3528f62c9e9620793b901274b4   473897  png    612x408   yes  assets/cats/cat-moju-sleeping-flowers.png
+23b63961b70e6cad0f6b8d7e7519a451   516871  png    760x453   yes  assets/cats/cat-moju.png
+15bceec7a47d62344bd4197d0b15eac8   133249  png    331x397   yes  assets/cats/cat-peek.png
+490baf94da3588b35f57a780f39de666   293243  png    612x408   yes  assets/cats/cat-shiro-butterfly.png
+fa67bb5ba4b874f538f980761f608889   294223  png    439x641   yes  assets/cats/cat-shiro.png
+5bfe07e26c99955758bad66b4abefe92   425769  png    612x408   yes  assets/cats/cat-simba-with-dove.png
+b22c079041aa07571a35577ebeab3372   323732  png    488x629   yes  assets/cats/cat-simba.png
+a81677116da4c3d08e40c33bd55b8c73  2786219  png   1536x1024  yes  assets/cats/cat-sleeping-flowers.png
+8b110b85f9a42c9d9b6d319b63bab32c  2820090  png   1536x1024  yes  assets/cats/cat-sleeping-wreath.png
+c3c21345d0ed35cb7ed13cdb8e612495  2930997  png   1536x1024  yes  assets/cats/cats-couple-wreath.png
+b0fec429329f857a94b7947893a330eb   165141  png    290x542   yes  assets/couple/couple-cutout.png
+24c7e5e01dfb683f1653b5c48fb39901  2583032  png   1536x1024  yes  assets/couple/couple-illustration.png
+2c0fd576f84ccdfd0750108d530ff01a    14667  png    164x178   yes  assets/cutout/accent-butterflies.png
+cfba559ff0fd457a3ed213b08cf5ea67  1234961  png   1536x1024  yes  assets/cutout/accent-doves-arch.png
+66389eff5aac753e3899fec093981b50  1283458  png   1536x1024  yes  assets/cutout/accent-doves-heart.png
+8a06054ac42aef94b215f991a7491da1  1095029  png   1536x1024  yes  assets/cutout/accent-doves-pair.png
+2b68450a4640b63a944966df93d4c2dc    63029  png    314x352   yes  assets/cutout/accent-doves.png
+0cb712a78c40fd6fd143bdcb68372472   242822  png    375x665   yes  assets/cutout/couple-cutout-alt.png
+0218e11288a0ae6d8b015a734dee6e26  2414221  png   1536x1024  yes  assets/cutout/couple-under-arch.png
+cec6a687cb556057e749a4f9027c2e09  1370214  png   1920x1080  yes  assets/cutout/drapery-divider.png
+11a8bc12ddf12bca3124f6e0061834e6  2128344  png   1536x1024  yes  assets/cutout/floral-cluster-mixed.png
+d634e8ef753384620c5be71ee373c4ea  1819429  png   1536x1024  yes  assets/cutout/floral-cluster-pink.png
+c58eebdec6d0d445dc5653fabac88c58  2346525  png   1536x1024  yes  assets/cutout/floral-cluster-pinkwhite.png
+a091595bd33771513544ee38855defa5  1120164  png   1536x1024  yes  assets/cutout/floral-cluster-redroses.png
+96f20d1c2fc029d49c3c11ac20db2359   312277  png    449x770   yes  assets/cutout/floral-corner-br.png
+64a83673034e9ff2308785e69c0f227f   312601  png    449x770   yes  assets/cutout/floral-corner-tl.png
+ef8d4a72570e3c83739e908602148368   165546  png    906x266   yes  assets/cutout/floral-sprig.png
+92c993e798986997401404da300e4abe  1719504  png   1536x1024  yes  assets/cutout/floral-wisteria-frame.png
+ccf451e7b9f770d6adf135f4faf483a9  2514413  png   1536x1024  yes  assets/cutout/forest-scene-bear.png
+c0851aaf27e6d0998a76ff3b21d55c0a  1997869  png   1536x1024  yes  assets/cutout/gate-arch-floral.png
+575c00110e7661a22462da70bb14c736  3183944  png   1536x1024  yes  assets/cutout/gate-scene-cat.png
+3e7a1db10ebd2d1be1ddd0b3df11dcd0  2386281  png   1536x1024  yes  assets/cutout/gate-scene-cats-wide.png
+7a5ebe0ea7d514884be132fcebbe286b  3277562  png   1536x1024  yes  assets/cutout/gate-scene-cats.png
+c028e03eefcee5065ba0961d71da41e6  1268572  png   1536x1024  yes  assets/cutout/paw-prints-trail-straight.png
+6c53d62a9a0086ee366fb9da0a2773d2  2350377  png   1536x1024  yes  assets/cutout/peacock-arch-couple.png
+afef155345adc69cc5e7e3add59f6c31   835909  png   1536x1024  yes  assets/cutout/section-wash-cool.png
+9dc5f379a12511d892113f35b9282f13   799165  png   1536x1024  yes  assets/cutout/section-wash-pink.png
+acf52ef9e5ab812a3030ffab8e57c2ba  2716507  png   1536x1024  yes  assets/cutout/section-wash-warm.png
+c7393ea99e4def15b37e8a04b3904dc0  2191323  png   1536x1024  yes  assets/cutout/story-books-plane.png
+5b00a677d9c97029e7b14965d6ad36bb  1722651  png   1536x1024  yes  assets/cutout/story-bus-couple.png
+d5cc7ff07b4481c9b832056c5de81f85   398259  png    952x658   yes  assets/cutout/story-growing.png
+b5f469fe70dbe3c1cea7db9a7449d732   782741  png   1536x1024  yes  assets/cutout/story-jakarta-map.png
+44f02307c0b54f880dfa077198869f2b  1780559  png   1536x1024  yes  assets/cutout/story-jakarta-motor.png
+a2a903f4129eaae3cee6d903647b4a69  2532998  png   1536x1024  yes  assets/cutout/story-keio-tower.png
+65d9d7614ac4d1d1e2905542308fc512  2560957  png   1536x1024  yes  assets/cutout/story-meeting-2.png
+ec40b80604f2a31dd8f075d6552253af  1936079  png   1536x1024  yes  assets/cutout/wedding-rings.png
+7107247dd0fe7e795a9f41dd5ec88e2b   110746  png    302x443   yes  assets/cutout/welcome-accent.png
+23928634b5a8bc11940f187da060f61a   117249  jpeg  1067x1600   no  assets/gallery/gallery-01.jpg
+5de5a160eac5fe269314b4c7a5c66787   118521  jpeg  1067x1600   no  assets/gallery/gallery-02.jpg
+e26184175e1292f84f9074b095cbfe97    53969  jpeg  1600x1067   no  assets/gallery/gallery-03.jpg
+7d137fd9771c9bc6caa9533d0cf1fe7f    96520  jpeg  1067x1600   no  assets/gallery/gallery-04.jpg
+6eaa512a0d48e96c433c2e92c9fc4614   131323  jpeg  1067x1600   no  assets/gallery/gallery-05.jpg
+4f11552bcee81e1ad95f9a2ba26ba9d0   125976  jpeg  1067x1600   no  assets/gallery/gallery-06.jpg
+b85f2d583054f145c2fcfe7150963a20   134664  jpeg  1067x1600   no  assets/gallery/gallery-07.jpg
+be2a25a3e1cdcd01e6ed2a6c34f9297c   114588  jpeg  1067x1600   no  assets/gallery/gallery-08.jpg
+eb1125de378672895f1d38cb8357c8ba   121825  jpeg  1067x1600   no  assets/gallery/gallery-09.jpg
+3f4827ce1404c410fa8a97161a6b2ab2   289842  png    464x713   yes  assets/scene/arch-frame.png
+e376bae7b29d2f6df25f2bca25b631de  7013585  png   3168x1344  yes  assets/scene/countdown-bg.png
+b4bc3fc18e99a3ea6717860c4fbdd19b    60430  webp  1600x679    no  assets/scene/countdown-bg.webp
+aa0da4be10b574d6102b0b073c28ca06   298556  png    535x687   yes  assets/scene/event-accent.png
+4d049e1b5eb7a47dd3f6b66ee988dd1e   430782  png    464x800   yes  assets/scene/floral-border-full.png
+cbd638c1adb9eb69911aeb260ec5bb60   137257  png    426x615   yes  assets/scene/gallery-frame.png
+9e64a37476e2eed7ae2ade45e4904c4d   387258  png    849x639   yes  assets/scene/gift-accent.png
+b6cf0874bd04377d9fe602b830a927e6   101290  webp  1080x1610   no  assets/scene/hero-bg.webp
+8cf42e206283acf1ff105ae977f30ebe   319830  webp  1080x1350   no  assets/scene/hero-main.webp
+092d4964627ba68920dda7ca07320240   327642  webp  1080x1935   no  assets/scene/hero-tall.webp
+a797cf0cbf954bc4d9ddbb46648865d6   612878  png    984x639   yes  assets/scene/japan-motif.png
+a4acc845ff00955e780c0d49dabda0b6   294078  png    496x467   yes  assets/scene/loading-motif.png
+3fef2fb956acb39b670ee767e28b5e9c    81957  png    246x336   yes  assets/scene/map-pin.png
+d92978ef7600f98c5e1f16165e3abda2  1134903  png   1536x1024  yes  assets/scene/meadow-daisies.png
+3f975d8a1872b2dc5439d0af02c832e8   753089  png   1536x1024  yes  assets/scene/scene-bridge-cat.png
+e294238016b7f1985620ade292d97cdd  1240857  png   1200x800   yes  assets/scene/section-bg-wash.png
+e8bb40c03f443663c6c04760a4d9a2d5     2436  webp  1200x800    no  assets/scene/section-bg-wash.webp
+493597bf29239dda808ce0d658a9525c  1825592  png   1536x1024  yes  assets/scene/section-meadow-bottom-daisies.png
+826c0332d5a50a9d94da45d981184c52     1834  webp  1200x600    no  assets/scene/section-wash.webp
+058053cabfa18b6f592bc148378c6458   444009  png   1000x717   yes  assets/scene/story-meeting.png
+2f4f2cbee422f4f2d047d2cb1e952f19  2937606  png   1536x1024  yes  assets/scene/welcome-cats-meadow.png
+0eaa5632eae343195b308965b994584e  1621034  png   1536x1024  yes  nikah-web/public/assets/cats/cat-grass-frontal.png
+0e87f3086a9e93d9b8e7da1c21cfa720  2566437  png   1536x1024  yes  nikah-web/public/assets/cats/cat-hoshi-kimho-playing.png
+930f55a6e3e8b4f78492ce6d182bd830   357774  png    342x692   yes  nikah-web/public/assets/cats/cat-hoshi.png
+50d2dc8afa90485a3834fe03b9a23aa6  1646219  png   1536x1024  yes  nikah-web/public/assets/cats/cat-in-flowers.png
+b66c2e7cedd4e6a5cd77a7326c46c4fa  2141950  png   1536x1024  yes  nikah-web/public/assets/cats/cat-in-heart-flowers.png
+4af04e2dff170ce46ef44feea22c35d3   412564  png    612x408   yes  nikah-web/public/assets/cats/cat-jiro-in-flowers.png
+0e99e0e563616d825bb846caf52af9de  2246227  png   1536x1024  yes  nikah-web/public/assets/cats/cat-jiro-with-dove.png
+c207e0b7cc7959274efec709ae28c40e   271382  png    342x582   yes  nikah-web/public/assets/cats/cat-jiro.png
+ff81838a2917260cff15823345a7c892   373746  png    535x682   yes  nikah-web/public/assets/cats/cat-kimho.png
+2b98b152502f1c92af351a504ff69bac   377858  png    612x408   yes  nikah-web/public/assets/cats/cat-meng-with-flowers.png
+e473195c074df676774f9888e8c357ce   336590  png    351x720   yes  nikah-web/public/assets/cats/cat-meng.png
+23a05b3528f62c9e9620793b901274b4   473897  png    612x408   yes  nikah-web/public/assets/cats/cat-moju-sleeping-flowers.png
+23b63961b70e6cad0f6b8d7e7519a451   516871  png    760x453   yes  nikah-web/public/assets/cats/cat-moju.png
+15bceec7a47d62344bd4197d0b15eac8   133249  png    331x397   yes  nikah-web/public/assets/cats/cat-peek.png
+490baf94da3588b35f57a780f39de666   293243  png    612x408   yes  nikah-web/public/assets/cats/cat-shiro-butterfly.png
+fa67bb5ba4b874f538f980761f608889   294223  png    439x641   yes  nikah-web/public/assets/cats/cat-shiro.png
+5bfe07e26c99955758bad66b4abefe92   425769  png    612x408   yes  nikah-web/public/assets/cats/cat-simba-with-dove.png
+b22c079041aa07571a35577ebeab3372   323732  png    488x629   yes  nikah-web/public/assets/cats/cat-simba.png
+a81677116da4c3d08e40c33bd55b8c73  2786219  png   1536x1024  yes  nikah-web/public/assets/cats/cat-sleeping-flowers.png
+8b110b85f9a42c9d9b6d319b63bab32c  2820090  png   1536x1024  yes  nikah-web/public/assets/cats/cat-sleeping-wreath.png
+c3c21345d0ed35cb7ed13cdb8e612495  2930997  png   1536x1024  yes  nikah-web/public/assets/cats/cats-couple-wreath.png
+b0fec429329f857a94b7947893a330eb   165141  png    290x542   yes  nikah-web/public/assets/couple/couple-cutout.png
+24c7e5e01dfb683f1653b5c48fb39901  2583032  png   1536x1024  yes  nikah-web/public/assets/couple/couple-illustration.png
+2c0fd576f84ccdfd0750108d530ff01a    14667  png    164x178   yes  nikah-web/public/assets/cutout/accent-butterflies.png
+cfba559ff0fd457a3ed213b08cf5ea67  1234961  png   1536x1024  yes  nikah-web/public/assets/cutout/accent-doves-arch.png
+66389eff5aac753e3899fec093981b50  1283458  png   1536x1024  yes  nikah-web/public/assets/cutout/accent-doves-heart.png
+8a06054ac42aef94b215f991a7491da1  1095029  png   1536x1024  yes  nikah-web/public/assets/cutout/accent-doves-pair.png
+2b68450a4640b63a944966df93d4c2dc    63029  png    314x352   yes  nikah-web/public/assets/cutout/accent-doves.png
+0cb712a78c40fd6fd143bdcb68372472   242822  png    375x665   yes  nikah-web/public/assets/cutout/couple-cutout-alt.png
+0218e11288a0ae6d8b015a734dee6e26  2414221  png   1536x1024  yes  nikah-web/public/assets/cutout/couple-under-arch.png
+cec6a687cb556057e749a4f9027c2e09  1370214  png   1920x1080  yes  nikah-web/public/assets/cutout/drapery-divider.png
+11a8bc12ddf12bca3124f6e0061834e6  2128344  png   1536x1024  yes  nikah-web/public/assets/cutout/floral-cluster-mixed.png
+d634e8ef753384620c5be71ee373c4ea  1819429  png   1536x1024  yes  nikah-web/public/assets/cutout/floral-cluster-pink.png
+c58eebdec6d0d445dc5653fabac88c58  2346525  png   1536x1024  yes  nikah-web/public/assets/cutout/floral-cluster-pinkwhite.png
+a091595bd33771513544ee38855defa5  1120164  png   1536x1024  yes  nikah-web/public/assets/cutout/floral-cluster-redroses.png
+96f20d1c2fc029d49c3c11ac20db2359   312277  png    449x770   yes  nikah-web/public/assets/cutout/floral-corner-br.png
+64a83673034e9ff2308785e69c0f227f   312601  png    449x770   yes  nikah-web/public/assets/cutout/floral-corner-tl.png
+ef8d4a72570e3c83739e908602148368   165546  png    906x266   yes  nikah-web/public/assets/cutout/floral-sprig.png
+92c993e798986997401404da300e4abe  1719504  png   1536x1024  yes  nikah-web/public/assets/cutout/floral-wisteria-frame.png
+ccf451e7b9f770d6adf135f4faf483a9  2514413  png   1536x1024  yes  nikah-web/public/assets/cutout/forest-scene-bear.png
+c0851aaf27e6d0998a76ff3b21d55c0a  1997869  png   1536x1024  yes  nikah-web/public/assets/cutout/gate-arch-floral.png
+575c00110e7661a22462da70bb14c736  3183944  png   1536x1024  yes  nikah-web/public/assets/cutout/gate-scene-cat.png
+3e7a1db10ebd2d1be1ddd0b3df11dcd0  2386281  png   1536x1024  yes  nikah-web/public/assets/cutout/gate-scene-cats-wide.png
+7a5ebe0ea7d514884be132fcebbe286b  3277562  png   1536x1024  yes  nikah-web/public/assets/cutout/gate-scene-cats.png
+c028e03eefcee5065ba0961d71da41e6  1268572  png   1536x1024  yes  nikah-web/public/assets/cutout/paw-prints-trail-straight.png
+6c53d62a9a0086ee366fb9da0a2773d2  2350377  png   1536x1024  yes  nikah-web/public/assets/cutout/peacock-arch-couple.png
+afef155345adc69cc5e7e3add59f6c31   835909  png   1536x1024  yes  nikah-web/public/assets/cutout/section-wash-cool.png
+9dc5f379a12511d892113f35b9282f13   799165  png   1536x1024  yes  nikah-web/public/assets/cutout/section-wash-pink.png
+acf52ef9e5ab812a3030ffab8e57c2ba  2716507  png   1536x1024  yes  nikah-web/public/assets/cutout/section-wash-warm.png
+c7393ea99e4def15b37e8a04b3904dc0  2191323  png   1536x1024  yes  nikah-web/public/assets/cutout/story-books-plane.png
+5b00a677d9c97029e7b14965d6ad36bb  1722651  png   1536x1024  yes  nikah-web/public/assets/cutout/story-bus-couple.png
+d5cc7ff07b4481c9b832056c5de81f85   398259  png    952x658   yes  nikah-web/public/assets/cutout/story-growing.png
+b5f469fe70dbe3c1cea7db9a7449d732   782741  png   1536x1024  yes  nikah-web/public/assets/cutout/story-jakarta-map.png
+44f02307c0b54f880dfa077198869f2b  1780559  png   1536x1024  yes  nikah-web/public/assets/cutout/story-jakarta-motor.png
+a2a903f4129eaae3cee6d903647b4a69  2532998  png   1536x1024  yes  nikah-web/public/assets/cutout/story-keio-tower.png
+65d9d7614ac4d1d1e2905542308fc512  2560957  png   1536x1024  yes  nikah-web/public/assets/cutout/story-meeting-2.png
+ec40b80604f2a31dd8f075d6552253af  1936079  png   1536x1024  yes  nikah-web/public/assets/cutout/wedding-rings.png
+7107247dd0fe7e795a9f41dd5ec88e2b   110746  png    302x443   yes  nikah-web/public/assets/cutout/welcome-accent.png
+23928634b5a8bc11940f187da060f61a   117249  jpeg  1067x1600   no  nikah-web/public/assets/gallery/gallery-01.jpg
+5de5a160eac5fe269314b4c7a5c66787   118521  jpeg  1067x1600   no  nikah-web/public/assets/gallery/gallery-02.jpg
+e26184175e1292f84f9074b095cbfe97    53969  jpeg  1600x1067   no  nikah-web/public/assets/gallery/gallery-03.jpg
+7d137fd9771c9bc6caa9533d0cf1fe7f    96520  jpeg  1067x1600   no  nikah-web/public/assets/gallery/gallery-04.jpg
+6eaa512a0d48e96c433c2e92c9fc4614   131323  jpeg  1067x1600   no  nikah-web/public/assets/gallery/gallery-05.jpg
+4f11552bcee81e1ad95f9a2ba26ba9d0   125976  jpeg  1067x1600   no  nikah-web/public/assets/gallery/gallery-06.jpg
+b85f2d583054f145c2fcfe7150963a20   134664  jpeg  1067x1600   no  nikah-web/public/assets/gallery/gallery-07.jpg
+be2a25a3e1cdcd01e6ed2a6c34f9297c   114588  jpeg  1067x1600   no  nikah-web/public/assets/gallery/gallery-08.jpg
+eb1125de378672895f1d38cb8357c8ba   121825  jpeg  1067x1600   no  nikah-web/public/assets/gallery/gallery-09.jpg
+3f4827ce1404c410fa8a97161a6b2ab2   289842  png    464x713   yes  nikah-web/public/assets/scene/arch-frame.png
+e376bae7b29d2f6df25f2bca25b631de  7013585  png   3168x1344  yes  nikah-web/public/assets/scene/countdown-bg.png
+b4bc3fc18e99a3ea6717860c4fbdd19b    60430  webp  1600x679    no  nikah-web/public/assets/scene/countdown-bg.webp
+aa0da4be10b574d6102b0b073c28ca06   298556  png    535x687   yes  nikah-web/public/assets/scene/event-accent.png
+4d049e1b5eb7a47dd3f6b66ee988dd1e   430782  png    464x800   yes  nikah-web/public/assets/scene/floral-border-full.png
+cbd638c1adb9eb69911aeb260ec5bb60   137257  png    426x615   yes  nikah-web/public/assets/scene/gallery-frame.png
+9e64a37476e2eed7ae2ade45e4904c4d   387258  png    849x639   yes  nikah-web/public/assets/scene/gift-accent.png
+b6cf0874bd04377d9fe602b830a927e6   101290  webp  1080x1610   no  nikah-web/public/assets/scene/hero-bg.webp
+8cf42e206283acf1ff105ae977f30ebe   319830  webp  1080x1350   no  nikah-web/public/assets/scene/hero-main.webp
+092d4964627ba68920dda7ca07320240   327642  webp  1080x1935   no  nikah-web/public/assets/scene/hero-tall.webp
+a797cf0cbf954bc4d9ddbb46648865d6   612878  png    984x639   yes  nikah-web/public/assets/scene/japan-motif.png
+a4acc845ff00955e780c0d49dabda0b6   294078  png    496x467   yes  nikah-web/public/assets/scene/loading-motif.png
+3fef2fb956acb39b670ee767e28b5e9c    81957  png    246x336   yes  nikah-web/public/assets/scene/map-pin.png
+d92978ef7600f98c5e1f16165e3abda2  1134903  png   1536x1024  yes  nikah-web/public/assets/scene/meadow-daisies.png
+3f975d8a1872b2dc5439d0af02c832e8   753089  png   1536x1024  yes  nikah-web/public/assets/scene/scene-bridge-cat.png
+e294238016b7f1985620ade292d97cdd  1240857  png   1200x800   yes  nikah-web/public/assets/scene/section-bg-wash.png
+e8bb40c03f443663c6c04760a4d9a2d5     2436  webp  1200x800    no  nikah-web/public/assets/scene/section-bg-wash.webp
+493597bf29239dda808ce0d658a9525c  1825592  png   1536x1024  yes  nikah-web/public/assets/scene/section-meadow-bottom-daisies.png
+826c0332d5a50a9d94da45d981184c52     1834  webp  1200x600    no  nikah-web/public/assets/scene/section-wash.webp
+058053cabfa18b6f592bc148378c6458   444009  png   1000x717   yes  nikah-web/public/assets/scene/story-meeting.png
+2f4f2cbee422f4f2d047d2cb1e952f19  2937606  png   1536x1024  yes  nikah-web/public/assets/scene/welcome-cats-meadow.png
+595c52236733d9bf0973e2f79eae7d90   212005  png   1920x1080  yes  Recovered/_backups/v2-backup/1.png
+d71d38b0af6dc46f9126fc7e56efca9f   598437  png   1920x1080  yes  Recovered/_backups/v2-backup/10.png
+2805eee974d5482abb8897533891cb4a   350168  png   1920x1080  yes  Recovered/_backups/v2-backup/11.png
+a8c7c4aa4d044d483887a3233b113dce   215081  png   1920x1080  yes  Recovered/_backups/v2-backup/12.png
+e9ac079ff4363968983b9295d89c6f38   494957  png   1920x1080  yes  Recovered/_backups/v2-backup/13.png
+cec6a687cb556057e749a4f9027c2e09  1370214  png   1920x1080  yes  Recovered/_backups/v2-backup/14.png
+5cb4e35069a231dc73764646a79059c7    89817  png   1920x1080  yes  Recovered/_backups/v2-backup/15.png
+5c64a1e138b18b58b6fa4c95998128a0   385002  png   1920x1080  yes  Recovered/_backups/v2-backup/16.png
+2ee59bf3991048e9a6a6f51a716f5b8a    28304  png   1920x1080  yes  Recovered/_backups/v2-backup/17.png
+51daf61c20f86712f6928575df698861   375647  png   1920x1080  yes  Recovered/_backups/v2-backup/18.png
+dae807d5d42e35c382120ba3db165d32   141147  png   1920x1080  yes  Recovered/_backups/v2-backup/19.png
+9ddbf49b13a5835dbf8bedac7b064f18   498438  png   1920x1080  yes  Recovered/_backups/v2-backup/2.png
+c8346b8400fa0f94c32c0cbced612f99  1162565  png   1920x1080  yes  Recovered/_backups/v2-backup/20.png
+5ea3e05c3cce431fd839483b7f0bee71   719805  png   1920x1080  yes  Recovered/_backups/v2-backup/21.png
+6cdc8177723a56ad846905d20f82ff31   543872  png   1920x1080  yes  Recovered/_backups/v2-backup/22.png
+dae94f5f219e92fc30dbe2ca2e46204d   914196  png   1920x1080  yes  Recovered/_backups/v2-backup/23.png
+97a175dc818e4740eaa0de8ed5754ea2   425792  png   1920x1080  yes  Recovered/_backups/v2-backup/24.png
+b5aa919cf023fc78fd9ca04847875d01   136037  png   1920x1080  yes  Recovered/_backups/v2-backup/25.png
+d2695206562e3ed68acde756ab65a203   629120  png   1920x1080  yes  Recovered/_backups/v2-backup/27.png
+aabba932038cbab65596c93c9d992a65  1263778  png   1920x1080  yes  Recovered/_backups/v2-backup/3.png
+6955e290016ae22f22e08667631ce489   409297  png   1920x1080  yes  Recovered/_backups/v2-backup/4.png
+1baf0468e6eab11746bdec22d05bd39c   449708  png   1920x1080  yes  Recovered/_backups/v2-backup/5.png
+1561a7ed763aaed68d1b72e727f63211   517134  png   1920x1080  yes  Recovered/_backups/v2-backup/6.png
+69fc6c15b920ca55248323dd7d01807e   544474  png   1920x1080  yes  Recovered/_backups/v2-backup/7.png
+4d95ca7617faa7bb50b650de1a57390d   200013  png   1920x1080  yes  Recovered/_backups/v2-backup/8.png
+68005fbe416a9519b66bbfad63886aae   411943  png   1920x1080  yes  Recovered/_backups/v2-backup/9.png
+0e87f3086a9e93d9b8e7da1c21cfa720  2566437  png   1536x1024  yes  Recovered/cats/cat-hoshi-kimho-playing.png
+595c52236733d9bf0973e2f79eae7d90   212005  png   1920x1080  yes  Recovered/cats/cat-hoshi.png
+27b4679a929c5b348ed9a11d6e23c37c  2891783  png   1536x1024  yes  Recovered/cats/cat-jiro-in-flowers.png
+69fc6c15b920ca55248323dd7d01807e   544474  png   1920x1080  yes  Recovered/cats/cat-jiro.png
+1baf0468e6eab11746bdec22d05bd39c   449708  png   1920x1080  yes  Recovered/cats/cat-kimho.png
+9ddbf49b13a5835dbf8bedac7b064f18   498438  png   1920x1080  yes  Recovered/cats/cat-meng.png
+aabba932038cbab65596c93c9d992a65  1263778  png   1920x1080  yes  Recovered/cats/cat-moju.png
+12f2b4e670be0a877d295358d2e48bcf  2698850  png   1536x1024  yes  Recovered/cats/cat-peek.png
+1561a7ed763aaed68d1b72e727f63211   517134  png   1920x1080  yes  Recovered/cats/cat-shiro.png
+12ca14bc50f3402517655221d3b0621e  2354918  png   1536x1024  yes  Recovered/cats/cat-simba-with-dove.png
+6955e290016ae22f22e08667631ce489   409297  png   1920x1080  yes  Recovered/cats/cat-simba.png
+cfba559ff0fd457a3ed213b08cf5ea67  1234961  png   1536x1024  yes  Recovered/correct-rgba/accent-doves-arch.png
+66389eff5aac753e3899fec093981b50  1283458  png   1536x1024  yes  Recovered/correct-rgba/accent-doves-heart.png
+8a06054ac42aef94b215f991a7491da1  1095029  png   1536x1024  yes  Recovered/correct-rgba/accent-doves-pair.png
+0eaa5632eae343195b308965b994584e  1621034  png   1536x1024  yes  Recovered/correct-rgba/cat-grass-frontal.png
+facc388f16b855d46cf78692151ac85c   325824  png    612x408   yes  Recovered/correct-rgba/cat-hoshi-kimho-playing.png
+50d2dc8afa90485a3834fe03b9a23aa6  1646219  png   1536x1024  yes  Recovered/correct-rgba/cat-in-flowers.png
+b66c2e7cedd4e6a5cd77a7326c46c4fa  2141950  png   1536x1024  yes  Recovered/correct-rgba/cat-in-heart-flowers.png
+eee4a2f20c347ef4e3d4dafc33584d58   375806  png    612x408   yes  Recovered/correct-rgba/cat-jiro-in-flowers.png
+73852236ee66037d608a78e280204be3   328830  png    612x408   yes  Recovered/correct-rgba/cat-meng-with-flowers.png
+6b2bd3b1bb24297e542397acdcbe0e79   419461  png    612x408   yes  Recovered/correct-rgba/cat-moju-sleeping-flowers.png
+c45fb37fcba84678a9cf055092e80763   237625  png    612x408   yes  Recovered/correct-rgba/cat-shiro-butterfly.png
+8a8af44109be160aef646a6d51e37a15   352150  png    612x408   yes  Recovered/correct-rgba/cat-simba-with-dove.png
+a81677116da4c3d08e40c33bd55b8c73  2786219  png   1536x1024  yes  Recovered/correct-rgba/cat-sleeping-flowers.png
+8b110b85f9a42c9d9b6d319b63bab32c  2820090  png   1536x1024  yes  Recovered/correct-rgba/cat-sleeping-wreath.png
+0e99e0e563616d825bb846caf52af9de  2246227  png   1536x1024  yes  Recovered/correct-rgba/cat-with-dove.png
+c3c21345d0ed35cb7ed13cdb8e612495  2930997  png   1536x1024  yes  Recovered/correct-rgba/cats-couple-wreath.png
+24c7e5e01dfb683f1653b5c48fb39901  2583032  png   1536x1024  yes  Recovered/correct-rgba/couple-illustration.png
+0218e11288a0ae6d8b015a734dee6e26  2414221  png   1536x1024  yes  Recovered/correct-rgba/couple-under-arch.png
+11a8bc12ddf12bca3124f6e0061834e6  2128344  png   1536x1024  yes  Recovered/correct-rgba/floral-cluster-mixed.png
+d634e8ef753384620c5be71ee373c4ea  1819429  png   1536x1024  yes  Recovered/correct-rgba/floral-cluster-pink.png
+c58eebdec6d0d445dc5653fabac88c58  2346525  png   1536x1024  yes  Recovered/correct-rgba/floral-cluster-pinkwhite.png
+a091595bd33771513544ee38855defa5  1120164  png   1536x1024  yes  Recovered/correct-rgba/floral-cluster-redroses.png
+92c993e798986997401404da300e4abe  1719504  png   1536x1024  yes  Recovered/correct-rgba/floral-wisteria-frame.png
+ccf451e7b9f770d6adf135f4faf483a9  2514413  png   1536x1024  yes  Recovered/correct-rgba/forest-scene-bear.png
+c0851aaf27e6d0998a76ff3b21d55c0a  1997869  png   1536x1024  yes  Recovered/correct-rgba/gate-arch-floral.png
+575c00110e7661a22462da70bb14c736  3183944  png   1536x1024  yes  Recovered/correct-rgba/gate-scene-cat.png
+3e7a1db10ebd2d1be1ddd0b3df11dcd0  2386281  png   1536x1024  yes  Recovered/correct-rgba/gate-scene-cats-wide.png
+d92978ef7600f98c5e1f16165e3abda2  1134903  png   1536x1024  yes  Recovered/correct-rgba/meadow-daisies.png
+c028e03eefcee5065ba0961d71da41e6  1268572  png   1536x1024  yes  Recovered/correct-rgba/paw-prints-trail-straight.png
+6c53d62a9a0086ee366fb9da0a2773d2  2350377  png   1536x1024  yes  Recovered/correct-rgba/peacock-arch-couple.png
+3f975d8a1872b2dc5439d0af02c832e8   753089  png   1536x1024  yes  Recovered/correct-rgba/scene-bridge-cat.png
+493597bf29239dda808ce0d658a9525c  1825592  png   1536x1024  yes  Recovered/correct-rgba/section-meadow-bottom-daisies.png
+afef155345adc69cc5e7e3add59f6c31   835909  png   1536x1024  yes  Recovered/correct-rgba/section-wash-cool.png
+9dc5f379a12511d892113f35b9282f13   799165  png   1536x1024  yes  Recovered/correct-rgba/section-wash-pink.png
+acf52ef9e5ab812a3030ffab8e57c2ba  2716507  png   1536x1024  yes  Recovered/correct-rgba/section-wash-warm.png
+c7393ea99e4def15b37e8a04b3904dc0  2191323  png   1536x1024  yes  Recovered/correct-rgba/story-books-plane.png
+5b00a677d9c97029e7b14965d6ad36bb  1722651  png   1536x1024  yes  Recovered/correct-rgba/story-bus-couple.png
+b5f469fe70dbe3c1cea7db9a7449d732   782741  png   1536x1024  yes  Recovered/correct-rgba/story-jakarta-map.png
+44f02307c0b54f880dfa077198869f2b  1780559  png   1536x1024  yes  Recovered/correct-rgba/story-jakarta-motor.png
+a2a903f4129eaae3cee6d903647b4a69  2532998  png   1536x1024  yes  Recovered/correct-rgba/story-keio-tower.png
+65d9d7614ac4d1d1e2905542308fc512  2560957  png   1536x1024  yes  Recovered/correct-rgba/story-meeting-2.png
+ec40b80604f2a31dd8f075d6552253af  1936079  png   1536x1024  yes  Recovered/correct-rgba/wedding-rings.png
+1ee87e2be4b087f40af4dd5a0e690f6e  3554909  png   1536x1024  yes  Recovered/correct/1.png
+5cf0318ba066627d4c7f11630191fdcd  1375714  png   1536x1024  yes  Recovered/correct/10.png
+2bd016e9334dab524566d7365187f4e3  3047637  png   1536x1024  yes  Recovered/correct/11.png
+167c6309f01362f36a9cd43fd5249e87  2380758  png   1536x1024  yes  Recovered/correct/12.png
+6a2744fb468234f21c837b0f9274cf87  2739382  png   1536x1024  yes  Recovered/correct/13.png
+bb2c8fe5c30ccd65f73fdca04bd169ae  3091554  png   1536x1024  yes  Recovered/correct/14.png
+8812aedf84adb0264d8afdfc73a3d98a  3880596  png   1536x1024  yes  Recovered/correct/15.png
+a76989a616dc73b02600355459f118ac  2977660  png   1536x1024  yes  Recovered/correct/16.png
+2c9923ef9b03729368c739a8c9190cae  2539347  png   1536x1024  yes  Recovered/correct/17.png
+2ab1f6d2dd0f2d450ea5bec442559ce0  1688399  png   1536x1024  yes  Recovered/correct/18.png
+1121f8f366938ec6e6809bebb987992f  1415567  png   1536x1024  yes  Recovered/correct/19.png
+3a7793db536e177592304ee93da36cf9  2637838  png   1536x1024  yes  Recovered/correct/2.png
+100f6d5840a33e1288b3484d939f56ac  2373849  png   1536x1024  yes  Recovered/correct/20.png
+1bdd32128dab89c7d5f775c5e351bef2  2469122  png   1536x1024  yes  Recovered/correct/21.png
+44122f9d55a0a86f17011ef879b387a4  2309138  png   1536x1024  yes  Recovered/correct/22.png
+fc492d5d166120f2195f601e32f43912  2859821  png   1536x1024  yes  Recovered/correct/23.png
+a95f6a66acf46766a6485569a7f94682  3260168  png   1536x1024  yes  Recovered/correct/24.png
+264396eb623eaa6904129c2b8e2ded01  1421127  png   1536x1024  yes  Recovered/correct/25.png
+7a5ebe0ea7d514884be132fcebbe286b  3277562  png   1536x1024  yes  Recovered/correct/26.png
+2f4f2cbee422f4f2d047d2cb1e952f19  2937606  png   1536x1024  yes  Recovered/correct/27.png
+085b9183c8ac542acc14546b338d8f1a  2237758  png   1536x1024  yes  Recovered/correct/28.png
+12ca14bc50f3402517655221d3b0621e  2354918  png   1536x1024  yes  Recovered/correct/29.png
+5c9ad647bb39c522860bf4cfb5b81fd9  3292923  png   1536x1024  yes  Recovered/correct/3.png
+0e87f3086a9e93d9b8e7da1c21cfa720  2566437  png   1536x1024  yes  Recovered/correct/30.png
+94e2c8dca599f654ec212c69bf4a51fb  1342405  png   1536x1024  yes  Recovered/correct/31.png
+a2cb766da2d79df875cfb32cf619eb84  1688201  png   1536x1024  yes  Recovered/correct/32.png
+27b4679a929c5b348ed9a11d6e23c37c  2891783  png   1536x1024  yes  Recovered/correct/33.png
+ba2ac232d510e77ac89c096fd0e7b621  1793896  png   1536x1024  yes  Recovered/correct/34.png
+12f2b4e670be0a877d295358d2e48bcf  2698850  png   1536x1024  yes  Recovered/correct/35.png
+83530f853fed9069a048d0a1fd066774  1990865  png   1536x1024   no  Recovered/correct/36.png
+2fcd712f602fb2d90dc05544b6729e78  1229383  png   1536x1024   no  Recovered/correct/37.png
+e0e42d0724dbb9491922375a36335993  1252555  png   1536x1024   no  Recovered/correct/38.png
+0e6d6b3e20d36b2647f22f255a333919  1323511  png   1536x1024   no  Recovered/correct/39.png
+9fd2fef6c48b7aab047a29bf6c68df7a  3348887  png   1536x1024  yes  Recovered/correct/4.png
+2bb7b671b8ab81807d9f923bb025224c  1833955  png   1536x1024   no  Recovered/correct/40.png
+39092cdf04845614748cf6e1d0d15f44  1637671  png   1536x1024   no  Recovered/correct/41.png
+b6c3397a3bfd2cca724c078dfc04108f  1353058  png   1536x1024   no  Recovered/correct/42.png
+b47b7d5204fda747de36f092161a37dd  2782517  png   1536x1024   no  Recovered/correct/43.png
+142c676142ae0071e699fc09870bfbb4  3482203  png   1536x1024  yes  Recovered/correct/5.png
+46e0a001d8693f7932718025c32c829b  1698908  png   1536x1024  yes  Recovered/correct/6.png
+89cae749e22875823d33e69dd2860d15  2169182  png   1536x1024  yes  Recovered/correct/7.png
+36c935096913cfb2a7c488359d3ca59f  1820777  png   1536x1024  yes  Recovered/correct/8.png
+22e8bc1969875d4515dc65bb339d8e45  1778968  png   1536x1024  yes  Recovered/correct/9.png
+48a0e44c638efc9ab008a74d73a1e319   398865  png    612x408   yes  Recovered/correct/cat-hoshi-kimho-playing.png
+4af04e2dff170ce46ef44feea22c35d3   412564  png    612x408   yes  Recovered/correct/cat-jiro-in-flowers.png
+2b98b152502f1c92af351a504ff69bac   377858  png    612x408   yes  Recovered/correct/cat-meng-with-flowers.png
+23a05b3528f62c9e9620793b901274b4   473897  png    612x408   yes  Recovered/correct/cat-moju-sleeping-flowers.png
+a76989a616dc73b02600355459f118ac  2977660  png   1536x1024  yes  Recovered/correct/cat-original/cat-hoshi-kimho-playing.png
+fc492d5d166120f2195f601e32f43912  2859821  png   1536x1024  yes  Recovered/correct/cat-original/cat-jiro-in-flowers.png
+6a2744fb468234f21c837b0f9274cf87  2739382  png   1536x1024  yes  Recovered/correct/cat-original/cat-meng-with-flowers.png
+a95f6a66acf46766a6485569a7f94682  3260168  png   1536x1024  yes  Recovered/correct/cat-original/cat-moju-sleeping-flowers.png
+167c6309f01362f36a9cd43fd5249e87  2380758  png   1536x1024  yes  Recovered/correct/cat-original/cat-shiro-butterfly.png
+bb2c8fe5c30ccd65f73fdca04bd169ae  3091554  png   1536x1024  yes  Recovered/correct/cat-original/cat-simba-with-dove.png
+490baf94da3588b35f57a780f39de666   293243  png    612x408   yes  Recovered/correct/cat-shiro-butterfly.png
+5bfe07e26c99955758bad66b4abefe92   425769  png    612x408   yes  Recovered/correct/cat-simba-with-dove.png
+595c52236733d9bf0973e2f79eae7d90   212005  png   1920x1080  yes  Recovered/correct/png asset website 2/1.png
+d71d38b0af6dc46f9126fc7e56efca9f   598437  png   1920x1080  yes  Recovered/correct/png asset website 2/10.png
+2805eee974d5482abb8897533891cb4a   350168  png   1920x1080  yes  Recovered/correct/png asset website 2/11.png
+a8c7c4aa4d044d483887a3233b113dce   215081  png   1920x1080  yes  Recovered/correct/png asset website 2/12.png
+e9ac079ff4363968983b9295d89c6f38   494957  png   1920x1080  yes  Recovered/correct/png asset website 2/13.png
+cec6a687cb556057e749a4f9027c2e09  1370214  png   1920x1080  yes  Recovered/correct/png asset website 2/14.png
+5cb4e35069a231dc73764646a79059c7    89817  png   1920x1080  yes  Recovered/correct/png asset website 2/15.png
+5c64a1e138b18b58b6fa4c95998128a0   385002  png   1920x1080  yes  Recovered/correct/png asset website 2/16.png
+2ee59bf3991048e9a6a6f51a716f5b8a    28304  png   1920x1080  yes  Recovered/correct/png asset website 2/17.png
+51daf61c20f86712f6928575df698861   375647  png   1920x1080  yes  Recovered/correct/png asset website 2/18.png
+dae807d5d42e35c382120ba3db165d32   141147  png   1920x1080  yes  Recovered/correct/png asset website 2/19.png
+9ddbf49b13a5835dbf8bedac7b064f18   498438  png   1920x1080  yes  Recovered/correct/png asset website 2/2.png
+c8346b8400fa0f94c32c0cbced612f99  1162565  png   1920x1080  yes  Recovered/correct/png asset website 2/20.png
+5ea3e05c3cce431fd839483b7f0bee71   719805  png   1920x1080  yes  Recovered/correct/png asset website 2/21.png
+6cdc8177723a56ad846905d20f82ff31   543872  png   1920x1080  yes  Recovered/correct/png asset website 2/22.png
+dae94f5f219e92fc30dbe2ca2e46204d   914196  png   1920x1080  yes  Recovered/correct/png asset website 2/23.png
+97a175dc818e4740eaa0de8ed5754ea2   425792  png   1920x1080  yes  Recovered/correct/png asset website 2/24.png
+b5aa919cf023fc78fd9ca04847875d01   136037  png   1920x1080  yes  Recovered/correct/png asset website 2/25.png
+d2695206562e3ed68acde756ab65a203   629120  png   1920x1080  yes  Recovered/correct/png asset website 2/27.png
+aabba932038cbab65596c93c9d992a65  1263778  png   1920x1080  yes  Recovered/correct/png asset website 2/3.png
+6955e290016ae22f22e08667631ce489   409297  png   1920x1080  yes  Recovered/correct/png asset website 2/4.png
+1baf0468e6eab11746bdec22d05bd39c   449708  png   1920x1080  yes  Recovered/correct/png asset website 2/5.png
+1561a7ed763aaed68d1b72e727f63211   517134  png   1920x1080  yes  Recovered/correct/png asset website 2/6.png
+69fc6c15b920ca55248323dd7d01807e   544474  png   1920x1080  yes  Recovered/correct/png asset website 2/7.png
+4d95ca7617faa7bb50b650de1a57390d   200013  png   1920x1080  yes  Recovered/correct/png asset website 2/8.png
+68005fbe416a9519b66bbfad63886aae   411943  png   1920x1080  yes  Recovered/correct/png asset website 2/9.png
+4d95ca7617faa7bb50b650de1a57390d   200013  png   1920x1080  yes  Recovered/couple/couple-cutout.png
+b6c3397a3bfd2cca724c078dfc04108f  1353058  png   1536x1024   no  Recovered/florals/accent-doves.png
+39092cdf04845614748cf6e1d0d15f44  1637671  png   1536x1024   no  Recovered/florals/arch-frame.png
+2fcd712f602fb2d90dc05544b6729e78  1229383  png   1536x1024   no  Recovered/florals/connecting-swag.png
+5c64a1e138b18b58b6fa4c95998128a0   385002  png   1920x1080  yes  Recovered/florals/drapery-divider.png
+e0e42d0724dbb9491922375a36335993  1252555  png   1536x1024   no  Recovered/florals/drapery-floral-divider.png
+d2695206562e3ed68acde756ab65a203   629120  png   1920x1080  yes  Recovered/florals/floral-border-full.png
+2805eee974d5482abb8897533891cb4a   350168  png   1920x1080  yes  Recovered/florals/floral-corner-tl.png
+e9ac079ff4363968983b9295d89c6f38   494957  png   1920x1080  yes  Recovered/florals/gallery-frame.png
+94e2c8dca599f654ec212c69bf4a51fb  1342405  png   1536x1024  yes  Recovered/florals/paw-prints-trail.png
+264396eb623eaa6904129c2b8e2ded01  1421127  png   1536x1024  yes  Recovered/florals/scattered-petals-trail.png
+0e6d6b3e20d36b2647f22f255a333919  1323511  png   1536x1024   no  Recovered/florals/section-header-garland.png
+085b9183c8ac542acc14546b338d8f1a  2237758  png   1536x1024  yes  Recovered/florals/section-meadow-bottom.png
+ba2ac232d510e77ac89c096fd0e7b621  1793896  png   1536x1024  yes  Recovered/florals/story-title-garland.png
+a2cb766da2d79df875cfb32cf619eb84  1688201  png   1536x1024  yes  Recovered/florals/story-vine-right.png
+b47b7d5204fda747de36f092161a37dd  2782517  png   1536x1024   no  Recovered/illustrations/closing-footer-meadow.png
+2bb7b671b8ab81807d9f923bb025224c  1833955  png   1536x1024   no  Recovered/illustrations/closing-illustration.png
+b5aa919cf023fc78fd9ca04847875d01   136037  png   1920x1080  yes  Recovered/illustrations/countdown-cats-banner.png
+7a5ebe0ea7d514884be132fcebbe286b  3277562  png   1536x1024  yes  Recovered/illustrations/gate-scene-cats.png
+2ee59bf3991048e9a6a6f51a716f5b8a    28304  png   1920x1080  yes  Recovered/illustrations/loading-motif.png
+5cb4e35069a231dc73764646a79059c7    89817  png   1920x1080  yes  Recovered/illustrations/map-pin.png
+100f6d5840a33e1288b3484d939f56ac  2373849  png   1536x1024  yes  Recovered/illustrations/section-meadow-bottom.png
+1bdd32128dab89c7d5f775c5e351bef2  2469122  png   1536x1024  yes  Recovered/illustrations/section-meadow-top.png
+cec6a687cb556057e749a4f9027c2e09  1370214  png   1920x1080  yes  Recovered/illustrations/section-wash.png
+bc4ee0cdec82c57be564c8c3b86a3f75  2667813  png   1536x1024   no  Recovered/illustrations/story-growing.png
+a8c7c4aa4d044d483887a3233b113dce   215081  png   1920x1080  yes  Recovered/illustrations/story-jakarta.png
+c8346b8400fa0f94c32c0cbced612f99  1162565  png   1920x1080  yes  Recovered/illustrations/story-keio.png
+dae807d5d42e35c382120ba3db165d32   141147  png   1920x1080  yes  Recovered/illustrations/story-ldr.png
+6cdc8177723a56ad846905d20f82ff31   543872  png   1920x1080  yes  Recovered/illustrations/story-married.png
+d71d38b0af6dc46f9126fc7e56efca9f   598437  png   1920x1080  yes  Recovered/illustrations/story-meeting.png
+83530f853fed9069a048d0a1fd066774  1990865  png   1536x1024   no  Recovered/illustrations/story-motor.png
+5ea3e05c3cce431fd839483b7f0bee71   719805  png   1920x1080  yes  Recovered/illustrations/story-together.png
+51daf61c20f86712f6928575df698861   375647  png   1920x1080  yes  Recovered/illustrations/welcome-accent.png
+2f4f2cbee422f4f2d047d2cb1e952f19  2937606  png   1536x1024  yes  Recovered/illustrations/welcome-cats-meadow.png
+eb5db7481c92219a1696d630773148c2    13782  webp  1200x320    no  Recovered/scenes/countdown-bg.webp
+e0ba3d9652c18998eb2f93fcdbe78801    54442  webp  1080x1350   no  Recovered/scenes/hero-bg.webp
+186d0f1dd5ba70b1134085d0d1b86522   272484  webp  1080x1350   no  Recovered/scenes/hero-main.webp
+e294238016b7f1985620ade292d97cdd  1240857  png   1200x800   yes  Recovered/scenes/section-bg-wash.png
+e8bb40c03f443663c6c04760a4d9a2d5     2436  webp  1200x800    no  Recovered/scenes/section-bg-wash.webp
+826c0332d5a50a9d94da45d981184c52     1834  webp  1200x600    no  Recovered/scenes/section-wash.webp
+
+# duplicates (same sha256, different paths):
+  0eaa5632eae34319…  assets/cats/cat-grass-frontal.png  =  nikah-web/public/assets/cats/cat-grass-frontal.png  =  Recovered/correct-rgba/cat-grass-frontal.png
+  0e87f3086a9e93d9…  assets/cats/cat-hoshi-kimho-playing.png  =  nikah-web/public/assets/cats/cat-hoshi-kimho-playing.png  =  Recovered/cats/cat-hoshi-kimho-playing.png  =  Recovered/correct/30.png
+  930f55a6e3e8b4f7…  assets/cats/cat-hoshi.png  =  nikah-web/public/assets/cats/cat-hoshi.png
+  50d2dc8afa90485a…  assets/cats/cat-in-flowers.png  =  nikah-web/public/assets/cats/cat-in-flowers.png  =  Recovered/correct-rgba/cat-in-flowers.png
+  b66c2e7cedd4e6a5…  assets/cats/cat-in-heart-flowers.png  =  nikah-web/public/assets/cats/cat-in-heart-flowers.png  =  Recovered/correct-rgba/cat-in-heart-flowers.png
+  4af04e2dff170ce4…  assets/cats/cat-jiro-in-flowers.png  =  nikah-web/public/assets/cats/cat-jiro-in-flowers.png  =  Recovered/correct/cat-jiro-in-flowers.png
+  0e99e0e563616d82…  assets/cats/cat-jiro-with-dove.png  =  nikah-web/public/assets/cats/cat-jiro-with-dove.png  =  Recovered/correct-rgba/cat-with-dove.png
+  c207e0b7cc795927…  assets/cats/cat-jiro.png  =  nikah-web/public/assets/cats/cat-jiro.png
+  ff81838a2917260c…  assets/cats/cat-kimho.png  =  nikah-web/public/assets/cats/cat-kimho.png
+  2b98b152502f1c92…  assets/cats/cat-meng-with-flowers.png  =  nikah-web/public/assets/cats/cat-meng-with-flowers.png  =  Recovered/correct/cat-meng-with-flowers.png
+  e473195c074df676…  assets/cats/cat-meng.png  =  nikah-web/public/assets/cats/cat-meng.png
+  23a05b3528f62c9e…  assets/cats/cat-moju-sleeping-flowers.png  =  nikah-web/public/assets/cats/cat-moju-sleeping-flowers.png  =  Recovered/correct/cat-moju-sleeping-flowers.png
+  23b63961b70e6cad…  assets/cats/cat-moju.png  =  nikah-web/public/assets/cats/cat-moju.png
+  15bceec7a47d6234…  assets/cats/cat-peek.png  =  nikah-web/public/assets/cats/cat-peek.png
+  490baf94da3588b3…  assets/cats/cat-shiro-butterfly.png  =  nikah-web/public/assets/cats/cat-shiro-butterfly.png  =  Recovered/correct/cat-shiro-butterfly.png
+  fa67bb5ba4b874f5…  assets/cats/cat-shiro.png  =  nikah-web/public/assets/cats/cat-shiro.png
+  5bfe07e26c999557…  assets/cats/cat-simba-with-dove.png  =  nikah-web/public/assets/cats/cat-simba-with-dove.png  =  Recovered/correct/cat-simba-with-dove.png
+  b22c079041aa0757…  assets/cats/cat-simba.png  =  nikah-web/public/assets/cats/cat-simba.png
+  a81677116da4c3d0…  assets/cats/cat-sleeping-flowers.png  =  nikah-web/public/assets/cats/cat-sleeping-flowers.png  =  Recovered/correct-rgba/cat-sleeping-flowers.png
+  8b110b85f9a42c9d…  assets/cats/cat-sleeping-wreath.png  =  nikah-web/public/assets/cats/cat-sleeping-wreath.png  =  Recovered/correct-rgba/cat-sleeping-wreath.png
+  c3c21345d0ed35cb…  assets/cats/cats-couple-wreath.png  =  nikah-web/public/assets/cats/cats-couple-wreath.png  =  Recovered/correct-rgba/cats-couple-wreath.png
+  b0fec429329f857a…  assets/couple/couple-cutout.png  =  nikah-web/public/assets/couple/couple-cutout.png
+  24c7e5e01dfb683f…  assets/couple/couple-illustration.png  =  nikah-web/public/assets/couple/couple-illustration.png  =  Recovered/correct-rgba/couple-illustration.png
+  2c0fd576f84ccdfd…  assets/cutout/accent-butterflies.png  =  nikah-web/public/assets/cutout/accent-butterflies.png
+  cfba559ff0fd457a…  assets/cutout/accent-doves-arch.png  =  nikah-web/public/assets/cutout/accent-doves-arch.png  =  Recovered/correct-rgba/accent-doves-arch.png
+  66389eff5aac753e…  assets/cutout/accent-doves-heart.png  =  nikah-web/public/assets/cutout/accent-doves-heart.png  =  Recovered/correct-rgba/accent-doves-heart.png
+  8a06054ac42aef94…  assets/cutout/accent-doves-pair.png  =  nikah-web/public/assets/cutout/accent-doves-pair.png  =  Recovered/correct-rgba/accent-doves-pair.png
+  2b68450a4640b63a…  assets/cutout/accent-doves.png  =  nikah-web/public/assets/cutout/accent-doves.png
+  0cb712a78c40fd6f…  assets/cutout/couple-cutout-alt.png  =  nikah-web/public/assets/cutout/couple-cutout-alt.png
+  0218e11288a0ae6d…  assets/cutout/couple-under-arch.png  =  nikah-web/public/assets/cutout/couple-under-arch.png  =  Recovered/correct-rgba/couple-under-arch.png
+  cec6a687cb556057…  assets/cutout/drapery-divider.png  =  nikah-web/public/assets/cutout/drapery-divider.png  =  Recovered/_backups/v2-backup/14.png  =  Recovered/correct/png asset website 2/14.png  =  Recovered/illustrations/section-wash.png
+  11a8bc12ddf12bca…  assets/cutout/floral-cluster-mixed.png  =  nikah-web/public/assets/cutout/floral-cluster-mixed.png  =  Recovered/correct-rgba/floral-cluster-mixed.png
+  d634e8ef75338462…  assets/cutout/floral-cluster-pink.png  =  nikah-web/public/assets/cutout/floral-cluster-pink.png  =  Recovered/correct-rgba/floral-cluster-pink.png
+  c58eebdec6d0d445…  assets/cutout/floral-cluster-pinkwhite.png  =  nikah-web/public/assets/cutout/floral-cluster-pinkwhite.png  =  Recovered/correct-rgba/floral-cluster-pinkwhite.png
+  a091595bd3377151…  assets/cutout/floral-cluster-redroses.png  =  nikah-web/public/assets/cutout/floral-cluster-redroses.png  =  Recovered/correct-rgba/floral-cluster-redroses.png
+  96f20d1c2fc029d4…  assets/cutout/floral-corner-br.png  =  nikah-web/public/assets/cutout/floral-corner-br.png
+  64a83673034e9ff2…  assets/cutout/floral-corner-tl.png  =  nikah-web/public/assets/cutout/floral-corner-tl.png
+  ef8d4a72570e3c83…  assets/cutout/floral-sprig.png  =  nikah-web/public/assets/cutout/floral-sprig.png
+  92c993e798986997…  assets/cutout/floral-wisteria-frame.png  =  nikah-web/public/assets/cutout/floral-wisteria-frame.png  =  Recovered/correct-rgba/floral-wisteria-frame.png
+  ccf451e7b9f770d6…  assets/cutout/forest-scene-bear.png  =  nikah-web/public/assets/cutout/forest-scene-bear.png  =  Recovered/correct-rgba/forest-scene-bear.png
+  c0851aaf27e6d099…  assets/cutout/gate-arch-floral.png  =  nikah-web/public/assets/cutout/gate-arch-floral.png  =  Recovered/correct-rgba/gate-arch-floral.png
+  575c00110e7661a2…  assets/cutout/gate-scene-cat.png  =  nikah-web/public/assets/cutout/gate-scene-cat.png  =  Recovered/correct-rgba/gate-scene-cat.png
+  3e7a1db10ebd2d1b…  assets/cutout/gate-scene-cats-wide.png  =  nikah-web/public/assets/cutout/gate-scene-cats-wide.png  =  Recovered/correct-rgba/gate-scene-cats-wide.png
+  7a5ebe0ea7d51488…  assets/cutout/gate-scene-cats.png  =  nikah-web/public/assets/cutout/gate-scene-cats.png  =  Recovered/correct/26.png  =  Recovered/illustrations/gate-scene-cats.png
+  c028e03eefcee506…  assets/cutout/paw-prints-trail-straight.png  =  nikah-web/public/assets/cutout/paw-prints-trail-straight.png  =  Recovered/correct-rgba/paw-prints-trail-straight.png
+  6c53d62a9a0086ee…  assets/cutout/peacock-arch-couple.png  =  nikah-web/public/assets/cutout/peacock-arch-couple.png  =  Recovered/correct-rgba/peacock-arch-couple.png
+  afef155345adc69c…  assets/cutout/section-wash-cool.png  =  nikah-web/public/assets/cutout/section-wash-cool.png  =  Recovered/correct-rgba/section-wash-cool.png
+  9dc5f379a12511d8…  assets/cutout/section-wash-pink.png  =  nikah-web/public/assets/cutout/section-wash-pink.png  =  Recovered/correct-rgba/section-wash-pink.png
+  acf52ef9e5ab812a…  assets/cutout/section-wash-warm.png  =  nikah-web/public/assets/cutout/section-wash-warm.png  =  Recovered/correct-rgba/section-wash-warm.png
+  c7393ea99e4def15…  assets/cutout/story-books-plane.png  =  nikah-web/public/assets/cutout/story-books-plane.png  =  Recovered/correct-rgba/story-books-plane.png
+  5b00a677d9c97029…  assets/cutout/story-bus-couple.png  =  nikah-web/public/assets/cutout/story-bus-couple.png  =  Recovered/correct-rgba/story-bus-couple.png
+  d5cc7ff07b4481c9…  assets/cutout/story-growing.png  =  nikah-web/public/assets/cutout/story-growing.png
+  b5f469fe70dbe3c1…  assets/cutout/story-jakarta-map.png  =  nikah-web/public/assets/cutout/story-jakarta-map.png  =  Recovered/correct-rgba/story-jakarta-map.png
+  44f02307c0b54f88…  assets/cutout/story-jakarta-motor.png  =  nikah-web/public/assets/cutout/story-jakarta-motor.png  =  Recovered/correct-rgba/story-jakarta-motor.png
+  a2a903f4129eaae3…  assets/cutout/story-keio-tower.png  =  nikah-web/public/assets/cutout/story-keio-tower.png  =  Recovered/correct-rgba/story-keio-tower.png
+  65d9d7614ac4d1d1…  assets/cutout/story-meeting-2.png  =  nikah-web/public/assets/cutout/story-meeting-2.png  =  Recovered/correct-rgba/story-meeting-2.png
+  ec40b80604f2a31d…  assets/cutout/wedding-rings.png  =  nikah-web/public/assets/cutout/wedding-rings.png  =  Recovered/correct-rgba/wedding-rings.png
+  7107247dd0fe7e79…  assets/cutout/welcome-accent.png  =  nikah-web/public/assets/cutout/welcome-accent.png
+  23928634b5a8bc11…  assets/gallery/gallery-01.jpg  =  nikah-web/public/assets/gallery/gallery-01.jpg
+  5de5a160eac5fe26…  assets/gallery/gallery-02.jpg  =  nikah-web/public/assets/gallery/gallery-02.jpg
+  e26184175e1292f8…  assets/gallery/gallery-03.jpg  =  nikah-web/public/assets/gallery/gallery-03.jpg
+  7d137fd9771c9bc6…  assets/gallery/gallery-04.jpg  =  nikah-web/public/assets/gallery/gallery-04.jpg
+  6eaa512a0d48e96c…  assets/gallery/gallery-05.jpg  =  nikah-web/public/assets/gallery/gallery-05.jpg
+  4f11552bcee81e1a…  assets/gallery/gallery-06.jpg  =  nikah-web/public/assets/gallery/gallery-06.jpg
+  b85f2d583054f145…  assets/gallery/gallery-07.jpg  =  nikah-web/public/assets/gallery/gallery-07.jpg
+  be2a25a3e1cdcd01…  assets/gallery/gallery-08.jpg  =  nikah-web/public/assets/gallery/gallery-08.jpg
+  eb1125de37867289…  assets/gallery/gallery-09.jpg  =  nikah-web/public/assets/gallery/gallery-09.jpg
+  3f4827ce1404c410…  assets/scene/arch-frame.png  =  nikah-web/public/assets/scene/arch-frame.png
+  e376bae7b29d2f6d…  assets/scene/countdown-bg.png  =  nikah-web/public/assets/scene/countdown-bg.png
+  b4bc3fc18e99a3ea…  assets/scene/countdown-bg.webp  =  nikah-web/public/assets/scene/countdown-bg.webp
+  aa0da4be10b574d6…  assets/scene/event-accent.png  =  nikah-web/public/assets/scene/event-accent.png
+  4d049e1b5eb7a47d…  assets/scene/floral-border-full.png  =  nikah-web/public/assets/scene/floral-border-full.png
+  cbd638c1adb9eb69…  assets/scene/gallery-frame.png  =  nikah-web/public/assets/scene/gallery-frame.png
+  9e64a37476e2eed7…  assets/scene/gift-accent.png  =  nikah-web/public/assets/scene/gift-accent.png
+  b6cf0874bd04377d…  assets/scene/hero-bg.webp  =  nikah-web/public/assets/scene/hero-bg.webp
+  8cf42e206283acf1…  assets/scene/hero-main.webp  =  nikah-web/public/assets/scene/hero-main.webp
+  092d4964627ba689…  assets/scene/hero-tall.webp  =  nikah-web/public/assets/scene/hero-tall.webp
+  a797cf0cbf954bc4…  assets/scene/japan-motif.png  =  nikah-web/public/assets/scene/japan-motif.png
+  a4acc845ff00955e…  assets/scene/loading-motif.png  =  nikah-web/public/assets/scene/loading-motif.png
+  3fef2fb956acb39b…  assets/scene/map-pin.png  =  nikah-web/public/assets/scene/map-pin.png
+  d92978ef7600f98c…  assets/scene/meadow-daisies.png  =  nikah-web/public/assets/scene/meadow-daisies.png  =  Recovered/correct-rgba/meadow-daisies.png
+  3f975d8a1872b2dc…  assets/scene/scene-bridge-cat.png  =  nikah-web/public/assets/scene/scene-bridge-cat.png  =  Recovered/correct-rgba/scene-bridge-cat.png
+  e294238016b7f198…  assets/scene/section-bg-wash.png  =  nikah-web/public/assets/scene/section-bg-wash.png  =  Recovered/scenes/section-bg-wash.png
+  e8bb40c03f443663…  assets/scene/section-bg-wash.webp  =  nikah-web/public/assets/scene/section-bg-wash.webp  =  Recovered/scenes/section-bg-wash.webp
+  493597bf29239dda…  assets/scene/section-meadow-bottom-daisies.png  =  nikah-web/public/assets/scene/section-meadow-bottom-daisies.png  =  Recovered/correct-rgba/section-meadow-bottom-daisies.png
+  826c0332d5a50a9d…  assets/scene/section-wash.webp  =  nikah-web/public/assets/scene/section-wash.webp  =  Recovered/scenes/section-wash.webp
+  058053cabfa18b6f…  assets/scene/story-meeting.png  =  nikah-web/public/assets/scene/story-meeting.png
+  2f4f2cbee422f4f2…  assets/scene/welcome-cats-meadow.png  =  nikah-web/public/assets/scene/welcome-cats-meadow.png  =  Recovered/correct/27.png  =  Recovered/illustrations/welcome-cats-meadow.png
+  595c52236733d9bf…  Recovered/_backups/v2-backup/1.png  =  Recovered/cats/cat-hoshi.png  =  Recovered/correct/png asset website 2/1.png
+  d71d38b0af6dc46f…  Recovered/_backups/v2-backup/10.png  =  Recovered/correct/png asset website 2/10.png  =  Recovered/illustrations/story-meeting.png
+  2805eee974d5482a…  Recovered/_backups/v2-backup/11.png  =  Recovered/correct/png asset website 2/11.png  =  Recovered/florals/floral-corner-tl.png
+  a8c7c4aa4d044d48…  Recovered/_backups/v2-backup/12.png  =  Recovered/correct/png asset website 2/12.png  =  Recovered/illustrations/story-jakarta.png
+  e9ac079ff4363968…  Recovered/_backups/v2-backup/13.png  =  Recovered/correct/png asset website 2/13.png  =  Recovered/florals/gallery-frame.png
+  5cb4e35069a231dc…  Recovered/_backups/v2-backup/15.png  =  Recovered/correct/png asset website 2/15.png  =  Recovered/illustrations/map-pin.png
+  5c64a1e138b18b58…  Recovered/_backups/v2-backup/16.png  =  Recovered/correct/png asset website 2/16.png  =  Recovered/florals/drapery-divider.png
+  2ee59bf3991048e9…  Recovered/_backups/v2-backup/17.png  =  Recovered/correct/png asset website 2/17.png  =  Recovered/illustrations/loading-motif.png
+  51daf61c20f86712…  Recovered/_backups/v2-backup/18.png  =  Recovered/correct/png asset website 2/18.png  =  Recovered/illustrations/welcome-accent.png
+  dae807d5d42e35c3…  Recovered/_backups/v2-backup/19.png  =  Recovered/correct/png asset website 2/19.png  =  Recovered/illustrations/story-ldr.png
+  9ddbf49b13a5835d…  Recovered/_backups/v2-backup/2.png  =  Recovered/cats/cat-meng.png  =  Recovered/correct/png asset website 2/2.png
+  c8346b8400fa0f94…  Recovered/_backups/v2-backup/20.png  =  Recovered/correct/png asset website 2/20.png  =  Recovered/illustrations/story-keio.png
+  5ea3e05c3cce431f…  Recovered/_backups/v2-backup/21.png  =  Recovered/correct/png asset website 2/21.png  =  Recovered/illustrations/story-together.png
+  6cdc8177723a56ad…  Recovered/_backups/v2-backup/22.png  =  Recovered/correct/png asset website 2/22.png  =  Recovered/illustrations/story-married.png
+  dae94f5f219e92fc…  Recovered/_backups/v2-backup/23.png  =  Recovered/correct/png asset website 2/23.png
+  97a175dc818e4740…  Recovered/_backups/v2-backup/24.png  =  Recovered/correct/png asset website 2/24.png
+  b5aa919cf023fc78…  Recovered/_backups/v2-backup/25.png  =  Recovered/correct/png asset website 2/25.png  =  Recovered/illustrations/countdown-cats-banner.png
+  d2695206562e3ed6…  Recovered/_backups/v2-backup/27.png  =  Recovered/correct/png asset website 2/27.png  =  Recovered/florals/floral-border-full.png
+  aabba932038cbab6…  Recovered/_backups/v2-backup/3.png  =  Recovered/cats/cat-moju.png  =  Recovered/correct/png asset website 2/3.png
+  6955e290016ae22f…  Recovered/_backups/v2-backup/4.png  =  Recovered/cats/cat-simba.png  =  Recovered/correct/png asset website 2/4.png
+  1baf0468e6eab117…  Recovered/_backups/v2-backup/5.png  =  Recovered/cats/cat-kimho.png  =  Recovered/correct/png asset website 2/5.png
+  1561a7ed763aaed6…  Recovered/_backups/v2-backup/6.png  =  Recovered/cats/cat-shiro.png  =  Recovered/correct/png asset website 2/6.png
+  69fc6c15b920ca55…  Recovered/_backups/v2-backup/7.png  =  Recovered/cats/cat-jiro.png  =  Recovered/correct/png asset website 2/7.png
+  4d95ca7617faa7bb…  Recovered/_backups/v2-backup/8.png  =  Recovered/correct/png asset website 2/8.png  =  Recovered/couple/couple-cutout.png
+  68005fbe416a9519…  Recovered/_backups/v2-backup/9.png  =  Recovered/correct/png asset website 2/9.png
+  27b4679a929c5b34…  Recovered/cats/cat-jiro-in-flowers.png  =  Recovered/correct/33.png
+  12f2b4e670be0a87…  Recovered/cats/cat-peek.png  =  Recovered/correct/35.png
+  12ca14bc50f34025…  Recovered/cats/cat-simba-with-dove.png  =  Recovered/correct/29.png
+  167c6309f01362f3…  Recovered/correct/12.png  =  Recovered/correct/cat-original/cat-shiro-butterfly.png
+  6a2744fb468234f2…  Recovered/correct/13.png  =  Recovered/correct/cat-original/cat-meng-with-flowers.png
+  bb2c8fe5c30ccd65…  Recovered/correct/14.png  =  Recovered/correct/cat-original/cat-simba-with-dove.png
+  a76989a616dc73b0…  Recovered/correct/16.png  =  Recovered/correct/cat-original/cat-hoshi-kimho-playing.png
+  100f6d5840a33e12…  Recovered/correct/20.png  =  Recovered/illustrations/section-meadow-bottom.png
+  1bdd32128dab89c7…  Recovered/correct/21.png  =  Recovered/illustrations/section-meadow-top.png
+  fc492d5d166120f2…  Recovered/correct/23.png  =  Recovered/correct/cat-original/cat-jiro-in-flowers.png
+  a95f6a66acf46766…  Recovered/correct/24.png  =  Recovered/correct/cat-original/cat-moju-sleeping-flowers.png
+  264396eb623eaa69…  Recovered/correct/25.png  =  Recovered/florals/scattered-petals-trail.png
+  085b9183c8ac542a…  Recovered/correct/28.png  =  Recovered/florals/section-meadow-bottom.png
+  94e2c8dca599f654…  Recovered/correct/31.png  =  Recovered/florals/paw-prints-trail.png
+  a2cb766da2d79df8…  Recovered/correct/32.png  =  Recovered/florals/story-vine-right.png
+  ba2ac232d510e77a…  Recovered/correct/34.png  =  Recovered/florals/story-title-garland.png
+  83530f853fed9069…  Recovered/correct/36.png  =  Recovered/illustrations/story-motor.png
+  2fcd712f602fb2d9…  Recovered/correct/37.png  =  Recovered/florals/connecting-swag.png
+  e0e42d0724dbb949…  Recovered/correct/38.png  =  Recovered/florals/drapery-floral-divider.png
+  0e6d6b3e20d36b26…  Recovered/correct/39.png  =  Recovered/florals/section-header-garland.png
+  2bb7b671b8ab8180…  Recovered/correct/40.png  =  Recovered/illustrations/closing-illustration.png
+  39092cdf04845614…  Recovered/correct/41.png  =  Recovered/florals/arch-frame.png
+  b6c3397a3bfd2cca…  Recovered/correct/42.png  =  Recovered/florals/accent-doves.png
+  b47b7d5204fda747…  Recovered/correct/43.png  =  Recovered/illustrations/closing-footer-meadow.png

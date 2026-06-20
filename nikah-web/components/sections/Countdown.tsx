@@ -226,7 +226,7 @@ export default function Countdown() {
               style={{ position: "relative", width: "100%", height: "100%" }}
             >
               <Image
-                src="/assets/scenes/countdown-bg.webp"
+                src="/assets/scene/countdown-bg.webp"
                 alt=""
                 fill
                 sizes="(max-width: 520px) 100vw, 520px"

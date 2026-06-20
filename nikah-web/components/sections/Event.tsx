@@ -145,7 +145,7 @@ export default function Event() {
         <Reveal>
           <Breathing seed="event-accent" as="div">
             <Image
-              src="/assets/illustrations/event-accent.png"
+              src="/assets/scene/event-accent.png"
               alt="Bingkai lengkung dengan bunga sebagai aksen detail acara"
               width={280}
               height={140}
@@ -213,7 +213,7 @@ export default function Event() {
             aria-label="Buka lokasi di Google Maps (tab baru)"
           >
             <Image
-              src="/assets/illustrations/map-pin.png"
+              src="/assets/scene/map-pin.png"
               alt=""
               width={20}
               height={20}

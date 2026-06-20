@@ -10,7 +10,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "rules:test": "../tools/cursor-rules-generator/run.sh test",
+    "rules:all": "../tools/cursor-rules-generator/run.sh all",
+    "rules:regen": "../tools/cursor-rules-generator/run.sh regen"
   },
   "dependencies": {
     "@studio-freight/lenis": "^1.0.42",
@@ -18,6 +21,7 @@
     "next": "16.2.9",
     "react": "19.2.4",
     "react-dom": "19.2.4",
+    "sharp": "^0.35.2",
     "zod": "^4.4.3"
   },
   "devDependencies": {

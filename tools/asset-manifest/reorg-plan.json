@@ -1,0 +1,377 @@
+[
+  {
+    "from": "assets/cats/cat-grass-frontal.png",
+    "to": "assets/cats/cat-grass-frontal.png",
+    "action": "keep"
+  },
+  {
+    "from": "assets/cats/cat-hoshi.png",
+    "to": "assets/cats/cat-hoshi.png",
+    "action": "keep"
+  },
+  {
+    "from": "assets/cats/cat-in-flowers.png",
+    "to": "assets/cats/cat-in-flowers.png",
+    "action": "keep"
+  },
+  {
+    "from": "assets/cats/cat-in-heart-flowers.png",
+    "to": "assets/cats/cat-in-heart-flowers.png",
+    "action": "keep"
+  },
+  {
+    "from": "assets/cats/cat-jiro.png",
+    "to": "assets/cats/cat-jiro.png",
+    "action": "keep"
+  },
+  {
+    "from": "assets/cats/cat-kimho.png",
+    "to": "assets/cats/cat-kimho.png",
+    "action": "keep"
+  },
+  {
+    "from": "assets/cats/cat-meng.png",
+    "to": "assets/cats/cat-meng.png",
+    "action": "keep"
+  },
+  {
+    "from": "assets/cats/cat-moju.png",
+    "to": "assets/cats/cat-moju.png",
+    "action": "keep"
+  },
+  {
+    "from": "assets/cats/cat-peek.png",
+    "to": "assets/cats/cat-peek.png",
+    "action": "keep"
+  },
+  {
+    "from": "assets/cats/cat-shiro.png",
+    "to": "assets/cats/cat-shiro.png",
+    "action": "keep"
+  },
+  {
+    "from": "assets/cats/cat-simba.png",
+    "to": "assets/cats/cat-simba.png",
+    "action": "keep"
+  },
+  {
+    "from": "assets/cats/cat-sleeping-flowers.png",
+    "to": "assets/cats/cat-sleeping-flowers.png",
+    "action": "keep"
+  },
+  {
+    "from": "assets/cats/cat-sleeping-wreath.png",
+    "to": "assets/cats/cat-sleeping-wreath.png",
+    "action": "keep"
+  },
+  {
+    "from": "assets/cats/cat-with-dove.png",
+    "to": "assets/cats/cat-with-dove.png",
+    "action": "keep"
+  },
+  {
+    "from": "assets/cats/cats-couple-wreath.png",
+    "to": "assets/cats/cats-couple-wreath.png",
+    "action": "keep"
+  },
+  {
+    "from": "assets/couple/couple-cutout.png",
+    "to": "assets/couple/couple-cutout.png",
+    "action": "keep"
+  },
+  {
+    "from": "assets/couple/couple-illustration.png",
+    "to": "assets/couple/couple-illustration.png",
+    "action": "keep"
+  },
+  {
+    "from": "assets/florals/accent-butterflies.png",
+    "to": "assets/cutout/accent-butterflies.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/florals/accent-doves-arch.png",
+    "to": "assets/cutout/accent-doves-arch.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/florals/accent-doves-heart.png",
+    "to": "assets/cutout/accent-doves-heart.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/florals/accent-doves-pair.png",
+    "to": "assets/cutout/accent-doves-pair.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/florals/accent-doves.png",
+    "to": "assets/cutout/accent-doves.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/florals/arch-frame.png",
+    "to": "assets/scene/arch-frame.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/florals/drapery-divider.png",
+    "to": "assets/cutout/drapery-divider.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/florals/floral-border-full.png",
+    "to": "assets/scene/floral-border-full.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/florals/floral-cluster-mixed.png",
+    "to": "assets/cutout/floral-cluster-mixed.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/florals/floral-cluster-pink.png",
+    "to": "assets/cutout/floral-cluster-pink.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/florals/floral-cluster-pinkwhite.png",
+    "to": "assets/cutout/floral-cluster-pinkwhite.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/florals/floral-cluster-redroses.png",
+    "to": "assets/cutout/floral-cluster-redroses.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/florals/floral-corner-br.png",
+    "to": "assets/cutout/floral-corner-br.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/florals/floral-corner-tl.png",
+    "to": "assets/cutout/floral-corner-tl.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/florals/floral-sprig.png",
+    "to": "assets/cutout/floral-sprig.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/florals/floral-wisteria-frame.png",
+    "to": "assets/cutout/floral-wisteria-frame.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/florals/paw-prints-trail-straight.png",
+    "to": "assets/cutout/paw-prints-trail-straight.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/gallery/gallery-01.jpg",
+    "to": "assets/gallery/gallery-01.jpg",
+    "action": "keep"
+  },
+  {
+    "from": "assets/gallery/gallery-02.jpg",
+    "to": "assets/gallery/gallery-02.jpg",
+    "action": "keep"
+  },
+  {
+    "from": "assets/gallery/gallery-03.jpg",
+    "to": "assets/gallery/gallery-03.jpg",
+    "action": "keep"
+  },
+  {
+    "from": "assets/gallery/gallery-04.jpg",
+    "to": "assets/gallery/gallery-04.jpg",
+    "action": "keep"
+  },
+  {
+    "from": "assets/gallery/gallery-05.jpg",
+    "to": "assets/gallery/gallery-05.jpg",
+    "action": "keep"
+  },
+  {
+    "from": "assets/gallery/gallery-06.jpg",
+    "to": "assets/gallery/gallery-06.jpg",
+    "action": "keep"
+  },
+  {
+    "from": "assets/gallery/gallery-07.jpg",
+    "to": "assets/gallery/gallery-07.jpg",
+    "action": "keep"
+  },
+  {
+    "from": "assets/gallery/gallery-08.jpg",
+    "to": "assets/gallery/gallery-08.jpg",
+    "action": "keep"
+  },
+  {
+    "from": "assets/gallery/gallery-09.jpg",
+    "to": "assets/gallery/gallery-09.jpg",
+    "action": "keep"
+  },
+  {
+    "from": "assets/illustrations/couple-under-arch.png",
+    "to": "assets/cutout/couple-under-arch.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/illustrations/event-accent.png",
+    "to": "assets/scene/event-accent.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/illustrations/forest-scene-bear.png",
+    "to": "assets/cutout/forest-scene-bear.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/illustrations/gallery-frame.png",
+    "to": "assets/scene/gallery-frame.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/illustrations/gate-arch-floral.png",
+    "to": "assets/cutout/gate-arch-floral.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/illustrations/gate-scene-cat.png",
+    "to": "assets/cutout/gate-scene-cat.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/illustrations/gate-scene-cats-wide.png",
+    "to": "assets/cutout/gate-scene-cats-wide.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/illustrations/gift-accent.png",
+    "to": "assets/scene/gift-accent.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/illustrations/japan-motif.png",
+    "to": "assets/scene/japan-motif.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/illustrations/loading-motif.png",
+    "to": "assets/scene/loading-motif.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/illustrations/map-pin.png",
+    "to": "assets/scene/map-pin.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/illustrations/peacock-arch-couple.png",
+    "to": "assets/cutout/peacock-arch-couple.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/illustrations/story-books-plane.png",
+    "to": "assets/cutout/story-books-plane.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/illustrations/story-bus-couple.png",
+    "to": "assets/cutout/story-bus-couple.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/illustrations/story-growing.png",
+    "to": "assets/cutout/story-growing.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/illustrations/story-jakarta-map.png",
+    "to": "assets/cutout/story-jakarta-map.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/illustrations/story-jakarta-motor.png",
+    "to": "assets/cutout/story-jakarta-motor.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/illustrations/story-keio-tower.png",
+    "to": "assets/cutout/story-keio-tower.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/illustrations/story-meeting-2.png",
+    "to": "assets/cutout/story-meeting-2.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/illustrations/story-meeting.png",
+    "to": "assets/scene/story-meeting.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/illustrations/wedding-rings.png",
+    "to": "assets/cutout/wedding-rings.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/illustrations/welcome-accent.png",
+    "to": "assets/cutout/welcome-accent.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/scenes/countdown-bg.webp",
+    "to": "assets/scene/countdown-bg.webp",
+    "action": "move"
+  },
+  {
+    "from": "assets/scenes/hero-bg.webp",
+    "to": "assets/scene/hero-bg.webp",
+    "action": "move"
+  },
+  {
+    "from": "assets/scenes/hero-main.webp",
+    "to": "assets/scene/hero-main.webp",
+    "action": "move"
+  },
+  {
+    "from": "assets/scenes/hero-tall.webp",
+    "to": "assets/scene/hero-tall.webp",
+    "action": "move"
+  },
+  {
+    "from": "assets/scenes/meadow-daisies.png",
+    "to": "assets/cutout/meadow-daisies.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/scenes/scene-bridge-cat.png",
+    "to": "assets/cutout/scene-bridge-cat.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/scenes/section-meadow-bottom-daisies.png",
+    "to": "assets/cutout/section-meadow-bottom-daisies.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/scenes/section-wash-cool.png",
+    "to": "assets/cutout/section-wash-cool.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/scenes/section-wash-pink.png",
+    "to": "assets/cutout/section-wash-pink.png",
+    "action": "move"
+  },
+  {
+    "from": "assets/scenes/section-wash-warm.png",
+    "to": "assets/cutout/section-wash-warm.png",
+    "action": "move"
+  }
+]

@@ -27,7 +27,7 @@ export default function Japan() {
         <Reveal>
           <Breathing seed="japan-motif" as="div">
             <Image
-              src="/assets/illustrations/japan-motif.png"
+              src="/assets/scene/japan-motif.png"
               alt="Motif sakura, kampus Keio, dan SIT Tokyo sebagai latar mimpi kami"
               width={320}
               height={200}

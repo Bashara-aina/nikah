@@ -37,3 +37,23 @@ nikah-web/next-env.d.ts
 
 # Editor
 .claude/
+
+# Cursor rules generator (Python + uv)
+tools/cursor-rules-generator/.venv/
+tools/cursor-rules-generator/src/exa_results/
+tools/cursor-rules-generator/src/logs/
+tools/cursor-rules-generator/src/__pycache__/
+
+# BiRefNet install (see tools/README.md)
+tools/python_framework/
+tools/python-pkg-extract/
+tools/python-3.11.9-macos11.pkg
+tools/venv/
+tools/test_birefnet.pyc
+__pycache__/
+
+# MCP server build artefacts (Node)
+tools/image-processing-mcp-server/node_modules/
+tools/image-processing-mcp-server/build/
+tools/birefnet-mcp-server/node_modules/
+tools/birefnet-mcp-server/build/

@@ -276,7 +276,7 @@ export default function Closing() {
             }}
           >
             <Image
-              src="/assets/florals/accent-doves.png"
+              src="/assets/cutout/accent-doves.png"
               alt=""
               width={120}
               height={80}
@@ -305,7 +305,7 @@ export default function Closing() {
             }}
           >
             <Image
-              src="/assets/illustrations/story-growing.png"
+              src="/assets/cutout/story-growing.png"
               alt="Bashara, Hanifah, dan kucing-kucing mereka"
               width={320}
               height={200}

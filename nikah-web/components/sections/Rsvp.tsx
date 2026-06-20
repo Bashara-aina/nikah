@@ -181,7 +181,7 @@ export default function Rsvp() {
         <Reveal>
           <Breathing seed="rsvp-accent" as="div">
             <Image
-              src="/assets/illustrations/gift-accent.png"
+              src="/assets/scene/gift-accent.png"
               alt="Aksen lembut untuk bagian konfirmasi kehadiran"
               width={220}
               height={120}

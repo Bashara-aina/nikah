@@ -21,7 +21,7 @@ export default function Divider() {
       aria-hidden="true"
     >
       <Image
-        src="/assets/florals/floral-sprig.png"
+        src="/assets/cutout/floral-sprig.png"
         alt=""
         width={906}
         height={266}

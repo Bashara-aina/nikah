@@ -66,7 +66,7 @@ export const copy = {
           "Berawal dari satu pertemuan daring, di sebuah program organisasi kampus.",
           "Layar yang sederhana, namun cukup untuk membuat hati berlabuh.",
         ],
-        illustration: "/assets/illustrations/story-meeting.png",
+        illustration: "/assets/scene/story-meeting.png",
         illustrationAlt: "Ilustrasi pertemuan daring di organisasi kampus",
       },
       {

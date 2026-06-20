@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "image-processing": {
+      "command": "node",
+      "args": [
+        "tools/image-processing-mcp-server/build/index.js"
+      ],
+      "cwd": "${workspaceFolder}"
+    },
+    "birefnet": {
+      "command": "node",
+      "args": [
+        "tools/birefnet-mcp-server/build/index.js"
+      ],
+      "cwd": "${workspaceFolder}"
+    }
+  }
+}

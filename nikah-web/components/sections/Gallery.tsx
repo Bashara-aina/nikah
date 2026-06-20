@@ -40,7 +40,7 @@ const PHOTOS: readonly { id: number; src: string; alt: string; span: 1 | 2 }[] =
   { id: 9, src: "/assets/gallery/gallery-09.jpg", alt: "Berdua, tenang", span: 1 },
 ];
 
-const FRAME_PNG = "/assets/illustrations/gallery-frame.png";
+const FRAME_PNG = "/assets/scene/gallery-frame.png";
 
 interface TileProps {
   src: string;

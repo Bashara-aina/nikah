@@ -1,0 +1,65 @@
+---
+description: Verify image content on every turn — never inherit prior descriptions of binary files.
+globs:
+  - "**/*.png"
+  - "**/*.jpg"
+  - "**/*.jpeg"
+  - "**/*.webp"
+  - "**/*.avif"
+  - "**/*.gif"
+  - "**/*.heic"
+alwaysApply: true
+---
+
+# Image verification
+
+A binary file's content is **not** carried in conversation history. Prior prose about an image is not evidence about that image's current bytes. This rule prevents the failure mode where the agent describes a file it never actually read this turn.
+
+## Required reading protocol
+
+When a task depends on the visual content of an image file — describing it, comparing it, identifying it, naming it, classifying it, or deciding whether to mutate it — the agent **MUST** do all of the following on the turn the claim is made:
+
+1. **Read the file.** Use the `Read` tool with the absolute path. The system "open file" signal in the IDE does not count as reading — it only indicates the user has the file open.
+2. **Verify the path.** The path passed to `Read` must equal the path the user is asking about, character for character. If unsure, `Glob` first.
+3. **Quote observable facts, not inherited descriptions.** The image content returned by `Read` is the only legitimate source for the claim.
+4. **Cite the path in the response.** Every visual claim must include the absolute path the agent just read. Example: "I read `/abs/path/to/file.png` — it shows…"
+5. **Re-read on every turn.** If the conversation returns to the same file in a later turn, re-read. Files can change. Descriptions cannot.
+
+## When this rule triggers
+
+- User pastes / attaches / references an image by path or by filename.
+- Task is to identify, name, classify, compare, or describe an image.
+- Decision (e.g., "promote to assets", "delete duplicate") depends on what the image shows.
+
+## When this rule does NOT trigger
+
+- Operations on the file's bytes only (resize, convert, hash, metadata) where visual content is incidental. Even then, the agent should still verify the path exists before reporting metadata.
+
+## Hash discipline
+
+When two image files are claimed to be the same or different, the agent **MUST NOT** rely on filename, dimensions, or visual memory. The agent **MUST**:
+
+1. Compute `sha256` of both files.
+2. Compare hashes.
+3. Report the hashes inline so the user can verify.
+
+A script exists at `tools/asset-manifest/build-manifest.mjs` that maintains a JSON manifest of `sha256` per file across `/assets/`, `/Recovered/`, and `/public/assets/`. Use it before claiming "this is a duplicate" or "this is unique."
+
+## Inherited-description failure (do not do this)
+
+```
+Turn N: "the image shows X"
+Turn N+1: (without re-reading) "the image shows X" — even though user has shown a different image
+```
+
+This is the failure that produced three wrong claims about `Recovered/correct-rgba/8.png`. The fix is mechanical: if the path or the content has changed, re-read. If neither has changed, re-read anyway as a sanity check on the first 64 bytes (`head -c 64 file | sha256sum`).
+
+## Honest reporting
+
+If the agent realizes mid-turn that a prior claim was wrong, it **MUST**:
+
+1. Say so explicitly: "Earlier I described `path` as X — that was wrong. I re-read it now and it is Y."
+2. Cite the corrected path and observable facts.
+3. Not paper over the correction with transitional phrasing.
+
+If the agent is uncertain about a claim — even a small one — it **MUST** say "I am not certain" and offer to re-read. Confidence is not a substitute for evidence.

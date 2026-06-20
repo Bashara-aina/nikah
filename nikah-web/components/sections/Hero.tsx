@@ -234,7 +234,7 @@ export default function Hero() {
           style={{ position: "absolute", inset: 0, transformOrigin: "center 45%" }}
         >
           <Image
-            src="/assets/scenes/hero-main.webp"
+            src="/assets/scene/hero-main.webp"
             alt="Ilustrasi Bashara dan Hanifah bersama kucing-kucing mereka di padang bunga"
             fill
             sizes="(max-width: 420px) 86vw, 380px"

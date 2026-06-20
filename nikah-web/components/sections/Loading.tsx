@@ -15,8 +15,8 @@ import { useMotion } from "@/components/motion/MotionContext";
 import { config } from "@/lib/config";
 
 const PRELOAD_SRCS = [
-  "/assets/scenes/hero-bg.webp",
-  "/assets/scenes/hero-main.webp",
+  "/assets/scene/hero-bg.webp",
+  "/assets/scene/hero-main.webp",
   "/assets/couple/couple-cutout.png",
   ...config.cats.map((c) => `/assets/cats/${c}.png`),
 ];
@@ -145,7 +145,7 @@ export default function Loading() {
         >
           <div ref={motifRef} style={{ width: 200, height: 200 }}>
             <Image
-              src="/assets/illustrations/loading-motif.png"
+              src="/assets/scene/loading-motif.png"
               alt=""
               width={200}
               height={200}

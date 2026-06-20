@@ -109,7 +109,7 @@ export default function Doves() {
           }}
         >
           <Image
-            src="/assets/florals/accent-doves.png"
+            src="/assets/cutout/accent-doves.png"
             alt=""
             width={120}
             height={80}
@@ -144,7 +144,7 @@ export default function Doves() {
           }}
         >
           <Image
-            src="/assets/florals/accent-doves.png"
+            src="/assets/cutout/accent-doves.png"
             alt=""
             width={120}
             height={80}

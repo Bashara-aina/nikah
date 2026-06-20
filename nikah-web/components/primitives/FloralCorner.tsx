@@ -55,8 +55,8 @@ export default function FloralCorner({
   const { tier } = useMotion();
   const src =
     side === "tl" || side === "tr"
-      ? "/assets/florals/floral-corner-tl.png"
-      : "/assets/florals/floral-corner-br.png";
+      ? "/assets/cutout/floral-corner-tl.png"
+      : "/assets/cutout/floral-corner-br.png";
 
   const sizeCss = typeof size === "number" ? `${size}px` : size;
   const intrinsic = typeof size === "number" ? size : 360;

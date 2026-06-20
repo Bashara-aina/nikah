@@ -301,7 +301,7 @@ export default function Gift() {
         <Reveal>
           <Breathing seed="gift-accent" as="div">
             <Image
-              src="/assets/illustrations/gift-accent.png"
+              src="/assets/scene/gift-accent.png"
               alt="Aksen lembut untuk bagian tanda kasih"
               width={220}
               height={140}

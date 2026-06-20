@@ -1,0 +1,156 @@
+{
+  "plan": [
+    {
+      "action": "delete",
+      "from": "nikah-web/public/assets/florals/accent-butterflies.png",
+      "sha256": "2c0fd576f84ccdfd0750108d530ff01a1a5c7bec9d2721ca9fa95f44a14e9a5a",
+      "keptTwin": "nikah-web/public/assets/cutout/accent-butterflies.png",
+      "keptTwinCount": 1
+    },
+    {
+      "action": "delete",
+      "from": "nikah-web/public/assets/florals/accent-doves.png",
+      "sha256": "2b68450a4640b63a944966df93d4c2dce7a191fa261a88e3e524faf0ad419df1",
+      "keptTwin": "nikah-web/public/assets/cutout/accent-doves.png",
+      "keptTwinCount": 1
+    },
+    {
+      "action": "delete",
+      "from": "nikah-web/public/assets/florals/drapery-divider.png",
+      "sha256": "cec6a687cb556057e749a4f9027c2e09e50e58948a604ee2b3ae9636da6e958c",
+      "keptTwin": "nikah-web/public/assets/cutout/drapery-divider.png",
+      "keptTwinCount": 1
+    },
+    {
+      "action": "delete",
+      "from": "nikah-web/public/assets/florals/floral-corner-br.png",
+      "sha256": "96f20d1c2fc029d49c3c11ac20db23596fef2123777d86e541b0ac086c1c0b00",
+      "keptTwin": "nikah-web/public/assets/cutout/floral-corner-br.png",
+      "keptTwinCount": 1
+    },
+    {
+      "action": "delete",
+      "from": "nikah-web/public/assets/florals/floral-corner-tl.png",
+      "sha256": "64a83673034e9ff2308785e69c0f227faab034115d9e01140d5edfdc9aca840c",
+      "keptTwin": "nikah-web/public/assets/cutout/floral-corner-tl.png",
+      "keptTwinCount": 1
+    },
+    {
+      "action": "delete",
+      "from": "nikah-web/public/assets/florals/floral-sprig.png",
+      "sha256": "ef8d4a72570e3c83739e908602148368ca6b05aa8b9ffe79f5822d184f0cf693",
+      "keptTwin": "nikah-web/public/assets/cutout/floral-sprig.png",
+      "keptTwinCount": 1
+    },
+    {
+      "action": "delete",
+      "from": "nikah-web/public/assets/illustrations/story-growing.png",
+      "sha256": "d5cc7ff07b4481c9b832056c5de81f859f215eca593f60b6a651629129e9be7e",
+      "keptTwin": "nikah-web/public/assets/cutout/story-growing.png",
+      "keptTwinCount": 1
+    },
+    {
+      "action": "delete",
+      "from": "nikah-web/public/assets/illustrations/welcome-accent.png",
+      "sha256": "7107247dd0fe7e795a9f41dd5ec88e2b5091e4dbba8bdce812e4bd6033ac87a4",
+      "keptTwin": "nikah-web/public/assets/cutout/welcome-accent.png",
+      "keptTwinCount": 1
+    },
+    {
+      "action": "delete",
+      "from": "nikah-web/public/assets/florals/arch-frame.png",
+      "sha256": "3f4827ce1404c410fa8a97161a6b2ab2c65894d19ac0c88d91de332e00f3f39d",
+      "keptTwin": "nikah-web/public/assets/scene/arch-frame.png",
+      "keptTwinCount": 1
+    },
+    {
+      "action": "delete",
+      "from": "nikah-web/public/assets/florals/floral-border-full.png",
+      "sha256": "4d049e1b5eb7a47dd3f6b66ee988dd1ee93a1bdc04afb70d019f3cb89739509d",
+      "keptTwin": "nikah-web/public/assets/scene/floral-border-full.png",
+      "keptTwinCount": 1
+    },
+    {
+      "action": "delete",
+      "from": "nikah-web/public/assets/illustrations/event-accent.png",
+      "sha256": "aa0da4be10b574d6102b0b073c28ca0664a47d877aaf912f81efe9ce5360a14d",
+      "keptTwin": "nikah-web/public/assets/scene/event-accent.png",
+      "keptTwinCount": 1
+    },
+    {
+      "action": "delete",
+      "from": "nikah-web/public/assets/illustrations/gallery-frame.png",
+      "sha256": "cbd638c1adb9eb69911aeb260ec5bb6023bc708f04b968b8879a7eea29bffcda",
+      "keptTwin": "nikah-web/public/assets/scene/gallery-frame.png",
+      "keptTwinCount": 1
+    },
+    {
+      "action": "delete",
+      "from": "nikah-web/public/assets/illustrations/gift-accent.png",
+      "sha256": "9e64a37476e2eed7ae2ade45e4904c4d380ed68bd64b2e28bdf31ed514db14de",
+      "keptTwin": "nikah-web/public/assets/scene/gift-accent.png",
+      "keptTwinCount": 1
+    },
+    {
+      "action": "delete",
+      "from": "nikah-web/public/assets/illustrations/japan-motif.png",
+      "sha256": "a797cf0cbf954bc4d9ddbb46648865d6dae47fcb11a3530c8dd61ff34c09e914",
+      "keptTwin": "nikah-web/public/assets/scene/japan-motif.png",
+      "keptTwinCount": 1
+    },
+    {
+      "action": "delete",
+      "from": "nikah-web/public/assets/illustrations/loading-motif.png",
+      "sha256": "a4acc845ff00955e780c0d49dabda0b6a71dec01d01c370504b17b6b8a3bb616",
+      "keptTwin": "nikah-web/public/assets/scene/loading-motif.png",
+      "keptTwinCount": 1
+    },
+    {
+      "action": "delete",
+      "from": "nikah-web/public/assets/illustrations/map-pin.png",
+      "sha256": "3fef2fb956acb39b670ee767e28b5e9cfeaa0bf95dc343205b84e2b1e3821bf2",
+      "keptTwin": "nikah-web/public/assets/scene/map-pin.png",
+      "keptTwinCount": 1
+    },
+    {
+      "action": "delete",
+      "from": "nikah-web/public/assets/illustrations/story-meeting.png",
+      "sha256": "058053cabfa18b6f592bc148378c6458fda1486b01dd80501b89ed7c5329937a",
+      "keptTwin": "nikah-web/public/assets/scene/story-meeting.png",
+      "keptTwinCount": 1
+    },
+    {
+      "action": "delete",
+      "from": "nikah-web/public/assets/scenes/countdown-bg.webp",
+      "sha256": "b4bc3fc18e99a3ea6717860c4fbdd19baeb0234f260379a984e043e0c8dc8b08",
+      "keptTwin": "nikah-web/public/assets/scene/countdown-bg.webp",
+      "keptTwinCount": 1
+    },
+    {
+      "action": "delete",
+      "from": "nikah-web/public/assets/scenes/hero-bg.webp",
+      "sha256": "b6cf0874bd04377d9fe602b830a927e66b37fc1017dedaa01a3af6232a3486e9",
+      "keptTwin": "nikah-web/public/assets/scene/hero-bg.webp",
+      "keptTwinCount": 1
+    },
+    {
+      "action": "delete",
+      "from": "nikah-web/public/assets/scenes/hero-main.webp",
+      "sha256": "8cf42e206283acf1ff105ae977f30ebe17fc7a45cd9de99a4032df344c2eaf62",
+      "keptTwin": "nikah-web/public/assets/scene/hero-main.webp",
+      "keptTwinCount": 1
+    },
+    {
+      "action": "delete",
+      "from": "nikah-web/public/assets/scenes/hero-tall.webp",
+      "sha256": "092d4964627ba68920dda7ca0732024042d644c08ac2fbf42ce03f76e6427e4c",
+      "keptTwin": "nikah-web/public/assets/scene/hero-tall.webp",
+      "keptTwinCount": 1
+    }
+  ],
+  "orphanLegacy": [],
+  "summary": {
+    "delete": 21,
+    "orphanLegacy": 0
+  }
+}

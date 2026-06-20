@@ -1,0 +1,38 @@
+[
+  {
+    "from": "nikah-web/public/assets/cats/cat-hoshi-kimho-playing.png",
+    "to": "assets/scene/cat-hoshi-kimho-playing.png",
+    "sha256": "48a0e44c638efc9ab008a74d73a1e319954d66b99afd090806f6abd56735294d",
+    "sizeBytes": 398865
+  },
+  {
+    "from": "nikah-web/public/assets/cats/cat-jiro-in-flowers.png",
+    "to": "assets/scene/cat-jiro-in-flowers.png",
+    "sha256": "4af04e2dff170ce46ef44feea22c35d3336202234b5cf3bc4043e0fac6d33714",
+    "sizeBytes": 412564
+  },
+  {
+    "from": "nikah-web/public/assets/cats/cat-meng-with-flowers.png",
+    "to": "assets/scene/cat-meng-with-flowers.png",
+    "sha256": "2b98b152502f1c92af351a504ff69bacc801c262f6f8035b97cefe4833766f14",
+    "sizeBytes": 377858
+  },
+  {
+    "from": "nikah-web/public/assets/cats/cat-moju-sleeping-flowers.png",
+    "to": "assets/scene/cat-moju-sleeping-flowers.png",
+    "sha256": "23a05b3528f62c9e9620793b901274b435da8a88bbd7918da5ab61614462dd25",
+    "sizeBytes": 473897
+  },
+  {
+    "from": "nikah-web/public/assets/cats/cat-shiro-butterfly.png",
+    "to": "assets/scene/cat-shiro-butterfly.png",
+    "sha256": "490baf94da3588b35f57a780f39de666e2ce79ce9000aceef9b0412add5fc86b",
+    "sizeBytes": 293243
+  },
+  {
+    "from": "nikah-web/public/assets/cats/cat-simba-with-dove.png",
+    "to": "assets/scene/cat-simba-with-dove.png",
+    "sha256": "5bfe07e26c99955758bad66b4abefe92e30e588973c3a3d2394736c1beebaec1",
+    "sizeBytes": 425769
+  }
+]

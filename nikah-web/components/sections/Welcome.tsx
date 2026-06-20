@@ -31,7 +31,7 @@ export default function Welcome() {
         <Reveal>
           <Breathing seed="welcome-accent" as="div">
             <Image
-              src="/assets/illustrations/welcome-accent.png"
+              src="/assets/cutout/welcome-accent.png"
               alt="Burung merpati dan bunga sebagai aksen sambutan"
               width={220}
               height={323}

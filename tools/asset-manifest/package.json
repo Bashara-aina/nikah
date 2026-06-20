@@ -1,0 +1,20 @@
+{
+  "name": "nikah-asset-manifest",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Build and query a SHA-256 manifest of every image under /assets, /public/assets, and /Recovered. See .cursor/rules/image-verification.mdc.",
+  "main": "build-manifest.mjs",
+  "scripts": {
+    "build": "node build-manifest.mjs",
+    "diff": "node build-manifest.mjs --diff",
+    "duplicates": "node query.mjs duplicates",
+    "where": "node query.mjs where"
+  },
+  "dependencies": {
+    "sharp": "^0.35.2"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  }
+}

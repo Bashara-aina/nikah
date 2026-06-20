@@ -17,12 +17,11 @@ const srcRoot = path.join(repoRoot, "assets");
 const dstRoot = path.resolve(__dirname, "..", "public", "assets");
 
 const FOLDERS = [
-  "scenes",
   "cats",
   "couple",
-  "florals",
-  "illustrations",
   "gallery",
+  "cutout",
+  "scene",
   "audio",
 ];
 
