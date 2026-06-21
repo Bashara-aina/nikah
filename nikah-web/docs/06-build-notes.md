@@ -141,6 +141,42 @@ Order: `VideoLayer` primitive → `Hero` → `Gate` → sections in order.
 
 ---
 
+## Definition of Done (prototype pertama)
+- [ ] Phase 0 selesai — semua video di `assets/video/`
+- [ ] One-page mobile semua section tampil
+- [ ] Gate membaca nama tamu dari link
+- [ ] Musik La Vie en Rose start setelah tap
+- [ ] Countdown jalan ke 22 Agustus 2026, 10.00 WIB
+- [ ] RSVP tersimpan ke Google Sheets
+- [ ] Wishes publik tampil & bisa kirim
+- [ ] Gift + tombol salin
+- [ ] Map, Save to Calendar, Livestream berfungsi
+- [ ] Video loop assets pause saat off-screen
+- [ ] `prefers-reduced-motion` → static PNG fallback
+- [ ] Lighthouse mobile lulus
+
+## Urutan Kerja
+1. Lock semua planning docs (selesai).
+2. **Phase 0:** Generate semua aset via fal.ai (lihat steps di atas + `13-fal-generation-plan.md`).
+3. Bangun prototype HTML/CSS/JS dengan video layers.
+4. Sambungkan GSAP orchestration (09 + 10 + 12).
+5. Sambungkan Google Sheets + logika link tamu.
+6. Uji di HP beneran (koneksi lambat) → poles.
+
+---
+
+## Appendix — Stack reconciliation (added 2026-06-21, feature/motion-ui-ux-pro-max)
+
+This document originally proposed **Astro** as the framework. The actual scaffolded project is **Next.js 16 App Router + React 19 + TypeScript strict + Tailwind v4**. The decision was driven by:
+
+- `docs/11-build-architecture.md` (authoritative build architecture) specifies Next.js.
+- `README.md` line 1 and `project-structure.mdc` (workspace rule) both name Next.js as the stack.
+- The repo ships a `.next/dev/` cache that only exists when Next.js is the runtime.
+
+This file's stack notes are kept for historical context. For current build decisions, follow `docs/11` and `nikah-web/AGENTS.md`.
+
+The Phase 0 fal.ai pipeline section remains valid — that work runs from `scripts/generate-assets.mjs` independently of the framework choice.
+
 ## Definition of Done
 
 - [ ] All fal.ai video assets generated and in `public/assets/video/`
