@@ -11,7 +11,13 @@
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx",
     "type-check": "tsc --noEmit",
-    "copy-assets": "node scripts/copy-assets.mjs"
+    "copy-assets": "node scripts/copy-assets.mjs",
+    "gen:list": "node --env-file=.env scripts/generate-assets.mjs --list",
+    "gen:dry": "node --env-file=.env scripts/generate-assets.mjs --phase=0 --dry-run",
+    "gen:0": "node --env-file=.env scripts/generate-assets.mjs --phase=0",
+    "gen:1": "node --env-file=.env scripts/generate-assets.mjs --phase=1",
+    "gen:4": "node --env-file=.env scripts/generate-assets.mjs --phase=4",
+    "gen:6": "node --env-file=.env scripts/generate-assets.mjs --phase=6"
   },
   "dependencies": {
     "@fal-ai/client": "^1.10.1",

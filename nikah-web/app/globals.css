@@ -14,8 +14,36 @@
   --color-sage: oklch(0.78 0.04 150);
   --color-gold: oklch(0.82 0.08 75);
 
+  /* Storybook accents added per REF-01. */
+  --color-dusty: oklch(0.74 0.06 12);
+  --color-peach: oklch(0.86 0.07 55);
+  --color-navy:  oklch(0.34 0.04 255);
+  --color-sky:   oklch(0.93 0.03 230);
+  --color-sakura: oklch(0.86 0.05 5);
+
   --font-serif: var(--font-serif-stack);
   --font-sans: var(--font-sans-stack);
+
+  /* Warm shadows — never gray/black. */
+  --shadow-petal: 0 2px 8px oklch(0.4 0.03 60 / 0.06);
+  --shadow-card:  0 4px 16px oklch(0.4 0.03 60 / 0.10);
+  --shadow-float: 0 12px 32px oklch(0.4 0.03 60 / 0.12);
+
+  /* Fluid type scale (REF-01 §3). */
+  --text-sm:   clamp(0.875rem, 0.8rem  + 0.35vw, 1rem);
+  --text-base: clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
+  --text-lg:   clamp(1.125rem, 1rem    + 0.75vw, 1.5rem);
+  --text-xl:   clamp(1.5rem,   1.2rem  + 1.25vw, 2.25rem);
+  --text-2xl:  clamp(2rem,     1.2rem  + 2.5vw,  3.5rem);
+  --text-hero: clamp(2.5rem,   1rem    + 5vw,    5rem);
+
+  /* Z-index scale — exposed so z-modal, z-sticky, z-toast resolve. */
+  --z-index-dropdown: 50;
+  --z-index-sticky: 100;
+  --z-index-modal-backdrop: 200;
+  --z-index-modal: 300;
+  --z-index-toast: 400;
+  --z-index-tooltip: 500;
 }
 
 /* Design tokens also mirrored as plain CSS variables for non-Tailwind
@@ -30,8 +58,23 @@
   --color-blush: oklch(0.86 0.04 25);
   --color-sage: oklch(0.78 0.04 150);
   --color-gold: oklch(0.82 0.08 75);
+  --color-dusty: oklch(0.74 0.06 12);
+  --color-peach: oklch(0.86 0.07 55);
+  --color-navy:  oklch(0.34 0.04 255);
+  --color-sky:   oklch(0.93 0.03 230);
+  --color-sakura: oklch(0.86 0.05 5);
 
-  /* Z-index scale — `impeccable` reference. */
+  --shadow-petal: 0 2px 8px oklch(0.4 0.03 60 / 0.06);
+  --shadow-card:  0 4px 16px oklch(0.4 0.03 60 / 0.10);
+  --shadow-float: 0 12px 32px oklch(0.4 0.03 60 / 0.12);
+
+  --text-sm:   clamp(0.875rem, 0.8rem  + 0.35vw, 1rem);
+  --text-base: clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
+  --text-lg:   clamp(1.125rem, 1rem    + 0.75vw, 1.5rem);
+  --text-xl:   clamp(1.5rem,   1.2rem  + 1.25vw, 2.25rem);
+  --text-2xl:  clamp(2rem,     1.2rem  + 2.5vw,  3.5rem);
+  --text-hero: clamp(2.5rem,   1rem    + 5vw,    5rem);
+
   --z-dropdown: 50;
   --z-sticky: 100;
   --z-modal-backdrop: 200;
@@ -69,6 +112,12 @@
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
   }
+
+  /* Content-visibility auto on below-fold sections — perf (GUIDE 05 C). */
+  section[data-cv="auto"] {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 600px;
+  }
 }
 
 /* Reduced motion — collapses both Motion and GSAP to instant.
@@ -87,3 +136,41 @@
   from { transform: rotate(-1.2deg); }
   to { transform: rotate(1.2deg); }
 }
+
+@keyframes drapery-ripple {
+  0%   { transform: scaleY(1) translateX(0); mask-position: 0% 50%; }
+  50%  { transform: scaleY(1.003) translateX(0); mask-position: 100% 50%; }
+  100% { transform: scaleY(1) translateX(0); mask-position: 0% 50%; }
+}
+
+@keyframes breathing {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%      { transform: translateY(-3px) scale(1.01); }
+}
+
+@keyframes scroll-progress {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+@keyframes petal-burst {
+  0%   { transform: translate(0, 0) rotate(0); opacity: 1; }
+  100% { transform: translate(var(--dx, 40px), var(--dy, -60px)) rotate(var(--rot, 90deg)); opacity: 0; }
+}
+
+@keyframes cat-peek {
+  0%, 80%, 100% { transform: translateY(100%); }
+  85%, 95%      { transform: translateY(0); }
+}
+
+@keyframes music-note-rise {
+  0%   { transform: translate(0, 0); opacity: 0; }
+  20%  { opacity: 1; }
+  100% { transform: translate(-20px, -80px); opacity: 0; }
+}
+
+.breathing-element { animation: breathing var(--breath-dur, 5200ms) ease-in-out infinite; }
+
+.utility-shadow-petal { box-shadow: var(--shadow-petal); }
+.utility-shadow-card  { box-shadow: var(--shadow-card); }
+.utility-shadow-float { box-shadow: var(--shadow-float); }
