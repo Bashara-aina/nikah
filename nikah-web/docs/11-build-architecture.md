@@ -245,3 +245,21 @@ Tanggal/jam, venue+alamat, maps URL, dress code, etiquette list, livestream (You
 6. Section sisanya berurutan (file 10).
 7. RSVP + Wishes (Apps Script).
 8. Polish: tier fallback, REDUCED mode, Lighthouse, QA HP kentang.
+
+---
+
+## 12. Motion library ownership map (added 2026-06-21, feature/motion-ui-ux-pro-max)
+
+`nikah-web/` now uses **two** animation libraries side-by-side. The split is deliberate — neither library subsumes the other.
+
+| Library | Owns | Does NOT touch |
+| :-- | :-- | :-- |
+| **Motion** (`motion/react`, formerly `framer-motion`) | Component-level enter/exit, springs (`spring.gentle` / `snappy` / `wobbly`), `AnimatePresence` for the gate→hero swap, individual hero-character micro-entrance, `MotionReveal` / `MotionFloat` primitives, `MotionFloat` fallback idle when fal.ai video is gated off. | ScrollTrigger scroll-parallax, MotionPath beziers, the master assemble timeline, particle canvas, gyro/tilt parallax, Lenis sync. |
+| **GSAP** (`gsap` + `ScrollTrigger` + `MotionPathPlugin`) | Hero master assemble timeline (per docs/09 §2), ScrollTrigger-driven scroll parallax (via `useParallax`), `Doves` + `Butterflies` MotionPath loops, `Particles` canvas RAF, `LenisProvider` ticker sync. | Component-level variants / springs / `AnimatePresence`. |
+| **fal.ai** (videos in `public/assets/video/`) | All character ambient — breathing, ear-twitch, tail-sway, blinks. Living video loops from Phase 0. | Anything else. Never duplicated by GSAP or Motion. |
+| **CSS `@keyframes`** | Small decorative florals + drapery ripple (`Sway` primitive). | Anything interactive. |
+
+Both libraries read easing / duration / amplitude tokens from `lib/motionTokens.ts` (single source of truth). `lib/motionAdapter.ts` converts the tokens into Motion `Transition` objects, cubic-bezier CSS strings, and GSAP `vars` — so the same numeric vocabulary drives both libraries. No magic numbers in components.
+
+The `ui-ux-pro-max` skill is installed at `.cursor/skills/ui-ux-pro-max/` (provisioned via `npx uipro-cli init --ai cursor`). Its priorities (Accessibility → Touch → Performance → Animation) are encoded in `nikah-web/AGENTS.md`.
+

@@ -1,0 +1,153 @@
+{
+  "$schema": "internal",
+  "comment": "Asset generation manifest for nikah-web. Paths relative to nikah-web/. The generator (scripts/generate-assets.mjs) reads this file. Hero path is COHESIVE PATH A: hero-bg-loop.mp4 is generated from scenes/hero-main.webp; per-character idle videos are skipped (gen:2 disabled).",
+  "fal_spend_cap_usd": 10,
+  "model_id_notes": "IDs verified against GUIDE-01-APPENDIX; update here if swapped.",
+  "heroScenes": [
+    {
+      "id": "hero-bg",
+      "source": "scenes/hero-main.webp",
+      "model": "minimax",
+      "out": "assets/video/hero-bg-loop.mp4",
+      "poster": "assets/scenes/hero-bg.webp",
+      "prompt": "scene",
+      "variants": 3
+    },
+    {
+      "id": "meadow-bottom",
+      "source": "correct/most correct/wildflower-meadow-full.png",
+      "model": "minimax",
+      "out": "assets/video/meadow-bottom-loop.mp4",
+      "poster": "assets/scenes/hero-bg.webp",
+      "prompt": "meadow"
+    }
+  ],
+  "characterSprites": [
+    {
+      "id": "cat-jiro",
+      "source": "correct/most correct/cat-jiro-in-flowers.png",
+      "rmbg": true,
+      "out": "assets/cats/cat-jiro.png"
+    },
+    {
+      "id": "cat-meng",
+      "source": "correct/most correct/cat-meng-with-flowers.png",
+      "rmbg": true,
+      "out": "assets/cats/cat-meng.png"
+    },
+    {
+      "id": "cat-moju",
+      "source": "correct/most correct/cat-moju-sleeping-flowers.png",
+      "rmbg": true,
+      "out": "assets/cats/cat-moju.png"
+    },
+    {
+      "id": "cat-shiro",
+      "source": "correct/most correct/cat-shiro-butterfly.png",
+      "rmbg": true,
+      "out": "assets/cats/cat-shiro.png"
+    },
+    {
+      "id": "cat-simba",
+      "source": "correct/most correct/cat-simba-with-dove.png",
+      "rmbg": true,
+      "out": "assets/cats/cat-simba.png"
+    },
+    {
+      "id": "cat-hoshi",
+      "source": "correct/most correct/cat-hoshi-kimho-playing.png",
+      "rmbg": true,
+      "out": "assets/cats/cat-hoshi.png"
+    },
+    {
+      "id": "couple",
+      "source": "correct/most correct/couple-scooter-vespa-wedding.png",
+      "rmbg": true,
+      "out": "assets/couple/couple-cutout.png"
+    }
+  ],
+  "decorative": [
+    {
+      "id": "floral-corner-tl",
+      "source": "correct/most correct/vertical-floral-spray.png",
+      "rmbg": true,
+      "out": "assets/florals/floral-corner-tl.png"
+    },
+    {
+      "id": "floral-corner-br",
+      "source": "correct/most correct/vertical-rose-spray.png",
+      "rmbg": true,
+      "out": "assets/florals/floral-corner-br.png"
+    },
+    {
+      "id": "floral-sprig",
+      "source": "correct/most correct/vertical-garden-spray.png",
+      "rmbg": true,
+      "out": "assets/florals/floral-sprig.png"
+    },
+    {
+      "id": "drapery-divider",
+      "source": "correct/most correct/flowing-floral-divider-wavy.png",
+      "rmbg": true,
+      "out": "assets/florals/drapery-divider.png"
+    },
+    {
+      "id": "accent-doves",
+      "source": "correct/most correct/doves-with-flowing-flowers.png",
+      "rmbg": true,
+      "out": "assets/florals/accent-doves.png"
+    },
+    {
+      "id": "petals-anim",
+      "source": "correct/most correct/falling-petals-scattered.png",
+      "rmbg": true,
+      "out": "assets/florals/petals-anim.png"
+    },
+    {
+      "id": "cat-peek",
+      "source": "correct/most correct/tuxedo-cat-reaching-flower.png",
+      "rmbg": true,
+      "out": "assets/florals/cat-peek.png"
+    }
+  ],
+  "floralLoops": [],
+  "gallery": [
+    {
+      "id": "gallery-01",
+      "source": "FOTO INVITATION/couple-overhead-romantic-pose.jpeg",
+      "out": "assets/gallery/gallery-01.webp"
+    },
+    {
+      "id": "gallery-02",
+      "source": "FOTO INVITATION/couple-overhead-spotlight-1.jpeg",
+      "out": "assets/gallery/gallery-02.webp"
+    },
+    {
+      "id": "gallery-03",
+      "source": "FOTO INVITATION/couple-overhead-side-by-side.jpeg",
+      "out": "assets/gallery/gallery-03.webp"
+    },
+    {
+      "id": "gallery-04",
+      "source": "FOTO INVITATION/couple-overhead-groom-above.jpeg",
+      "out": "assets/gallery/gallery-04.webp"
+    },
+    {
+      "id": "gallery-05",
+      "source": "FOTO INVITATION/couple-overhead-bride-bouquet.jpeg",
+      "out": "assets/gallery/gallery-05.webp"
+    },
+    {
+      "id": "gallery-06",
+      "source": "FOTO INVITATION/couple-overhead-spotlight-2.jpeg",
+      "out": "assets/gallery/gallery-06.webp"
+    }
+  ],
+  "storyIllustrations": [
+    { "id": "story-motor",   "out": "assets/illustrations/story-motor.png" },
+    { "id": "story-jakarta", "out": "assets/illustrations/story-jakarta.png" },
+    { "id": "story-ldr",     "out": "assets/illustrations/story-ldr.png" },
+    { "id": "story-keio",    "out": "assets/illustrations/story-keio.png" },
+    { "id": "story-married", "out": "assets/illustrations/story-married.png" }
+  ]
+}
