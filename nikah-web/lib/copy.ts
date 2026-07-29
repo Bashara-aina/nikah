@@ -194,8 +194,61 @@ export const copy = {
   closing: {
     lines: ["Terima kasih sudah membaca sampai akhir."],
     emphasis: ["Sampai bertemu di Bandung,", "22 Agustus 2026. 🤍"],
+    /** Online variant — nobody is asked to travel, so nothing points to Bandung. */
+    emphasisOnline: ["Sampai bertemu di siaran langsung,", "22 Agustus 2026. 🤍"],
     names: "Hanifah & Bashara",
     hashtag: "#BASHicallyHANI's",
+  },
+
+  /**
+   * Online-invitation copy. NOT yet in `relevant/10-docs/03-copywriting.md` —
+   * pending the couple's sign-off, then mirror it there.
+   *
+   * Rule for this block: it never mentions the venue, the guest list, or a
+   * reason. The online invitation is a complete invitation to witness the akad
+   * live, so no line in it can be read as a downgrade.
+   */
+  watch: {
+    heading: "Cara Menyaksikan",
+    lead: "Akad kami siarkan langsung. Pilih kanal yang paling nyaman buat kamu.",
+    /** Split in two so the date stacks deliberately inside the floral arch. */
+    dayLine: "Sabtu",
+    dateLine: "22 Agustus 2026",
+    timeLine: "Akad mulai pukul 10.00 WIB",
+    timezoneNote: "Waktunya WIB (GMT+7).",
+    pending: "Tautannya menyusul, ya. Kami kirimkan lewat WhatsApp begitu siap.",
+    ctaCalendar: "Simpan ke Kalender",
+  },
+
+  rsvpOnline: {
+    heading: "Konfirmasi Menyaksikan",
+    pill: "Konfirmasi",
+    lead: "Beri tahu kami kalau kamu berencana menonton, supaya kami tahu siapa saja yang ikut dari jauh.",
+    attendance: "Rencana kamu",
+    attendanceOptions: ["Menyaksikan Daring", "Masih Diusahakan", "Tidak Hadir"] as const,
+    success: "Terima kasih, kabarmu sudah kami terima.",
+  },
+
+  faqOnline: {
+    heading: "Yang Sering Ditanyakan",
+    items: [
+      {
+        q: "Siarannya bisa ditonton di mana?",
+        a: "Di YouTube, Zoom, Instagram, dan Facebook. Tautannya kami pasang di halaman ini begitu siap.",
+      },
+      {
+        q: "Jam berapa mulainya?",
+        a: "Akad mulai pukul 10.00 WIB. Sebaiknya bergabung sedikit lebih awal.",
+      },
+      {
+        q: "Kalau tautannya belum muncul?",
+        a: "Berarti masih kami siapkan. Halaman ini terisi sendiri begitu tautannya jadi, jadi simpan saja tautan undangan ini.",
+      },
+      {
+        q: "Boleh titip doa?",
+        a: "Boleh sekali. Ada kolom ucapan di halaman ini, dan semuanya kami baca.",
+      },
+    ],
   },
 
   /** Non-visual strings: section landmarks, icon buttons, dialogs. */
@@ -208,6 +261,7 @@ export const copy = {
     story: "Kisah kami",
     japan: "Rencana kami di Jepang",
     event: "Detail acara",
+    watch: "Cara menyaksikan siaran langsung",
     rsvp: "Konfirmasi kehadiran",
     wishes: "Ucapan dan doa",
     faq: "Yang sering ditanyakan",

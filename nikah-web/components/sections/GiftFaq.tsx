@@ -6,6 +6,7 @@
  */
 import { useState } from "react";
 import { Reveal } from "@/components/primitives/Reveal";
+import { useGuest } from "@/components/GuestProvider";
 import { copy } from "@/lib/copy";
 
 /* Drawn rather than typed. This was a fullwidth `＋` (U+FF0B) — a CJK glyph
@@ -29,6 +30,9 @@ const PlusGlyph = ({ open }: { open: boolean }) => (
 
 export const GiftFaq = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  // Parking and dress code are meaningless to someone watching a stream; the
+  // online set answers what that guest actually asks instead.
+  const faq = useGuest().inviteType === "online" ? copy.faqOnline : copy.faq;
 
   return (
     <section
@@ -38,10 +42,10 @@ export const GiftFaq = () => {
       className="bg-paper px-7 pb-20 pt-16 text-center"
     >
       <Reveal className="mx-auto max-w-sm text-left">
-        <h2 className="type-display text-center">{copy.faq.heading}</h2>
+        <h2 className="type-display text-center">{faq.heading}</h2>
         <div aria-hidden className="mx-auto mt-4 h-px w-20 bg-gold/70" />
         <div className="mt-7 flex flex-col divide-y divide-border border-y border-border">
-          {copy.faq.items.map((item, i) => {
+          {faq.items.map((item, i) => {
             const open = openFaq === i;
             return (
               <div key={item.q}>

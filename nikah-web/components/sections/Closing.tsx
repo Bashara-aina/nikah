@@ -11,12 +11,14 @@ import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useMotion } from "@/components/motion/MotionProvider";
+import { useGuest } from "@/components/GuestProvider";
 import { copy } from "@/lib/copy";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export const Closing = () => {
   const { tier } = useMotion();
+  const online = useGuest().inviteType === "online";
   const root = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -82,7 +84,9 @@ export const Closing = () => {
 
       {/* Emphasis + signature on paper (clears the sticky RSVP pill). */}
       <div className="flex flex-col items-center px-8 pb-32 pt-12 text-center">
-        <p className="type-display-sm mx-auto max-w-sm">{copy.closing.emphasis.join(" ")}</p>
+        <p className="type-display-sm mx-auto max-w-sm">
+          {(online ? copy.closing.emphasisOnline : copy.closing.emphasis).join(" ")}
+        </p>
         <div aria-hidden className="my-7 h-px w-20 bg-gold/70" />
         <p className="type-display">{copy.closing.names}</p>
         <p className="type-lede mt-2 text-dusty-deep">{copy.closing.hashtag}</p>

@@ -2,23 +2,32 @@
 
 /**
  * L9 — RSVP. Copy §7 verbatim; posts `{ slug, nama, kehadiran, jumlah,
- * catatan, website }` to /api/rsvp (REF-03 contract). Honeypot `website` stays
- * empty + visually hidden. Success = quiet petal burst; errors human-readable.
+ * catatan, website }` to /api/rsvp. Honeypot `website` stays empty + visually
+ * hidden. Success = quiet petal burst; errors human-readable.
+ *
+ * Two shapes from one form: venue guests confirm attendance and a party size
+ * (capped by their own `partyMax`), online guests confirm they will watch —
+ * no seat count is asked, because there is no seat to hold.
  */
 import { useState } from "react";
 import Image from "next/image";
 import { Reveal } from "@/components/primitives/Reveal";
+import { useGuest } from "@/components/GuestProvider";
 import { FloatInput, FloatTextarea, PetalBurst, PillRadioGroup } from "@/components/ui/fields";
 import { copy } from "@/lib/copy";
-import { siteConfig } from "@/lib/config";
+import type { Attendance } from "@/lib/db.types";
 
-type Attendance = (typeof copy.rsvp.fields.attendanceOptions)[number];
 type Status = "idle" | "sending" | "success" | "error";
 
 export const Rsvp = () => {
-  const [nama, setNama] = useState("");
+  const guest = useGuest();
+  const online = guest.inviteType === "online";
+  // The public page has no name to offer, so it starts empty.
+  const [nama, setNama] = useState(
+    guest.slug ? guest.displayName : "",
+  );
   const [kehadiran, setKehadiran] = useState<Attendance | null>(null);
-  const [jumlah, setJumlah] = useState(2);
+  const [jumlah, setJumlah] = useState(Math.min(2, guest.partyMax));
   const [catatan, setCatatan] = useState("");
   const [website, setWebsite] = useState(""); // honeypot
   const [status, setStatus] = useState<Status>("idle");
@@ -35,15 +44,14 @@ export const Rsvp = () => {
     setStatus("sending");
     setErrorMsg("");
     try {
-      const slug = new URLSearchParams(window.location.search).get("to") ?? "";
       const res = await fetch("/api/rsvp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          slug,
+          slug: guest.slug ?? "",
           nama: nama.trim(),
           kehadiran,
-          jumlah,
+          jumlah: online ? 1 : jumlah,
           catatan: catatan.trim(),
           website,
         }),
@@ -71,9 +79,13 @@ export const Rsvp = () => {
       className="relative bg-paper px-7 pb-20 pt-16"
     >
       <Reveal className="text-center">
-        <h2 className="type-display">{copy.rsvp.heading}</h2>
+        <h2 className="type-display">
+          {online ? copy.rsvpOnline.heading : copy.rsvp.heading}
+        </h2>
         <div aria-hidden className="mx-auto mt-4 h-px w-20 bg-gold/70" />
-        <p className="type-lede mx-auto mt-6">{copy.rsvp.lead}</p>
+        <p className="type-lede mx-auto mt-6">
+          {online ? copy.rsvpOnline.lead : copy.rsvp.lead}
+        </p>
         <p className="type-meta mx-auto mt-2">
           {copy.rsvp.deadlineTemplate}{" "}
           <strong className="font-medium text-ink">{copy.rsvp.deadlineDate}</strong>.
@@ -105,34 +117,40 @@ export const Rsvp = () => {
           />
 
           <PillRadioGroup
-            legend={copy.rsvp.fields.attendance}
+            legend={online ? copy.rsvpOnline.attendance : copy.rsvp.fields.attendance}
             name="kehadiran"
-            options={copy.rsvp.fields.attendanceOptions}
+            options={
+              online ? copy.rsvpOnline.attendanceOptions : copy.rsvp.fields.attendanceOptions
+            }
             value={kehadiran}
             onChange={setKehadiran}
           />
 
-          <div>
-            <p className="type-label mb-3">{copy.rsvp.fields.partySize}</p>
-            <div className="flex gap-2.5" role="group" aria-label={copy.rsvp.fields.partySize}>
-              {Array.from({ length: siteConfig.rsvp.maxParty }, (_, i) => i + 1).map((n) => (
-                <button
-                  key={n}
-                  type="button"
-                  onClick={() => setJumlah(n)}
-                  aria-pressed={jumlah === n}
-                  className={`flex h-11 w-11 items-center justify-center rounded-full border font-sans text-sm tabular-nums transition-colors ${
-                    jumlah === n
-                      ? "border-dusty bg-blush/35 font-medium text-ink"
-                      : "border-border bg-surface text-ink-soft hover:bg-cream"
-                  }`}
-                >
-                  {n}
-                </button>
-              ))}
+          {/* Seat count is a venue-only question, and it stops at this guest's
+              own allowance rather than the global maximum. */}
+          {online ? null : (
+            <div>
+              <p className="type-label mb-3">{copy.rsvp.fields.partySize}</p>
+              <div className="flex gap-2.5" role="group" aria-label={copy.rsvp.fields.partySize}>
+                {Array.from({ length: guest.partyMax }, (_, i) => i + 1).map((n) => (
+                  <button
+                    key={n}
+                    type="button"
+                    onClick={() => setJumlah(n)}
+                    aria-pressed={jumlah === n}
+                    className={`flex h-11 w-11 items-center justify-center rounded-full border font-sans text-sm tabular-nums transition-colors ${
+                      jumlah === n
+                        ? "border-dusty bg-blush/35 font-medium text-ink"
+                        : "border-border bg-surface text-ink-soft hover:bg-cream"
+                    }`}
+                  >
+                    {n}
+                  </button>
+                ))}
+              </div>
+              <p className="type-meta mt-2.5">{copy.rsvp.fields.partySizeNote}</p>
             </div>
-            <p className="type-meta mt-2.5">{copy.rsvp.fields.partySizeNote}</p>
-          </div>
+          )}
 
           <FloatTextarea
             name="catatan"

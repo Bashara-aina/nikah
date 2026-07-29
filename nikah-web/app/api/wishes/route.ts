@@ -1,17 +1,20 @@
 /**
- * Wishes endpoint — REF-03 contract.
+ * Wishes endpoint — the public wall, stored in Supabase.
  *
- *   GET  → proxies the Apps Script wall; 503 `NOT_CONFIGURED` until wired
- *          (the UI renders an honest empty state).
- *   POST → validates `{ nama, pesan, website }`; honeypot drops quietly;
- *          forwards `{ type: "wish", nama, pesan }`.
+ *   GET  → `{ wishes: [{ nama, pesan, timestamp }] }`, newest first;
+ *          503 `NOT_CONFIGURED` until the env vars exist, so the UI can render
+ *          an honest empty state.
+ *   POST → validates `{ nama, pesan, slug?, website }`; honeypot drops quietly.
  *
  * Envelope: `{ success, data?, error?, meta? }`.
  */
 import { NextResponse } from "next/server";
 import { clientIp, rateLimited } from "@/lib/rateLimit";
+import { supabaseAdmin, supabaseConfigured } from "@/lib/supabaseAdmin";
+import { isValidSlug } from "@/lib/guests";
 
-const scriptUrl = (): string => process.env.APPS_SCRIPT_URL ?? "";
+/** Enough to fill the wall without shipping an unbounded list to a phone. */
+const WALL_LIMIT = 200;
 
 const cleanText = (v: unknown, max: number): string =>
   typeof v === "string"
@@ -22,44 +25,35 @@ const cleanText = (v: unknown, max: number): string =>
         .slice(0, max)
     : "";
 
-type Wish = { nama: string; pesan: string; timestamp?: string };
+const notConfigured = (): NextResponse =>
+  NextResponse.json(
+    { success: false, error: { code: "NOT_CONFIGURED", message: "Wishes backend belum terpasang" } },
+    { status: 503 },
+  );
 
 export async function GET(): Promise<NextResponse> {
-  const url = scriptUrl();
-  if (!url) {
+  if (!supabaseConfigured()) return notConfigured();
+
+  const { data, error } = await supabaseAdmin()
+    .from("wishes")
+    .select("nama, pesan, created_at")
+    .order("created_at", { ascending: false })
+    .limit(WALL_LIMIT);
+
+  if (error) {
+    console.error(`Wishes read failed: ${error.message}`);
     return NextResponse.json(
-      { success: false, error: { code: "NOT_CONFIGURED", message: "Wishes backend belum terpasang" } },
-      { status: 503 },
+      { success: false, error: { code: "READ_FAILED", message: "Ucapan belum bisa dimuat" } },
+      { status: 500 },
     );
   }
-  try {
-    const res = await fetch(`${url}?action=wishes`, { cache: "no-store" });
-    if (!res.ok) {
-      return NextResponse.json(
-        { success: false, error: { code: "UPSTREAM_ERROR", message: `Upstream ${res.status}` } },
-        { status: 502 },
-      );
-    }
-    const raw = (await res.json()) as { wishes?: unknown };
-    const wishes: Wish[] = Array.isArray(raw.wishes)
-      ? raw.wishes
-          .map((w) => {
-            const o = (w ?? {}) as Record<string, unknown>;
-            return {
-              nama: cleanText(o.nama, 80),
-              pesan: cleanText(o.pesan, 300),
-              ...(typeof o.timestamp === "string" ? { timestamp: o.timestamp } : {}),
-            };
-          })
-          .filter((w) => w.nama.length > 0 && w.pesan.length > 0)
-      : [];
-    return NextResponse.json({ success: true, data: { wishes } });
-  } catch {
-    return NextResponse.json(
-      { success: false, error: { code: "FETCH_FAILED", message: "Upstream unreachable" } },
-      { status: 502 },
-    );
-  }
+
+  const wishes = (data ?? []).map((w) => ({
+    nama: w.nama,
+    pesan: w.pesan,
+    timestamp: w.created_at,
+  }));
+  return NextResponse.json({ success: true, data: { wishes } });
 }
 
 export async function POST(req: Request): Promise<NextResponse> {
@@ -96,32 +90,25 @@ export async function POST(req: Request): Promise<NextResponse> {
     );
   }
 
-  const url = scriptUrl();
-  if (!url) {
+  if (!supabaseConfigured()) return notConfigured();
+
+  const db = supabaseAdmin();
+
+  const slug = cleanText(o.slug, 80).toLowerCase();
+  let guestId: string | null = null;
+  if (isValidSlug(slug)) {
+    const { data } = await db.from("guests").select("id").eq("slug", slug).maybeSingle();
+    guestId = data?.id ?? null;
+  }
+
+  const { error } = await db.from("wishes").insert({ guest_id: guestId, nama, pesan });
+  if (error) {
+    console.error(`Wish insert failed: ${error.message}`);
     return NextResponse.json(
-      { success: false, error: { code: "NOT_CONFIGURED", message: "Wishes backend belum terpasang" } },
-      { status: 503 },
+      { success: false, error: { code: "WRITE_FAILED", message: "Ucapan gagal disimpan" } },
+      { status: 500 },
     );
   }
 
-  try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ type: "wish", timestamp: new Date().toISOString(), nama, pesan }),
-      cache: "no-store",
-    });
-    if (!res.ok) {
-      return NextResponse.json(
-        { success: false, error: { code: "UPSTREAM_ERROR", message: `Upstream ${res.status}` } },
-        { status: 502 },
-      );
-    }
-    return NextResponse.json({ success: true, data: null });
-  } catch {
-    return NextResponse.json(
-      { success: false, error: { code: "FETCH_FAILED", message: "Upstream unreachable" } },
-      { status: 502 },
-    );
-  }
+  return NextResponse.json({ success: true, data: null });
 }

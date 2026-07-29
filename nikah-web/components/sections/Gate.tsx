@@ -20,11 +20,11 @@ import Image from "next/image";
 import { motion, type Variants, type Easing } from "motion/react";
 import { useMotion } from "@/components/motion/MotionProvider";
 import { useSiteAudio } from "@/components/AudioProvider";
+import { useGuest } from "@/components/GuestProvider";
 import { motionEase, motionSpring } from "@/lib/motionAdapter";
 import { dur } from "@/lib/motionTokens";
 import { siteConfig } from "@/lib/config";
 import { copy } from "@/lib/copy";
-import { guestNameFromSearchParams } from "@/lib/guest";
 
 const ENTER_EASING: Easing = motionEase("enter");
 
@@ -41,11 +41,9 @@ export const Gate = ({ onOpen }: { onOpen: () => void }) => {
   const { tier } = useMotion();
   const { unlock } = useSiteAudio();
   const [opening, setOpening] = useState(false);
-  const [guestName] = useState<string>(() => {
-    if (typeof window === "undefined") return copy.gate.guestFallback;
-    const params = new URLSearchParams(window.location.search);
-    return guestNameFromSearchParams(Object.fromEntries(params));
-  });
+  // Resolved server-side from the slug, so the name is painted in the first
+  // render instead of appearing a beat later from a query-string read.
+  const guest = useGuest();
 
   const reduced = tier === "REDUCED";
   const swaying = tier === "HIGH" || tier === "MID";
@@ -178,8 +176,16 @@ export const Gate = ({ onOpen }: { onOpen: () => void }) => {
           variants={reduced ? undefined : item}
           className="relative type-name mt-2"
         >
-          {guestName}
+          {guest.displayName}
         </motion.p>
+        {guest.partyLabel ? (
+          <motion.p
+            variants={reduced ? undefined : item}
+            className="relative type-label type-label-center mt-1.5 text-dusty-deep"
+          >
+            {guest.partyLabel}
+          </motion.p>
+        ) : null}
         <motion.p
           variants={reduced ? undefined : item}
           className="relative type-lede mx-auto mt-5 text-ink"
