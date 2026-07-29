@@ -6,35 +6,9 @@
  */
 import Image from "next/image";
 import { Reveal } from "@/components/primitives/Reveal";
+import { Cta } from "@/components/ui/Cta";
 import { calendarUrl, siteConfig } from "@/lib/config";
 import { copy } from "@/lib/copy";
-
-const Cta = ({
-  href,
-  children,
-  variant = "outline",
-}: {
-  href: string;
-  children: React.ReactNode;
-  variant?: "outline" | "solid";
-}) => {
-  const base =
-    "type-button inline-flex min-h-[44px] items-center justify-center rounded-full px-7 py-2.5 transition-transform active:scale-[0.97]";
-  const styles =
-    variant === "solid"
-      ? "bg-dusty-deep text-paper shadow-petal hover:opacity-90"
-      : "border border-dusty/40 bg-surface text-ink shadow-petal hover:bg-blush/25";
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`${base} ${styles}`}
-    >
-      {children}
-    </a>
-  );
-};
 
 export const EventDetails = () => {
   const livestream = Object.entries(siteConfig.livestream).filter(([, url]) => url !== "");

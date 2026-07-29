@@ -68,8 +68,14 @@ export const siteConfig = {
 
 export type SiteConfig = typeof siteConfig;
 
-/** Google Calendar template URL derived from locked event facts. */
-export const calendarUrl = (): string => {
+/**
+ * Google Calendar template URL derived from locked event facts.
+ *
+ * `online: true` is used by the livestream invitation, where putting the Widuri
+ * address in the guest's calendar would be wrong — it points at the stream
+ * instead, or says so plainly while the links are still pending.
+ */
+export const calendarUrl = (opts: { online?: boolean } = {}): string => {
   const fmt = (iso: string) =>
     new Date(iso).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
   const params = new URLSearchParams({
@@ -77,7 +83,9 @@ export const calendarUrl = (): string => {
     text: `Pernikahan ${siteConfig.couple.short}`,
     dates: `${fmt(siteConfig.event.startIso)}/${fmt(siteConfig.event.endIso)}`,
     details: siteConfig.couple.hashtag,
-    location: `${siteConfig.event.venueName} ${siteConfig.event.venueFloor}, ${siteConfig.event.venueAddress}`,
+    location: opts.online
+      ? siteConfig.livestream.youtube || "Siaran langsung (tautan menyusul)"
+      : `${siteConfig.event.venueName} ${siteConfig.event.venueFloor}, ${siteConfig.event.venueAddress}`,
   });
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
 };

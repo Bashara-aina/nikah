@@ -1,19 +1,19 @@
 /**
- * RSVP endpoint — validates and forwards to the Google Apps Script Web App
- * (`APPS_SCRIPT_URL`, server-only). Contract per REF-03:
+ * RSVP endpoint — writes to Supabase.
  *
  *   accepts `{ slug?, nama, kehadiran, jumlah, catatan?, website }`
- *   honeypot `website` non-empty → 200 success without forwarding
- *   forwards `{ type: "rsvp", …fields, userAgent, timestamp }`
+ *   honeypot `website` non-empty → 200 success without storing
+ *   `slug` links the reply to a guest row, so the dashboard can show
+ *   invited → opened → answered for that person
  *
  * Envelope: `{ success, data?, error?, meta? }`.
- * Codes: 200 ok · 400 invalid · 429 rate limited · 502 upstream · 503 unwired.
+ * Codes: 200 ok · 400 invalid · 429 rate limited · 500 write failed · 503 unwired.
  */
 import { NextResponse } from "next/server";
 import { clientIp, rateLimited } from "@/lib/rateLimit";
-
-const ATTENDANCE = ["Hadir", "Tidak Hadir", "Masih Diusahakan"] as const;
-type Attendance = (typeof ATTENDANCE)[number];
+import { supabaseAdmin, supabaseConfigured } from "@/lib/supabaseAdmin";
+import { ATTENDANCE, type Attendance } from "@/lib/db.types";
+import { isValidSlug } from "@/lib/guests";
 
 type RsvpPayload = {
   slug: string;
@@ -40,10 +40,10 @@ const validate = (raw: unknown): RsvpPayload | null => {
   if (nama.length === 0 || !kehadiran) return null;
   const jumlahRaw = typeof r.jumlah === "number" && Number.isInteger(r.jumlah) ? r.jumlah : 1;
   return {
-    slug: cleanText(r.slug, 120),
+    slug: cleanText(r.slug, 80).toLowerCase(),
     nama,
     kehadiran,
-    jumlah: Math.min(4, Math.max(1, jumlahRaw)),
+    jumlah: Math.min(10, Math.max(1, jumlahRaw)),
     catatan: cleanText(r.catatan, 300),
   };
 };
@@ -83,40 +83,49 @@ export async function POST(req: Request): Promise<NextResponse> {
     );
   }
 
-  const url = process.env.APPS_SCRIPT_URL ?? "";
-  if (!url) {
+  if (!supabaseConfigured()) {
     return NextResponse.json(
-      {
-        success: false,
-        error: { code: "NOT_CONFIGURED", message: "RSVP backend belum terpasang" },
-      },
+      { success: false, error: { code: "NOT_CONFIGURED", message: "RSVP backend belum terpasang" } },
       { status: 503 },
     );
   }
 
-  try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        type: "rsvp",
-        timestamp: new Date().toISOString(),
-        userAgent: req.headers.get("user-agent") ?? "",
-        ...validated,
-      }),
-      cache: "no-store",
-    });
-    if (!res.ok) {
-      return NextResponse.json(
-        { success: false, error: { code: "UPSTREAM_ERROR", message: `Upstream ${res.status}` } },
-        { status: 502 },
-      );
+  const db = supabaseAdmin();
+
+  // An unknown slug still records the reply, just without the link — a guest
+  // forwarding their link to a cousin should not lose that cousin's answer.
+  let guestId: string | null = null;
+  let partyMax = 4;
+  if (isValidSlug(validated.slug)) {
+    const { data, error } = await db
+      .from("guests")
+      .select("id, party_max")
+      .eq("slug", validated.slug)
+      .maybeSingle();
+    if (error) {
+      console.error(`RSVP guest lookup failed for "${validated.slug}": ${error.message}`);
+    } else if (data) {
+      guestId = data.id;
+      partyMax = data.party_max;
     }
-    return NextResponse.json({ success: true, data: null });
-  } catch {
+  }
+
+  const { error } = await db.from("rsvps").insert({
+    guest_id: guestId,
+    nama: validated.nama,
+    kehadiran: validated.kehadiran,
+    jumlah: Math.min(validated.jumlah, partyMax),
+    catatan: validated.catatan,
+    user_agent: req.headers.get("user-agent") ?? "",
+  });
+
+  if (error) {
+    console.error(`RSVP insert failed: ${error.message}`);
     return NextResponse.json(
-      { success: false, error: { code: "FETCH_FAILED", message: "Upstream unreachable" } },
-      { status: 502 },
+      { success: false, error: { code: "WRITE_FAILED", message: "Konfirmasi gagal disimpan" } },
+      { status: 500 },
     );
   }
+
+  return NextResponse.json({ success: true, data: null });
 }

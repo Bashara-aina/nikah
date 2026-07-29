@@ -1,0 +1,101 @@
+/**
+ * Hand-written Supabase schema types, mirroring
+ * `supabase/migrations/0001_guests.sql`. Kept by hand rather than generated so
+ * the build has no dependency on the Supabase CLI — change the migration and
+ * this file together.
+ */
+
+export type GuestGroup = "groom_family" | "bride_family" | "friend";
+export type InviteType = "venue" | "online";
+
+export const GUEST_GROUPS: readonly GuestGroup[] = [
+  "groom_family",
+  "bride_family",
+  "friend",
+] as const;
+
+export const INVITE_TYPES: readonly InviteType[] = ["venue", "online"] as const;
+
+/** Attendance values accepted by `rsvps.kehadiran` (DB check constraint). */
+export const ATTENDANCE = [
+  "Hadir",
+  "Tidak Hadir",
+  "Masih Diusahakan",
+  "Menyaksikan Daring",
+] as const;
+export type Attendance = (typeof ATTENDANCE)[number];
+
+export type GuestRow = {
+  id: string;
+  slug: string;
+  display_name: string;
+  whatsapp_name: string | null;
+  phone: string | null;
+  guest_group: GuestGroup;
+  invite_type: InviteType;
+  party_label: string;
+  party_max: number;
+  message_override: string | null;
+  notes: string | null;
+  invited_at: string | null;
+  opened_count: number;
+  opened_first_at: string | null;
+  opened_last_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type GuestInsert = Omit<
+  GuestRow,
+  "id" | "created_at" | "updated_at" | "opened_count" | "opened_first_at" | "opened_last_at"
+> &
+  Partial<Pick<GuestRow, "id" | "opened_count">>;
+
+export type GuestUpdate = Partial<GuestInsert>;
+
+export type RsvpRow = {
+  id: string;
+  guest_id: string | null;
+  nama: string;
+  kehadiran: Attendance;
+  jumlah: number;
+  catatan: string;
+  user_agent: string | null;
+  created_at: string;
+};
+
+export type RsvpInsert = Omit<RsvpRow, "id" | "created_at"> & Partial<Pick<RsvpRow, "id">>;
+
+export type WishRow = {
+  id: string;
+  guest_id: string | null;
+  nama: string;
+  pesan: string;
+  created_at: string;
+};
+
+export type WishInsert = Omit<WishRow, "id" | "created_at"> & Partial<Pick<WishRow, "id">>;
+
+/**
+ * A guest plus their latest RSVP — what the dashboard list renders. Declared
+ * here so the client bundle can type it without importing the query module.
+ */
+export type GuestWithRsvp = GuestRow & {
+  rsvp: Pick<RsvpRow, "kehadiran" | "jumlah" | "catatan" | "created_at"> | null;
+};
+
+export type Database = {
+  public: {
+    Tables: {
+      guests: { Row: GuestRow; Insert: GuestInsert; Update: GuestUpdate; Relationships: [] };
+      rsvps: { Row: RsvpRow; Insert: RsvpInsert; Update: Partial<RsvpInsert>; Relationships: [] };
+      wishes: { Row: WishRow; Insert: WishInsert; Update: Partial<WishInsert>; Relationships: [] };
+    };
+    Views: Record<never, never>;
+    Functions: {
+      track_guest_open: { Args: { guest_slug: string }; Returns: undefined };
+    };
+    Enums: { guest_group: GuestGroup; invite_type: InviteType };
+    CompositeTypes: Record<never, never>;
+  };
+};

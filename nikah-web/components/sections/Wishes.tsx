@@ -8,6 +8,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Reveal } from "@/components/primitives/Reveal";
+import { useGuest } from "@/components/GuestProvider";
 import { FloatInput, FloatTextarea } from "@/components/ui/fields";
 import { copy } from "@/lib/copy";
 
@@ -15,6 +16,7 @@ type Wish = { nama: string; pesan: string; timestamp?: string };
 type Status = "idle" | "sending" | "success" | "error";
 
 export const Wishes = () => {
+  const guest = useGuest();
   const [wishes, setWishes] = useState<Wish[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [nama, setNama] = useState("");
@@ -51,7 +53,13 @@ export const Wishes = () => {
       const res = await fetch("/api/wishes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nama: nama.trim(), pesan: pesan.trim(), website }),
+        body: JSON.stringify({
+          // Links the wish to the guest record when it came from a personal link.
+          slug: guest.slug ?? "",
+          nama: nama.trim(),
+          pesan: pesan.trim(),
+          website,
+        }),
       });
       const body = (await res.json()) as { success: boolean };
       if (body.success) {
