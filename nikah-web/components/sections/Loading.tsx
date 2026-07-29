@@ -19,7 +19,7 @@ export const Loading = () => {
     <motion.div
       key="loading"
       role="status"
-      aria-label="Memuat undangan"
+      aria-label={copy.a11y.loading}
       exit={{ opacity: 0 }}
       transition={{ duration: tier === "REDUCED" ? 0 : dur.base }}
       className="fixed inset-0 z-modal flex flex-col items-center justify-center bg-paper px-6"
@@ -38,9 +38,7 @@ export const Loading = () => {
           className="h-auto w-[58vw] max-w-[280px] [mask-image:radial-gradient(circle,black_58%,transparent_74%)]"
         />
       </div>
-      <p className="mt-6 font-serif text-lg italic tracking-[-0.01em] text-ink/90">
-        {copy.loading.hashtag}
-      </p>
+      <p className="type-lede mt-6">{copy.loading.hashtag}</p>
     </motion.div>
   );
 };

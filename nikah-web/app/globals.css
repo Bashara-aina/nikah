@@ -9,6 +9,10 @@
   --color-surface: oklch(0.995 0.005 80);
   --color-border: oklch(0.88 0.014 80);
   --color-ink: oklch(0.26 0.022 50);
+  /* Secondary ink — one step down from full, for supporting prose. Replaces
+   * the ad-hoc text-ink/70…/90 tints that used to drift per component.
+   * 7.6:1 on paper. */
+  --color-ink-soft: oklch(0.347 0.022 52);
   /* Darker muted — small caps labels must stay readable on paper in sunlight. */
   --color-muted: oklch(0.38 0.022 55);
   --color-blush: oklch(0.86 0.04 25);
@@ -17,8 +21,12 @@
 
   /* Storybook accents added per REF-01. */
   --color-dusty: oklch(0.74 0.06 12);
-  /* Deep rose — dusty's readable sibling for informative text on paper. */
-  --color-dusty-deep: oklch(0.5 0.09 12);
+  /* Deep rose — dusty's readable sibling for informative text on paper.
+   * 4.8:1 on paper as text, and 4.8:1 against paper-on-dusty-deep buttons. */
+  --color-dusty-deep: oklch(0.47 0.095 14);
+  /* Form errors. Stays in the rose family but dark enough to actually read —
+   * error text used to be set in --color-dusty at 2.0:1, i.e. invisible. */
+  --color-alert: oklch(0.44 0.11 22);
   --color-peach: oklch(0.86 0.07 55);
   --color-navy:  oklch(0.34 0.04 255);
   --color-sky:   oklch(0.93 0.03 230);
@@ -57,14 +65,19 @@
   --color-surface: oklch(0.995 0.005 80);
   --color-border: oklch(0.88 0.014 80);
   --color-ink: oklch(0.26 0.022 50);
+  --color-ink-soft: oklch(0.347 0.022 52);
   /* Darker muted — small caps labels must stay readable on paper in sunlight. */
   --color-muted: oklch(0.38 0.022 55);
   --color-blush: oklch(0.86 0.04 25);
   --color-sage: oklch(0.78 0.04 150);
   --color-gold: oklch(0.82 0.08 75);
   --color-dusty: oklch(0.74 0.06 12);
-  /* Deep rose — dusty's readable sibling for informative text on paper. */
-  --color-dusty-deep: oklch(0.5 0.09 12);
+  /* Deep rose — dusty's readable sibling for informative text on paper.
+   * 4.8:1 on paper as text, and 4.8:1 against paper-on-dusty-deep buttons. */
+  --color-dusty-deep: oklch(0.47 0.095 14);
+  /* Form errors. Stays in the rose family but dark enough to actually read —
+   * error text used to be set in --color-dusty at 2.0:1, i.e. invisible. */
+  --color-alert: oklch(0.44 0.11 22);
   --color-peach: oklch(0.86 0.07 55);
   --color-navy:  oklch(0.34 0.04 255);
   --color-sky:   oklch(0.93 0.03 230);
@@ -94,7 +107,9 @@
     color-scheme: light;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
+    /* `text-rendering: optimizeLegibility` deliberately omitted — it delays
+     * first paint on low-end Android (a target here) and the default already
+     * applies kerning + standard ligatures. */
   }
 
   body {
@@ -102,9 +117,11 @@
     text-wrap: pretty;
   }
 
+  /* Headings carry no blanket tracking — Cormorant Garamond is already tightly
+   * fitted, and a global negative value cramped it at every size. Each
+   * `.type-*` role sets its own optical value instead. */
   h1, h2, h3 {
     text-wrap: balance;
-    letter-spacing: -0.022em;
   }
 
   /* Optical sizing for long Indonesian display names (Cormorant). */
@@ -199,89 +216,195 @@
 .utility-shadow-card  { box-shadow: var(--shadow-card); }
 .utility-shadow-float { box-shadow: var(--shadow-float); }
 
-/* Editorial type roles — invite hierarchy, not SaaS scale.
- * Prefer these over ad-hoc text-* stacks so sections stay coherent. */
+/* ── Editorial type roles ────────────────────────────────────────────────────
+ * Invite hierarchy, not a SaaS scale. Every piece of text on the page picks
+ * exactly one of these; components must not hand-roll `font-serif text-[…]
+ * leading-[…] tracking-[…]` stacks, which is how eighteen different sizes and
+ * six different uppercase trackings crept in.
+ *
+ * Tracking is set per role rather than globally, because the two families want
+ * opposite corrections:
+ *   Cormorant Garamond — tightly fitted by design. Display sizes take a hair
+ *     of negative tracking; at running-text size it needs a *positive* nudge
+ *     and weight 500, or its high-contrast strokes go anemic on ivory.
+ *   Plus Jakarta Sans — uppercase micro-type needs wide tracking, and centred
+ *     letterspaced text needs `text-indent` to cancel the trailing space the
+ *     last letter carries (otherwise it sits visibly left of centre).
+ * ─────────────────────────────────────────────────────────────────────────── */
 @layer components {
+  /* Section headings: Kisah Kami, Akad & Resepsi, Ucapan & Doa. */
   .type-display {
     font-family: var(--font-serif);
     font-weight: 500;
     font-size: clamp(2rem, 1.55rem + 2vw, 2.65rem);
-    line-height: 1.12;
-    letter-spacing: -0.025em;
+    line-height: 1.14;
+    letter-spacing: -0.01em;
+    font-variant-numeric: lining-nums;
     color: var(--color-ink);
     text-wrap: balance;
   }
 
+  /* Story chapter titles, closing emphasis. */
   .type-display-sm {
     font-family: var(--font-serif);
     font-weight: 500;
     font-size: clamp(1.55rem, 1.25rem + 1.2vw, 2rem);
-    line-height: 1.18;
-    letter-spacing: -0.02em;
+    line-height: 1.22;
+    letter-spacing: -0.006em;
+    font-variant-numeric: lining-nums;
     color: var(--color-ink);
     text-wrap: balance;
   }
 
+  /* Proper nouns set as display: the couple, the venue, the guest. */
   .type-name {
     font-family: var(--font-serif);
     font-weight: 500;
     font-size: clamp(1.65rem, 1.2rem + 1.8vw, 2.15rem);
-    line-height: 1.15;
-    letter-spacing: -0.018em;
+    line-height: 1.18;
+    letter-spacing: -0.004em;
+    font-variant-numeric: lining-nums;
     color: var(--color-ink);
     text-wrap: balance;
   }
 
+  /* Italic serif opener under a heading. One or two lines, never a paragraph. */
   .type-lede {
     font-family: var(--font-serif);
     font-style: italic;
-    font-weight: 400;
-    font-size: clamp(1.05rem, 0.95rem + 0.45vw, 1.2rem);
-    line-height: 1.65;
-    letter-spacing: -0.01em;
-    /* Near-full ink — thin italic strokes fail first on busy florals / sky. */
-    color: color-mix(in oklch, var(--color-ink) 96%, transparent);
-    max-width: 36ch;
+    font-weight: 500;
+    font-size: clamp(1.1rem, 0.98rem + 0.5vw, 1.25rem);
+    line-height: 1.6;
+    letter-spacing: 0;
+    /* Full ink — thin italic strokes fail first on busy florals / sky. */
+    color: var(--color-ink);
+    max-width: 34ch;
+    /* `balance`, not `pretty` — a lede is one or two lines, and balancing them
+     * lets the break fall on the sentence boundary instead of orphaning a word. */
+    text-wrap: balance;
+  }
+
+  /* Serif running text — the storybook voice. Chapter bodies, the welcome
+   * address. Weight 500 + positive tracking is what keeps Cormorant from
+   * washing out at reading size on a phone. */
+  .type-prose {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(1.125rem, 1.03rem + 0.42vw, 1.28rem);
+    line-height: 1.68;
+    letter-spacing: 0.008em;
+    /* Oldstyle figures: in serif running text a date should sit in the line
+     * like lowercase, not stand up like a heading. Display roles take lining. */
+    font-variant-numeric: oldstyle-nums;
+    color: var(--color-ink-soft);
+    max-width: 34ch;
     text-wrap: pretty;
   }
 
+  /* Scripture and guest quotations. Same serif body, italic, hung punctuation
+   * so the opening quote mark doesn't shove the first line inward. */
+  .type-verse {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(1.06rem, 0.98rem + 0.36vw, 1.18rem);
+    line-height: 1.72;
+    letter-spacing: 0.006em;
+    color: var(--color-ink);
+    max-width: 36ch;
+    text-wrap: pretty;
+    hanging-punctuation: first last;
+  }
+
+  /* Sans running text — practical copy that must stay plain: guest notes,
+   * FAQ answers, field hints. */
   .type-body {
     font-family: var(--font-sans);
     font-weight: 400;
     font-size: clamp(0.9375rem, 0.9rem + 0.2vw, 1.0625rem);
     line-height: 1.7;
-    color: color-mix(in oklch, var(--color-ink) 92%, transparent);
+    letter-spacing: -0.003em;
+    color: var(--color-ink-soft);
     max-width: 42ch;
     text-wrap: pretty;
   }
 
-  .type-label {
-    font-family: var(--font-sans);
-    font-weight: 500;
-    font-size: 0.6875rem;
-    line-height: 1.4;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--color-muted);
-  }
-
+  /* Secondary sans: addresses, deadlines, disclosures. */
   .type-meta {
     font-family: var(--font-sans);
     font-weight: 400;
     font-size: 0.8125rem;
-    line-height: 1.55;
+    line-height: 1.6;
     color: var(--color-muted);
     max-width: 40ch;
+    text-wrap: pretty;
   }
 
+  /* Uppercase micro-labels. No optical indent here: this role is used both
+   * centred and flush-left (form legends), and an indent would push the
+   * flush-left ones off the field edge. */
+  .type-label {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.72rem;
+    line-height: 1.45;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  /* Centred variant — `text-indent` mirrors the empty letterspace the last
+   * character trails, so the glyphs actually sit on the centre line. */
+  .type-label-center {
+    text-indent: 0.2em;
+  }
+
+  /* The widest register — hero and gate lockups only, where the label is
+   * doing display work rather than labelling a field. */
   .type-kicker {
     font-family: var(--font-sans);
     font-weight: 500;
-    font-size: 0.6875rem;
-    line-height: 1.35;
-    letter-spacing: 0.32em;
+    font-size: 0.72rem;
+    line-height: 1.4;
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
     text-transform: uppercase;
-    /* Was 68% — ~3.8:1 on hero sky; small caps need ≥4.5:1. */
-    color: color-mix(in oklch, var(--color-ink) 92%, transparent);
+    /* Full ink — small caps over the hero sky need ≥4.5:1. */
+    color: var(--color-ink);
+  }
+
+  /* Buttons and pills. Tighter than a label: 0.25em on a 16-character CTA
+   * stretched it past the button. */
+  .type-button {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.78rem;
+    line-height: 1;
+    letter-spacing: 0.14em;
+    text-indent: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* Countdown digits. Tabular so the numbers don't jitter as they tick. */
+  .type-numeral {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(2.1rem, 1.7rem + 1.6vw, 2.5rem);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums lining-nums;
+    color: var(--color-ink);
+  }
+
+  /* Dates set as a spaced lockup: 22 · 08 · 2026. */
+  .type-datemark {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.82rem;
+    line-height: 1.4;
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
+    font-variant-numeric: tabular-nums lining-nums;
+    color: var(--color-ink);
   }
 }

@@ -167,13 +167,13 @@ export const Hero = () => {
           <MotionRevealItem className="type-name mt-2.5">
             {siteConfig.couple.bride}
           </MotionRevealItem>
-          <MotionRevealItem className="mt-0.5 pb-1 font-serif text-lg italic leading-[1.2] text-ink/85">
+          <MotionRevealItem className="mt-0.5 pb-1 font-serif text-lg italic leading-[1.2] text-ink-soft">
             &amp;
           </MotionRevealItem>
           <MotionRevealItem className="type-name">
             {siteConfig.couple.groom}
           </MotionRevealItem>
-          <MotionRevealItem className="mt-2.5 font-sans text-[0.8rem] font-medium tracking-[0.32em] text-ink">
+          <MotionRevealItem className="type-datemark mt-3">
             {copy.hero.dateDisplay}
           </MotionRevealItem>
         </MotionReveal>

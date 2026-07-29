@@ -42,7 +42,7 @@ export const Closing = () => {
     <section
       ref={root}
       id="closing"
-      aria-label="Penutup"
+      aria-label={copy.a11y.closing}
       className="relative overflow-hidden bg-paper"
     >
       <div className="relative overflow-hidden">
@@ -63,9 +63,7 @@ export const Closing = () => {
             aria-hidden
             className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-paper/90 via-sky/70 to-transparent"
           />
-          <p className="type-lede relative mx-auto max-w-[28ch] text-ink">
-            {copy.closing.lines.join(" ")}
-          </p>
+          <p className="type-lede relative mx-auto">{copy.closing.lines.join(" ")}</p>
         </div>
 
         {/* Hoshi peek — slides up from the bottom edge, occasionally. */}
@@ -87,7 +85,7 @@ export const Closing = () => {
         <p className="type-display-sm mx-auto max-w-sm">{copy.closing.emphasis.join(" ")}</p>
         <div aria-hidden className="my-7 h-px w-20 bg-gold/70" />
         <p className="type-display">{copy.closing.names}</p>
-        <p className="mt-2 font-serif text-lg italic text-dusty-deep">{copy.closing.hashtag}</p>
+        <p className="type-lede mt-2 text-dusty-deep">{copy.closing.hashtag}</p>
       </div>
     </section>
   );

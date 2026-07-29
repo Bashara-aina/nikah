@@ -9,10 +9,13 @@ import { useId, type ChangeEvent } from "react";
 const fieldBase =
   "peer w-full rounded-2xl border border-border bg-surface px-4 pb-2.5 pt-6 font-sans text-base text-ink shadow-petal outline-none transition-colors focus:border-dusty/60";
 
+/* Resting state is the field's own size; the raised state lands exactly on the
+ * `.type-label` role (0.72rem / 0.2em) so a floated label matches every other
+ * micro-label on the page instead of being a fourth uppercase size. */
 const labelBase =
   "pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 font-sans text-base text-muted transition-all " +
-  "peer-focus:top-3.5 peer-focus:text-[0.68rem] peer-focus:uppercase peer-focus:tracking-[0.18em] " +
-  "peer-[:not(:placeholder-shown)]:top-3.5 peer-[:not(:placeholder-shown)]:text-[0.68rem] peer-[:not(:placeholder-shown)]:uppercase peer-[:not(:placeholder-shown)]:tracking-[0.18em]";
+  "peer-focus:top-3.5 peer-focus:text-[0.72rem] peer-focus:font-medium peer-focus:uppercase peer-focus:tracking-[0.2em] " +
+  "peer-[:not(:placeholder-shown)]:top-3.5 peer-[:not(:placeholder-shown)]:text-[0.72rem] peer-[:not(:placeholder-shown)]:font-medium peer-[:not(:placeholder-shown)]:uppercase peer-[:not(:placeholder-shown)]:tracking-[0.2em]";
 
 export const FloatInput = ({
   label,
@@ -88,6 +91,24 @@ export const FloatTextarea = ({
   );
 };
 
+/* Selected-state mark. Was a `✿` (U+273F) — a dingbat that renders as a very
+ * different flower on iOS, Android and Windows, and shifts the pill's baseline
+ * on any device whose fallback font carries it at a different size. */
+const PetalMark = () => (
+  <svg
+    aria-hidden
+    viewBox="0 0 12 12"
+    width="9"
+    height="9"
+    fill="currentColor"
+    className="mr-2 shrink-0 text-dusty-deep"
+  >
+    <circle cx="6" cy="3" r="2.3" />
+    <circle cx="9" cy="7.5" r="2.3" />
+    <circle cx="3" cy="7.5" r="2.3" />
+  </svg>
+);
+
 export const PillRadioGroup = <T extends string>({
   legend,
   options,
@@ -102,9 +123,7 @@ export const PillRadioGroup = <T extends string>({
   name: string;
 }) => (
   <fieldset>
-    <legend className="mb-3 font-sans text-[0.68rem] uppercase tracking-[0.18em] text-muted">
-      {legend}
-    </legend>
+    <legend className="type-label mb-3">{legend}</legend>
     <div className="flex flex-wrap gap-2.5">
       {options.map((opt) => {
         const active = value === opt;
@@ -114,7 +133,7 @@ export const PillRadioGroup = <T extends string>({
             className={`inline-flex min-h-[44px] cursor-pointer items-center rounded-full border px-5 py-2.5 font-sans text-sm transition-colors ${
               active
                 ? "border-dusty bg-blush/35 font-medium text-ink"
-                : "border-border bg-surface text-ink/75 hover:bg-cream"
+                : "border-border bg-surface text-ink-soft hover:bg-cream"
             }`}
           >
             <input
@@ -125,11 +144,7 @@ export const PillRadioGroup = <T extends string>({
               onChange={() => onChange(opt)}
               className="sr-only"
             />
-            {active ? (
-              <span aria-hidden className="mr-2 text-dusty">
-                ✿
-              </span>
-            ) : null}
+            {active ? <PetalMark /> : null}
             {opt}
           </label>
         );

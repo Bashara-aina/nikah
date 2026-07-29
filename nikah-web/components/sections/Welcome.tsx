@@ -12,7 +12,7 @@ import { siteConfig } from "@/lib/config";
 export const Welcome = () => (
   <section
     id="welcome"
-    aria-label="Sambutan"
+    aria-label={copy.a11y.welcome}
     data-cv="auto"
     className="relative bg-paper px-8 pb-20 pt-16 text-center"
   >
@@ -29,26 +29,19 @@ export const Welcome = () => (
     </Reveal>
 
     <Reveal stagger className="mt-7 flex flex-col items-center gap-5">
-      <p className="font-serif text-xl italic leading-[1.35] tracking-[-0.01em] text-ink">
-        {copy.welcome.bismillah}
-      </p>
-      <p className="mx-auto max-w-sm font-serif text-[1.05rem] font-normal leading-[1.75] tracking-[-0.01em] text-ink">
-        {copy.welcome.lines.join(" ")}
-      </p>
+      <p className="type-lede mx-auto">{copy.welcome.bismillah}</p>
+      {/* The announcement is etiquette, not prose — full ink, centred. */}
+      <p className="type-prose mx-auto text-ink">{copy.welcome.lines.join(" ")}</p>
 
       <div className="mx-auto mt-2 flex max-w-sm flex-col items-center gap-6">
         <div>
           <p className="type-name">{siteConfig.couple.bride}</p>
-          <p className="mt-1.5 font-sans text-sm leading-relaxed text-ink/75">
-            {siteConfig.couple.parents.bride}
-          </p>
+          <p className="type-meta mx-auto mt-2">{siteConfig.couple.parents.bride}</p>
         </div>
-        <p className="font-serif text-lg italic text-ink/70">&amp;</p>
+        <p className="font-serif text-lg italic text-muted">&amp;</p>
         <div>
           <p className="type-name">{siteConfig.couple.groom}</p>
-          <p className="mt-1.5 font-sans text-sm leading-relaxed text-ink/75">
-            {siteConfig.couple.parents.groom}
-          </p>
+          <p className="type-meta mx-auto mt-2">{siteConfig.couple.parents.groom}</p>
         </div>
       </div>
 
@@ -61,10 +54,13 @@ export const Welcome = () => (
           sizes="112px"
           className="pointer-events-none absolute -top-5 left-1/2 h-auto w-28 -translate-x-1/2"
         />
-        <p className="font-serif text-[1.05rem] italic leading-[1.75] tracking-[-0.01em] text-ink/90">
+        <blockquote className="type-verse mx-auto">
           {copy.welcome.verse.join(" ")}
+        </blockquote>
+        <p className="type-label type-label-center mt-5">
+          <span aria-hidden>—&nbsp;</span>
+          {copy.welcome.verseSource}
         </p>
-        <p className="type-label mt-4">{copy.welcome.verseSource}</p>
       </div>
     </Reveal>
   </section>

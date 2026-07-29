@@ -8,6 +8,7 @@
  */
 import Image from "next/image";
 import { useMotion } from "@/components/motion/MotionProvider";
+import { copy } from "@/lib/copy";
 
 const PETALS = [
   { left: "12%", delay: "0s", dur: "11s", size: 34 },
@@ -21,7 +22,7 @@ export const Japan = () => {
   return (
     <section
       id="japan"
-      aria-label="Impian kami di Jepang"
+      aria-label={copy.a11y.japan}
       data-cv="auto"
       className="relative overflow-hidden"
     >
