@@ -6,19 +6,26 @@ import { AudioProvider } from "@/components/AudioProvider";
 import { siteConfig } from "@/lib/config";
 import "./globals.css";
 
+/* Weight 600 dropped from both families — no `.type-*` role or component used
+ * it, and this is a mobile-first invite on Indonesian 3G/4G. 9 font files → 6.
+ * Explicit fallbacks are metric-adjacent so the swap doesn't reflow the page. */
 const serif = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500"],
   style: ["normal", "italic"],
   display: "swap",
+  preload: true,
+  fallback: ["Iowan Old Style", "Palatino", "Georgia", "serif"],
   variable: "--font-serif-stack",
 });
 
 /* Humanist sans per design law (§4 brand voice — no Inter/Roboto/Arial). */
 const sans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500"],
   display: "swap",
+  preload: true,
+  fallback: ["Avenir Next", "Segoe UI", "system-ui", "sans-serif"],
   variable: "--font-sans-stack",
 });
 

@@ -68,12 +68,14 @@ export const StickyRsvp = () => {
       href="#rsvp"
       aria-hidden={!visible}
       tabIndex={visible ? 0 : -1}
-      className={`fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] left-1/2 z-sticky flex min-h-[44px] -translate-x-1/2 items-center gap-2.5 rounded-full bg-ink px-6 py-2.5 font-sans text-xs uppercase tracking-[0.22em] text-paper shadow-float transition-[opacity,transform] duration-500 ease-out ${
+      className={`type-button fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] left-1/2 z-sticky flex min-h-[44px] -translate-x-1/2 items-center gap-2.5 rounded-full bg-ink px-6 py-2.5 text-paper shadow-float transition-[opacity,transform] duration-500 ease-out ${
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-16 opacity-0"
       }`}
     >
       <EnvelopeIcon />
-      <span className="leading-none">{copy.rsvp.heading}</span>
+      {/* Short form — the full "Konfirmasi Kehadiran" runs past the pill once
+          it picks up the button tracking. */}
+      <span className="leading-none">{copy.rsvp.pill}</span>
     </a>
   );
 };

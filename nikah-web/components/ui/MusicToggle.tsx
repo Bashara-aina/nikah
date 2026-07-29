@@ -6,6 +6,7 @@
  * keepers are opaque tiles (plan 05 §7 SVG fallback).
  */
 import { useSiteAudio } from "@/components/AudioProvider";
+import { copy } from "@/lib/copy";
 
 export const MusicToggle = () => {
   const { unlocked, playing, toggleMute } = useSiteAudio();
@@ -16,7 +17,7 @@ export const MusicToggle = () => {
     <button
       type="button"
       onClick={toggleMute}
-      aria-label={silent ? "Nyalakan musik" : "Matikan musik"}
+      aria-label={silent ? copy.a11y.musicOn : copy.a11y.musicOff}
       aria-pressed={!silent}
       className="fixed top-[max(1rem,env(safe-area-inset-top))] right-[max(1rem,calc(50vw-230px))] z-sticky flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface/90 text-ink shadow-card backdrop-blur-sm transition-colors hover:bg-blush/30 active:scale-[0.97]"
     >

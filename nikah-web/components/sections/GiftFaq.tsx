@@ -8,13 +8,32 @@ import { useState } from "react";
 import { Reveal } from "@/components/primitives/Reveal";
 import { copy } from "@/lib/copy";
 
+/* Drawn rather than typed. This was a fullwidth `＋` (U+FF0B) — a CJK glyph
+ * that falls back to a different font on most Latin systems, so it rendered at
+ * the wrong weight and sat off the optical centre of the row. */
+const PlusGlyph = ({ open }: { open: boolean }) => (
+  <svg
+    aria-hidden
+    viewBox="0 0 16 16"
+    width="14"
+    height="14"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.4"
+    strokeLinecap="round"
+    className={`shrink-0 text-dusty-deep transition-transform duration-300 ${open ? "rotate-45" : ""}`}
+  >
+    <path d="M8 2v12M2 8h12" />
+  </svg>
+);
+
 export const GiftFaq = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
     <section
       id="faq"
-      aria-label="Pertanyaan yang sering diajukan"
+      aria-label={copy.a11y.faq}
       data-cv="auto"
       className="bg-paper px-7 pb-20 pt-16 text-center"
     >
@@ -30,15 +49,10 @@ export const GiftFaq = () => {
                   type="button"
                   onClick={() => setOpenFaq(open ? null : i)}
                   aria-expanded={open}
-                  className="flex min-h-[52px] w-full items-center justify-between gap-4 py-4 text-left font-sans text-sm font-medium text-ink"
+                  className="type-body flex min-h-[52px] w-full max-w-none items-center justify-between gap-4 py-4 text-left font-medium text-ink"
                 >
                   {item.q}
-                  <span
-                    aria-hidden
-                    className={`shrink-0 text-dusty transition-transform duration-300 ${open ? "rotate-45" : ""}`}
-                  >
-                    ＋
-                  </span>
+                  <PlusGlyph open={open} />
                 </button>
                 <div
                   className={`grid transition-[grid-template-rows] duration-300 ease-out ${
@@ -46,9 +60,7 @@ export const GiftFaq = () => {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <p className="pb-5 font-sans text-sm leading-relaxed text-ink/75">
-                      {item.a}
-                    </p>
+                    <p className="type-body pb-5">{item.a}</p>
                   </div>
                 </div>
               </div>

@@ -42,7 +42,7 @@ export const Gate = ({ onOpen }: { onOpen: () => void }) => {
   const { unlock } = useSiteAudio();
   const [opening, setOpening] = useState(false);
   const [guestName] = useState<string>(() => {
-    if (typeof window === "undefined") return "Bapak/Ibu/Saudara/i";
+    if (typeof window === "undefined") return copy.gate.guestFallback;
     const params = new URLSearchParams(window.location.search);
     return guestNameFromSearchParams(Object.fromEntries(params));
   });
@@ -92,7 +92,7 @@ export const Gate = ({ onOpen }: { onOpen: () => void }) => {
       id="gate"
       role="dialog"
       aria-modal="true"
-      aria-label="Buka undangan"
+      aria-label={copy.a11y.gate}
       data-tier={tier}
       initial={{ opacity: reduced ? 1 : 0 }}
       animate={{ opacity: 1 }}
@@ -170,7 +170,7 @@ export const Gate = ({ onOpen }: { onOpen: () => void }) => {
 
         <motion.p
           variants={reduced ? undefined : item}
-          className="relative type-label"
+          className="relative type-label type-label-center"
         >
           {copy.gate.dear}
         </motion.p>
@@ -194,7 +194,7 @@ export const Gate = ({ onOpen }: { onOpen: () => void }) => {
           transition={motionSpring("gentle")}
           whileHover={reduced ? undefined : { scale: 1.03 }}
           whileTap={reduced ? undefined : { scale: 0.97 }}
-          className="relative mt-8 inline-flex min-h-[48px] items-center gap-2 rounded-full border border-dusty/50 bg-surface px-9 py-3 font-sans text-sm uppercase tracking-[0.25em] text-ink shadow-petal transition-colors hover:bg-blush/25 active:scale-[0.97] disabled:opacity-70"
+          className="type-button relative mt-8 inline-flex min-h-[48px] items-center gap-2 rounded-full border border-dusty/50 bg-surface px-9 py-3 text-ink shadow-petal transition-colors hover:bg-blush/25 active:scale-[0.97] disabled:opacity-70"
         >
           {opening ? (
             <span

@@ -1,8 +1,33 @@
 # 03 — Copywriting (Bahasa Indonesia)
 
-Semua teks final, section demi section. Suara: hangat, puitis, bercerita, sweet & sincere. Draft awal — silakan poles.
+Semua teks final, section demi section. Ini sumber kebenaran; `nikah-web/lib/copy.ts` harus selalu sama persis.
 
 > Catatan: `{namaTamu}` = placeholder dari link personal.
+
+---
+
+## Aturan suara
+
+Suara yang dituju: **hangat, bercerita, sweet & sincere** — persis yang diminta di
+`00-original-qa.md` (#22, #36). Yang membuat teks terasa ditulis manusia, bukan
+digenerate:
+
+1. **Kalimat biasa.** Kalimat pendek boleh sangat pendek. Tidak semua kalimat
+   harus punya anak kalimat.
+2. **Konkret, bukan liris.** Sebut tempat, benda, waktu. Hindari kata benda
+   abstrak yang dipakai untuk membawa emosi ("hati berlabuh", "angin sore",
+   "secarik doa").
+3. **Tanda pisah (—) dijatah.** Kira-kira satu untuk seluruh halaman. Bahasa
+   Indonesia jalan dengan koma dan titik; satu halaman penuh em dash adalah
+   penanda paling jelas bahwa teksnya tidak ditulis orang.
+4. **Tanpa antitesis "bukan X, tapi Y"** dan tanpa daftar tiga hal yang dipakai
+   sekadar untuk irama.
+5. **Register formal tetap baku.** Bismillah dan kalimat pengumuman pernikahan
+   adalah etiket, bukan tempat berkreasi. Justru dibiarkan formulaic.
+6. **Sudut pandang konsisten**: "kami" sepanjang situs, menyebut nama Bashara
+   atau Hanifah ketika hanya salah satu yang melakukan sesuatu. Tidak
+   berpindah-pindah antara orang pertama dan ketiga di tengah cerita.
+7. **Tidak menyebut hadiah/transfer.** Kehadiran dan doa sudah cukup.
 
 ---
 
@@ -19,9 +44,11 @@ Semua teks final, section demi section. Suara: hangat, puitis, bercerita, sweet 
 > Kepada yang terkasih,
 > **{namaTamu}**
 >
-> Dengan penuh syukur, kami mengundangmu untuk menjadi bagian dari hari bahagia kami.
+> Ada satu hari yang sudah lama kami tunggu. Kami ingin kamu ada di sana.
 >
 > [ Buka Undangan ]
+
+*Fallback bila link tidak membawa nama:* Bapak/Ibu/Saudara/i
 
 ---
 
@@ -40,9 +67,7 @@ Semua teks final, section demi section. Suara: hangat, puitis, bercerita, sweet 
 > Bismillahirrahmanirrahim.
 >
 > Dengan memohon rahmat dan ridha Allah SWT,
-> kami bermaksud menyelenggarakan pernikahan kami.
-> Sebuah awal baru yang kami mulai dengan doa,
-> dan kami harap turut kamu rayakan bersama.
+> kami bermaksud melangsungkan pernikahan kami.
 >
 > **Hanifah Syifa Azzahra Bay**
 > Anak dari Achmad Fuad Bay dan Eulis Galih
@@ -52,8 +77,8 @@ Semua teks final, section demi section. Suara: hangat, puitis, bercerita, sweet 
 > **Bashara Aina**
 > Anak dari Adlinsyah dan Hartanti Rahayuningsih
 
-**Kutipan — Surat Yasin Ayat 36:**
-> "Maha Suci (Allah) yang telah menciptakan semuanya berpasang-pasangan,
+**Kutipan — Surat Yasin Ayat 36** (terjemahan Kemenag, jangan diparafrase):
+> "Mahasuci (Allah) yang telah menciptakan semuanya berpasang-pasangan,
 > baik dari apa yang ditumbuhkan oleh bumi
 > dan dari diri mereka sendiri,
 > maupun dari apa yang tidak mereka ketahui."
@@ -70,38 +95,39 @@ Semua teks final, section demi section. Suara: hangat, puitis, bercerita, sweet 
 ---
 
 ## 5. Love Story
-*(6 chapter pendek, masing-masing: sub-judul + 1–3 baris narasi orang ketiga, ilustrasi di sisi kiri/kanan bergantian)*
+*(6 chapter pendek. Judul berupa frasa polos, bukan judul puitis. Panjang badan
+teks sengaja tidak seragam.)*
 
 > **Kisah Kami**
 >
-> **Awal yang Sederhana**
-> Berawal dari satu pertemuan daring,
-> di sebuah program organisasi kampus.
-> Layar yang sederhana, namun cukup untuk membuat hati berlabuh.
+> **Awal Mula**
+> Kami pertama kali bertemu di rapat daring, di salah satu program organisasi
+> kampus. Pertemuannya biasa saja. Tapi sejak hari itu, Bashara tidak pernah
+> benar-benar berhenti memikirkan Hanifah.
 >
-> **Antar Pulang, Hati Semakin Dekat**
-> Lalu interaksi tumbuh di kampus — sapa yang makin sering, tawa yang makin akrab.
-> Makin dekat karena sering diantar pulang dengan motor ke kosan,
-> membagi angin sore dan cerita yang tidak terasa habis.
+> **Diantar Pulang**
+> Setelah itu kami mulai sering bertemu di kampus. Hampir setiap sore Bashara
+> mengantar Hanifah pulang ke kos, naik motor. Jalannya selalu sama, obrolannya
+> tidak pernah habis.
 >
-> **Bersama di Jakarta**
-> Cerita berlanjut ke Jakarta — bekerja bersama, menimba ilmu di bangku yang sama,
-> dan menemukan bahwa kami adalah partner yang searah.
+> **Pindah ke Jakarta**
+> Lalu kami sama-sama pindah ke Jakarta. Bekerja di tempat yang sama, kuliah di
+> kelas yang sama. Semakin lama semakin jelas bahwa kami memang searah.
 >
-> **LDR, Sampai Tokyo**
-> Tak lama kemudian, langkah kami harus berbeda kota.
-> Bashara harus sekolah lebih dulu di SIT, Tokyo — sebuah LDR yang tidak mudah,
-> namun kami jaga dengan doa dan janji untuk segera bertemu kembali.
+> **Berbeda Kota**
+> Tidak lama kemudian Bashara berangkat lebih dulu ke Tokyo, kuliah di SIT.
+> Setahun itu kami menjalani LDR, terpaut dua jam. Tidak mudah. Yang kami punya
+> cuma doa dan janji untuk segera bertemu lagi.
 >
-> **Setahun Kemudian, Hanifah Diterima di Keio**
-> Setahun berselang, kabar baik itu datang — Hanifah diterima di Keio University, Hiyoshi (Yokohama).
-> Hiyoshi dan Tokyo bersebelahan — bukan lagi dua kota yang jauh,
-> tapi satu area yang sama, dan jarak yang bisa kami jembatani setiap hari.
+> **Kabar dari Keio**
+> Setahun kemudian kabar itu datang: Hanifah diterima di Keio University, kampus
+> Hiyoshi, Yokohama. Dari Tokyo, Hiyoshi bisa ditempuh sekali naik kereta.
+> Setelah setahun Jakarta–Tokyo, jarak sedekat itu rasanya seperti hadiah.
 >
-> **Memutuskan Menikah, Studi Bersama**
-> Di titik ini, kami memilih melangkah lebih pasti: menikah,
-> dan menempuh studi bersama setelahnya di Jepang.
-> Perjalanan ini, baru saja dimulai — dan kami ingin kamu menjadi bagian dari awal yang baru.
+> **Memutuskan Menikah**
+> Sampai di titik ini, kami memutuskan untuk melangkah lebih pasti. Menikah,
+> lalu melanjutkan studi bersama di Jepang. Perjalanannya baru mau dimulai, dan
+> kami ingin kamu ikut dari awalnya.
 
 ---
 
@@ -110,43 +136,54 @@ Semua teks final, section demi section. Suara: hangat, puitis, bercerita, sweet 
 > **Akad & Resepsi**
 > Sabtu, 22 Agustus 2026
 > Akad pukul 10.00 WIB
-> Acara berlangsung hingga 13.00 WIB
+> Resepsi sampai pukul 13.00 WIB
 >
 > **Widuri Restaurant** — Lantai 2
-> Jl. Ciliwung No.19, Cihapit,
+> Jl. Ciliwung No. 19, Cihapit,
 > Kec. Bandung Wetan, Kota Bandung,
 > Jawa Barat 40114 (dekat Gedung Sate)
 >
 > [ Lihat Peta ]   [ Simpan ke Kalender ]
 
 **Dress Code:**
-> Mari hadir dengan nuansa **warna pastel** yang lembut. 🤍
+> Nuansa pastel yang lembut. Pilih yang paling nyaman kamu pakai.
 
-**Catatan untuk Tamu:**
-> - Akad dimulai pukul 10.00 — mohon hadir tepat waktu.
-> - Mohon tidak membawa anak-anak ke lantai 2.
-> - Ruang salat tersedia di lantai 1.
-> - Mohon untuk tidak menggunakan flash kamera.
-> - Mohon untuk tetap duduk selama prosesi akad berlangsung.
+**Beberapa Catatan Kecil:**
+> - Akad mulai pukul 10.00. Mohon hadir sedikit lebih awal.
+> - Mohon maaf, anak-anak belum bisa kami terima di lantai 2.
+> - Ruang salat ada di lantai 1.
+> - Mohon tidak menggunakan flash saat memotret.
+> - Selama prosesi akad, mohon tetap duduk di tempat.
 
 **Livestream:**
-> Bagi yang berhalangan hadir, ikuti momen kami secara langsung:
+> Kalau tidak bisa datang, acaranya kami siarkan langsung.
 > [ YouTube ]  ·  [ Zoom (interaktif) ]  ·  [ Instagram ]  ·  [ Facebook ]
+>
+> *Bila tautan belum diisi di `lib/config.ts`:* Tautannya menyusul, ya.
 
 ---
 
 ## 7. RSVP
-> **Konfirmasi Kehadiran**
+> **Konfirmasi Kehadiran**  *(pill sticky: "Konfirmasi")*
 >
-> Doa dan kehadiranmu adalah hadiah terindah bagi kami.
-> Mohon konfirmasi sebelum **{tanggal D-7}**.
+> Beri tahu kami kalau kamu bisa datang, supaya kami bisa menyiapkan tempat
+> untukmu.
+> Kami tunggu kabarnya sampai **{tanggal D-7}**.
 >
 > Nama: ______________________
 > Kehadiran:  ( ) Hadir   ( ) Tidak Hadir   ( ) Masih Diusahakan
-> Jumlah hadir: ____  *(1 undangan berlaku untuk 2 orang; bila membawa anak, maksimal 4 orang)*
-> Ucapan singkat: ______________________
+> Jumlah yang datang: ____
+>   *Satu undangan berlaku untuk dua orang. Kalau membawa anak, maksimal empat orang.*
+> Titip pesan: ______________________
 >
 > [ Kirim Konfirmasi ]
+
+**Status:**
+> - Berhasil: Terima kasih, kabarmu sudah kami terima.
+> - Belum lengkap: Nama dan pilihan kehadiran belum diisi.
+> - Backend belum siap (503): Mohon maaf, konfirmasi belum bisa terkirim sekarang. Coba lagi nanti, ya.
+> - Gagal umum: Ada kendala saat mengirim. Coba sekali lagi, ya.
+> - Jaringan: Jaringannya sedang tersendat. Coba sekali lagi, ya.
 
 ---
 
@@ -154,14 +191,18 @@ Semua teks final, section demi section. Suara: hangat, puitis, bercerita, sweet 
 
 > **Ucapan & Doa**
 >
-> Tinggalkan secarik doa dan harapan untuk kami —
-> setiap kata akan kami simpan dengan hati.
+> Tulis doa atau pesan apa pun untuk kami. Semuanya kami baca.
 >
 > Nama: ______________________
 > Ucapan: ______________________
 > [ Kirim Ucapan ]
 >
-> *(ucapan tampil terbuka untuk semua tamu)*
+> Ucapan yang masuk bisa dibaca semua tamu.
+
+**Status:**
+> - Berhasil: Terima kasih, doamu sudah kami terima.
+> - Gagal: Ucapannya belum terkirim. Coba lagi nanti, ya.
+> - Dinding masih kosong: Belum ada ucapan. Kamu bisa jadi yang pertama.
 
 > **Catatan:** bagian Tanda Kasih / transfer / kirim hadiah dihapus —
 > kehadiran dan doa sudah cukup; undangan tidak meminta hadiah.
@@ -169,28 +210,38 @@ Semua teks final, section demi section. Suara: hangat, puitis, bercerita, sweet 
 ---
 
 ## 9. FAQ (accordion)
-> **Pertanyaan yang Sering Diajukan**
+> **Yang Sering Ditanyakan**
 >
-> **Apakah saya boleh membawa pasangan/anak?**
-> Satu undangan berlaku untuk dua orang. Bila membawa anak, jumlah maksimal adalah empat orang. Mohon dicatat, anak-anak tidak diperkenankan berada di lantai 2.
+> **Boleh membawa pasangan atau anak?**
+> Satu undangan berlaku untuk dua orang. Kalau membawa anak, maksimal empat orang. Tapi mohon maaf, anak-anak belum bisa kami terima di lantai 2.
 >
-> **Apakah tersedia tempat parkir?**
-> Tersedia parkir untuk ± 40 mobil di lokasi.
+> **Ada tempat parkir?**
+> Ada, muat sekitar 40 mobil di lokasi.
 >
-> **Apa dress code-nya?**
-> Nuansa warna pastel yang lembut.
+> **Dress code-nya apa?**
+> Nuansa pastel yang lembut.
 >
-> **Saya tidak bisa hadir, bagaimana mengikuti acaranya?**
-> Acara disiarkan langsung melalui YouTube, dan Zoom untuk interaksi.
+> **Kalau tidak bisa datang, bagaimana?**
+> Acaranya kami siarkan langsung lewat YouTube. Untuk yang ingin ikut lebih dekat, ada Zoom.
 
 ---
 
 ## 10. Closing
-> Dengan penuh kebahagiaan,
-> kami menanti kehadiranmu.
+> Terima kasih sudah membaca sampai akhir.
 >
-> **Tak sabar bertemu denganmu
-> di hari bahagia kami.** 🤍
+> **Sampai bertemu di Bandung,
+> 22 Agustus 2026.** 🤍
 >
 > **Hanifah & Bashara**
 > #BASHicallyHANI's
+
+---
+
+## Catatan yang perlu keputusan Bashara
+
+- **FAQ #1 vs catatan lantai 2.** Undangan mengizinkan sampai empat orang bila
+  membawa anak, tapi anak-anak tidak boleh berada di lantai 2 — sementara akad
+  dan resepsi ada di lantai 2. Ini terbawa apa adanya dari jawaban asli
+  (`00-original-qa.md` #93, #94). Kalau maksudnya "anak boleh ikut tapi
+  menunggu di lantai 1 dengan pendamping", kalimatnya perlu diperjelas.
+- **Section Japan** tetap tanpa teks (lihat `plans/DELTA.md`).

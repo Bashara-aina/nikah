@@ -19,7 +19,7 @@ const Cta = ({
   variant?: "outline" | "solid";
 }) => {
   const base =
-    "type-label inline-flex min-h-[44px] items-center justify-center rounded-full px-7 py-2.5 transition-transform active:scale-[0.97]";
+    "type-button inline-flex min-h-[44px] items-center justify-center rounded-full px-7 py-2.5 transition-transform active:scale-[0.97]";
   const styles =
     variant === "solid"
       ? "bg-dusty-deep text-paper shadow-petal hover:opacity-90"
@@ -42,7 +42,7 @@ export const EventDetails = () => {
   return (
     <section
       id="event"
-      aria-label="Detail acara"
+      aria-label={copy.a11y.event}
       data-cv="auto"
       className="bg-paper px-8 pb-24 pt-16 text-center"
     >
@@ -53,19 +53,13 @@ export const EventDetails = () => {
 
       {/* Date — breathing room above the schedule blocks */}
       <Reveal className="mt-14">
-        <p className="font-serif text-[1.25rem] font-medium leading-snug tracking-[-0.01em] text-ink">
-          {copy.event.dateLine}
-        </p>
+        <p className="type-prose mx-auto text-ink">{copy.event.dateLine}</p>
       </Reveal>
 
-      {/* Schedule — generous vertical rhythm, locked copy only */}
-      <Reveal className="mx-auto mt-12 flex max-w-[18rem] flex-col gap-5">
-        <p className="font-sans text-[0.95rem] font-medium leading-relaxed tracking-[-0.005em] text-ink">
-          {copy.event.akadLine}
-        </p>
-        <p className="font-sans text-[0.95rem] font-medium leading-relaxed tracking-[-0.005em] text-ink">
-          {copy.event.untilLine}
-        </p>
+      {/* Schedule — practical, so it drops to sans while the date stays serif */}
+      <Reveal className="mx-auto mt-12 flex max-w-[18rem] flex-col gap-4">
+        <p className="type-body mx-auto text-ink">{copy.event.akadLine}</p>
+        <p className="type-body mx-auto text-ink">{copy.event.untilLine}</p>
       </Reveal>
 
       {/* Venue line-art — open composition, not packed inside an arch.
@@ -84,20 +78,20 @@ export const EventDetails = () => {
       </Reveal>
 
       <Reveal className="mt-10">
-        <p className="font-serif text-[1.65rem] font-medium leading-tight tracking-[-0.02em] text-ink">
-          {copy.event.venueName}
+        <p className="type-name">{copy.event.venueName}</p>
+        <p className="type-label type-label-center mt-3 text-dusty-deep">
+          {copy.event.venueFloor}
         </p>
-        <p className="type-label mt-3 text-dusty-deep">{copy.event.venueFloor}</p>
       </Reveal>
 
       <Reveal className="mx-auto mt-6 max-w-[18rem]">
-        <p className="font-sans text-[0.8rem] font-medium leading-[1.7] tracking-[0.01em] text-muted">
+        <address className="type-meta mx-auto not-italic">
           {copy.event.addressLines.map((line) => (
             <span key={line} className="block">
               {line}
             </span>
           ))}
-        </p>
+        </address>
       </Reveal>
 
       <Reveal className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
@@ -122,17 +116,17 @@ export const EventDetails = () => {
 
       {/* Dress code */}
       <Reveal className="mt-16">
-        <h3 className="type-label">{copy.event.dressCodeHeading}</h3>
-        <p className="type-lede mx-auto mt-4 max-w-[28ch]">{copy.event.dressCodeLine}</p>
+        <h3 className="type-label type-label-center">{copy.event.dressCodeHeading}</h3>
+        <p className="type-lede mx-auto mt-4">{copy.event.dressCodeLine}</p>
       </Reveal>
 
       {/* Notes */}
       <Reveal className="mx-auto mt-14 max-w-sm rounded-3xl border border-border bg-surface/70 px-7 py-8 text-left shadow-petal">
-        <h3 className="type-label text-center">{copy.event.notesHeading}</h3>
+        <h3 className="type-label type-label-center text-center">{copy.event.notesHeading}</h3>
         <ul className="mt-6 flex flex-col gap-4">
           {copy.event.notes.map((note) => (
             <li key={note} className="type-body flex gap-3 text-left">
-              <span aria-hidden className="mt-[0.55em] h-1 w-1 shrink-0 rounded-full bg-dusty" />
+              <span aria-hidden className="mt-[0.6em] h-1 w-1 shrink-0 rounded-full bg-dusty" />
               {note}
             </li>
           ))}
@@ -141,8 +135,8 @@ export const EventDetails = () => {
 
       {/* Livestream */}
       <Reveal className="mt-14">
-        <h3 className="type-label">{copy.event.livestreamHeading}</h3>
-        <p className="type-lede mx-auto mt-4 max-w-[32ch]">{copy.event.livestreamLine}</p>
+        <h3 className="type-label type-label-center">{copy.event.livestreamHeading}</h3>
+        <p className="type-lede mx-auto mt-4">{copy.event.livestreamLine}</p>
         {livestream.length > 0 ? (
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             {livestream.map(([key, url]) => (
@@ -152,9 +146,7 @@ export const EventDetails = () => {
             ))}
           </div>
         ) : (
-          <p className="mt-5 font-sans text-sm text-muted">
-            Tautan livestream menyusul.
-          </p>
+          <p className="type-meta mx-auto mt-5">{copy.event.livestreamPending}</p>
         )}
       </Reveal>
     </section>

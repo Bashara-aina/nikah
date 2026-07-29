@@ -71,7 +71,7 @@ export const Wishes = () => {
   return (
     <section
       id="wishes"
-      aria-label="Ucapan dan doa"
+      aria-label={copy.a11y.wishes}
       data-cv="auto"
       className="bg-paper px-7 pb-20 pt-16"
     >
@@ -114,7 +114,7 @@ export const Wishes = () => {
           <button
             type="submit"
             disabled={status === "sending"}
-            className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full border border-ink/25 bg-surface px-8 py-3 font-sans text-sm uppercase tracking-[0.22em] text-ink shadow-petal transition-transform hover:bg-blush/25 active:scale-[0.97] disabled:opacity-70"
+            className="type-button inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full border border-ink/25 bg-surface px-8 py-3 text-ink shadow-petal transition-transform hover:bg-blush/25 active:scale-[0.97] disabled:opacity-70"
           >
             {status === "sending" ? (
               <span
@@ -122,24 +122,18 @@ export const Wishes = () => {
                 className="h-4 w-4 animate-spin rounded-full border-2 border-ink/30 border-t-ink"
               />
             ) : null}
-            {status === "success" ? "Terkirim" : copy.wishes.cta}
+            {status === "success" ? copy.wishes.ctaSent : copy.wishes.cta}
           </button>
           <div aria-live="polite">
             {status === "success" ? (
-              <p className="text-center font-serif text-base italic text-sage">
-                Terima kasih - doamu sudah kami terima.
-              </p>
+              <p className="type-lede mx-auto text-center text-sage">{copy.wishes.success}</p>
             ) : null}
             {status === "error" ? (
-              <p className="text-center font-sans text-sm text-dusty">
-                Ucapan belum terkirim. Silakan coba lagi nanti.
-              </p>
+              <p className="type-body mx-auto text-center text-alert">{copy.wishes.error}</p>
             ) : null}
           </div>
         </form>
-        <p className="mt-3 text-center font-sans text-xs italic text-muted">
-          {copy.wishes.openNote}
-        </p>
+        <p className="type-meta mx-auto mt-3 text-center">{copy.wishes.openNote}</p>
       </Reveal>
 
       {/* Wall */}
@@ -149,11 +143,10 @@ export const Wishes = () => {
             key={`${w.nama}-${i}`}
             className="animate-[fade-in_600ms_ease-out] break-words rounded-2xl border border-border bg-surface/80 px-5 py-4 shadow-petal"
           >
-            <blockquote className="font-serif text-base leading-relaxed text-ink/85">
-              {w.pesan}
-            </blockquote>
-            <figcaption className="mt-2 font-sans text-xs uppercase tracking-[0.18em] text-muted">
-              — {w.nama}
+            <blockquote className="type-prose">{w.pesan}</blockquote>
+            <figcaption className="type-label mt-3">
+              <span aria-hidden>—&nbsp;</span>
+              {w.nama}
             </figcaption>
           </figure>
         ))}
@@ -167,9 +160,7 @@ export const Wishes = () => {
               sizes="176px"
               className="h-auto w-44 max-w-[75%] opacity-90"
             />
-            <p className="mt-5 font-serif text-base italic leading-relaxed text-muted">
-              Jadilah yang pertama menuliskan doa untuk kami.
-            </p>
+            <p className="type-lede mt-5 text-muted">{copy.wishes.empty}</p>
           </div>
         ) : null}
       </div>

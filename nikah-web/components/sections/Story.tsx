@@ -49,12 +49,28 @@ const Chapter = ({
       <h3 className="type-display-sm mx-auto mt-7 max-w-xs text-center">
         {title}
       </h3>
-      <p className="mx-auto mt-3 max-w-sm text-center font-serif text-[1.05rem] leading-[1.7] tracking-[-0.01em] text-ink/80">
-        {body}
-      </p>
+      <p className="type-prose mx-auto mt-3 text-center">{body}</p>
     </Reveal>
   );
 };
+
+/* Drawn, not typed. The close control used to be a `✕` character, which picks
+ * up whatever dingbat the device font happens to carry — a different weight and
+ * baseline on every phone. */
+const CloseGlyph = () => (
+  <svg
+    aria-hidden
+    viewBox="0 0 24 24"
+    width="16"
+    height="16"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.6"
+    strokeLinecap="round"
+  >
+    <path d="M6 6 18 18M18 6 6 18" />
+  </svg>
+);
 
 const Lightbox = ({
   src,
@@ -82,19 +98,19 @@ const Lightbox = ({
     <div
       role="dialog"
       aria-modal="true"
-      aria-label="Foto diperbesar"
+      aria-label={copy.a11y.photoDialog}
       className="fixed inset-0 z-modal flex items-center justify-center bg-ink/80 p-6"
       onClick={onClose}
     >
       {/* eslint-disable-next-line @next/next/no-img-element -- lightbox shows the already-optimized gallery WebP at natural size */}
-      <img src={src} alt="Foto Bashara dan Hanifah" className="max-h-[85svh] max-w-full rounded-lg shadow-float" />
+      <img src={src} alt={copy.a11y.photoAlt} className="max-h-[85svh] max-w-full rounded-lg shadow-float" />
       <button
         ref={closeRef}
         onClick={onClose}
-        aria-label="Tutup foto"
-        className="absolute right-5 top-5 flex h-11 w-11 items-center justify-center rounded-full bg-paper/90 font-sans text-lg text-ink shadow-card"
+        aria-label={copy.a11y.photoClose}
+        className="absolute right-5 top-5 flex h-11 w-11 items-center justify-center rounded-full bg-paper/90 text-ink shadow-card"
       >
-        ✕
+        <CloseGlyph />
       </button>
     </div>
   );
@@ -107,7 +123,7 @@ export const Story = () => {
   return (
     <section
       id="story"
-      aria-label="Kisah kami"
+      aria-label={copy.a11y.story}
       data-cv="auto"
       className="relative bg-paper px-6 pb-20 pt-16"
     >
@@ -138,7 +154,7 @@ export const Story = () => {
           <Reveal key={photo.src}>
             <button
               onClick={() => setLightbox(photo.src)}
-              aria-label="Perbesar foto"
+              aria-label={copy.a11y.photoZoom}
               className={`relative block w-full bg-surface p-2 pb-4 shadow-card transition-transform hover:scale-[1.03] ${photo.tilt}`}
             >
               <Image
@@ -151,7 +167,7 @@ export const Story = () => {
               />
               <Image
                 src={photo.src}
-                alt="Foto Bashara dan Hanifah"
+                alt={copy.a11y.photoAlt}
                 width={photo.w}
                 height={photo.h}
                 sizes="(max-width: 480px) 42vw, 200px"

@@ -14,12 +14,12 @@ import { useCountdown } from "@/lib/useCountdown";
 import { siteConfig } from "@/lib/config";
 import { copy } from "@/lib/copy";
 
+/* Pill is sized off the widest label ("Menit" at the shared label tracking) so
+ * the role stays intact instead of being shrunk per-instance. */
 const Unit = ({ value, label }: { value: number; label: string }) => (
-  <div className="flex min-w-[4.5rem] flex-col items-center rounded-2xl bg-paper/95 px-3.5 py-3 shadow-petal backdrop-blur-[2px]">
-    <span className="font-serif text-[2.35rem] font-medium leading-none tabular-nums tracking-[-0.02em] text-ink">
-      {String(value).padStart(2, "0")}
-    </span>
-    <span className="type-label mt-1.5 text-[0.6rem] tracking-[0.28em] text-ink/80">{label}</span>
+  <div className="flex min-w-[5.25rem] flex-col items-center rounded-2xl bg-paper/95 px-3 py-3 shadow-petal backdrop-blur-[2px]">
+    <span className="type-numeral">{String(value).padStart(2, "0")}</span>
+    <span className="type-label type-label-center mt-2 text-ink">{label}</span>
   </div>
 );
 
@@ -42,7 +42,7 @@ export const Countdown = () => {
   return (
     <section
       id="countdown"
-      aria-label="Hitung mundur"
+      aria-label={copy.a11y.countdown}
       data-cv="auto"
       className="relative overflow-hidden"
     >
@@ -78,19 +78,15 @@ export const Countdown = () => {
               "radial-gradient(ellipse at 50% 42%, rgba(250, 246, 239, 0.88) 0%, rgba(250, 246, 239, 0.42) 52%, transparent 74%)",
           }}
         />
-        <p className="relative mx-auto max-w-[22ch] font-serif text-[1.15rem] italic leading-[1.35] tracking-[-0.01em] text-ink">
-          {copy.countdown.heading}
-        </p>
-        <p className="type-display-sm relative mt-1.5 text-ink">
-          {copy.countdown.date}
-        </p>
-        <div className="relative mt-9 flex items-center justify-center gap-2.5" role="timer" aria-live="off">
+        <p className="type-lede relative mx-auto">{copy.countdown.heading}</p>
+        <p className="type-display-sm relative mt-1.5">{copy.countdown.date}</p>
+        <div className="relative mt-9 flex items-center justify-center gap-2" role="timer" aria-live="off">
           <Unit value={days} label={copy.countdown.units.days} />
-          <span aria-hidden className="font-serif text-xl text-ink/55">
+          <span aria-hidden className="font-serif text-xl text-muted">
             ·
           </span>
           <Unit value={hours} label={copy.countdown.units.hours} />
-          <span aria-hidden className="font-serif text-xl text-ink/55">
+          <span aria-hidden className="font-serif text-xl text-muted">
             ·
           </span>
           <Unit value={minutes} label={copy.countdown.units.minutes} />

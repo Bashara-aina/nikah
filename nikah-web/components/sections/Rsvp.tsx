@@ -29,7 +29,7 @@ export const Rsvp = () => {
     if (status === "sending" || status === "success") return;
     if (!nama.trim() || !kehadiran) {
       setStatus("error");
-      setErrorMsg("Mohon isi nama dan pilihan kehadiran terlebih dahulu.");
+      setErrorMsg(copy.rsvp.errors.incomplete);
       return;
     }
     setStatus("sending");
@@ -54,21 +54,19 @@ export const Rsvp = () => {
       } else {
         setStatus("error");
         setErrorMsg(
-          res.status === 503
-            ? "Mohon maaf, konfirmasi belum dapat terkirim saat ini. Silakan coba lagi nanti."
-            : "Terjadi kendala saat mengirim. Silakan coba sekali lagi.",
+          res.status === 503 ? copy.rsvp.errors.unavailable : copy.rsvp.errors.generic,
         );
       }
     } catch {
       setStatus("error");
-      setErrorMsg("Jaringan sedang terganggu. Silakan coba sekali lagi.");
+      setErrorMsg(copy.rsvp.errors.network);
     }
   };
 
   return (
     <section
       id="rsvp"
-      aria-label="Konfirmasi kehadiran"
+      aria-label={copy.a11y.rsvp}
       data-cv="auto"
       className="relative bg-paper px-7 pb-20 pt-16"
     >
@@ -115,9 +113,7 @@ export const Rsvp = () => {
           />
 
           <div>
-            <p className="mb-3 font-sans text-[0.68rem] uppercase tracking-[0.18em] text-muted">
-              {copy.rsvp.fields.partySize}
-            </p>
+            <p className="type-label mb-3">{copy.rsvp.fields.partySize}</p>
             <div className="flex gap-2.5" role="group" aria-label={copy.rsvp.fields.partySize}>
               {Array.from({ length: siteConfig.rsvp.maxParty }, (_, i) => i + 1).map((n) => (
                 <button
@@ -125,19 +121,17 @@ export const Rsvp = () => {
                   type="button"
                   onClick={() => setJumlah(n)}
                   aria-pressed={jumlah === n}
-                  className={`flex h-11 w-11 items-center justify-center rounded-full border font-sans text-sm transition-colors ${
+                  className={`flex h-11 w-11 items-center justify-center rounded-full border font-sans text-sm tabular-nums transition-colors ${
                     jumlah === n
                       ? "border-dusty bg-blush/35 font-medium text-ink"
-                      : "border-border bg-surface text-ink/75 hover:bg-cream"
+                      : "border-border bg-surface text-ink-soft hover:bg-cream"
                   }`}
                 >
                   {n}
                 </button>
               ))}
             </div>
-            <p className="mt-2.5 font-sans text-xs leading-relaxed text-muted">
-              {copy.rsvp.fields.partySizeNote}
-            </p>
+            <p className="type-meta mt-2.5">{copy.rsvp.fields.partySizeNote}</p>
           </div>
 
           <FloatTextarea
@@ -166,7 +160,7 @@ export const Rsvp = () => {
           <button
             type="submit"
             disabled={status === "sending" || status === "success"}
-            className="relative mt-1 inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-ink px-8 py-3 font-sans text-sm uppercase tracking-[0.22em] text-paper shadow-card transition-transform hover:scale-[1.02] active:scale-[0.97] disabled:opacity-80 disabled:hover:scale-100"
+            className="type-button relative mt-1 inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-ink px-8 py-3 text-paper shadow-card transition-transform hover:scale-[1.02] active:scale-[0.97] disabled:opacity-80 disabled:hover:scale-100"
           >
             {status === "sending" ? (
               <span
@@ -174,18 +168,16 @@ export const Rsvp = () => {
                 className="h-4 w-4 animate-spin rounded-full border-2 border-paper/40 border-t-paper"
               />
             ) : null}
-            {status === "success" ? "Terkirim" : copy.rsvp.cta}
+            {status === "success" ? copy.rsvp.ctaSent : copy.rsvp.cta}
             <PetalBurst fire={status === "success"} />
           </button>
 
           <div aria-live="polite">
             {status === "success" ? (
-              <p className="text-center font-serif text-base italic text-sage">
-                Terima kasih - konfirmasimu sudah kami terima.
-              </p>
+              <p className="type-lede mx-auto text-center text-sage">{copy.rsvp.success}</p>
             ) : null}
             {status === "error" ? (
-              <p className="text-center font-sans text-sm text-dusty">{errorMsg}</p>
+              <p className="type-body mx-auto text-center text-alert">{errorMsg}</p>
             ) : null}
           </div>
         </form>
