@@ -21,6 +21,8 @@ import {
 } from "@/lib/guests";
 import { fromGuestError, invalidJson, notConfigured, unauthorized } from "@/lib/dashboardApi";
 
+export const runtime = "nodejs";
+
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 type Ctx = { params: Promise<{ id: string }> };

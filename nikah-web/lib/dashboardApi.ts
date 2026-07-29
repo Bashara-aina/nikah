@@ -4,6 +4,8 @@
  * Lives here rather than in a route file because Next only allows HTTP method
  * handlers and route config to be exported from `route.ts`.
  */
+import "server-only";
+
 import { NextResponse } from "next/server";
 import { GuestError } from "./guests";
 

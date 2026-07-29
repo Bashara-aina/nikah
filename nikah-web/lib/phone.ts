@@ -45,11 +45,21 @@ export const normalizePhone = (raw: string | null | undefined): string | null =>
   return e164;
 };
 
-/** `6281234567890` → `+62 812 3456 7890` for display in the dashboard. */
+/**
+ * `6281234567899` → `+62 812-3456-7899`, the shape an Indonesian reader expects
+ * (3 then 4 then the rest in fours). The couple eyeballs ~200 of these before
+ * hitting send, so a number grouped `8123 4567 899` costs a beat of doubt.
+ *
+ * Assumes a two-digit country code, which holds for every number this
+ * invitation will reach (62 Indonesia, 81 Japan).
+ */
 export const formatPhone = (e164: string | null | undefined): string => {
   if (!e164) return "";
-  const groups = e164.slice(2).replace(/(\d{3,4})(?=\d)/g, "$1 ");
-  return `+${e164.slice(0, 2)} ${groups}`.trim();
+  const rest = e164.slice(2);
+  const parts = [rest.slice(0, 3), rest.slice(3, 7), rest.slice(7)].filter(
+    (part) => part.length > 0,
+  );
+  return `+${e164.slice(0, 2)} ${parts.join("-")}`.trim();
 };
 
 /** WhatsApp deep link: opens the app (or WhatsApp Web) with the text prefilled. */

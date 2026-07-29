@@ -9,6 +9,8 @@
  * Follows the `APPS_SCRIPT_URL` precedent: when the env vars are missing the
  * app stays honest and returns 503 NOT_CONFIGURED rather than crashing.
  */
+import "server-only";
+
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "./db.types";
 

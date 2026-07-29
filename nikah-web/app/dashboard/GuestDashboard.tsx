@@ -14,10 +14,12 @@
  */
 import { useMemo, useState } from "react";
 import { GUEST_GROUPS, INVITE_TYPES } from "@/lib/db.types";
-import type { GuestGroup, GuestWithRsvp, InviteType } from "@/lib/db.types";
+import type { GuestGroup, GuestRow, GuestWithRsvp, InviteType } from "@/lib/db.types";
+import { dashboardRequest } from "@/lib/dashboardClient";
 import { formatPhone, normalizePhone, whatsappLink } from "@/lib/phone";
 import { guestLink, renderMessage, templateFor } from "@/lib/waTemplates";
 import { slugify } from "@/lib/slug";
+import { WishesModeration } from "./WishesModeration";
 
 const GROUP_LABEL: Record<GuestGroup, string> = {
   groom_family: "Keluarga Bashara",
@@ -30,7 +32,8 @@ const TYPE_LABEL: Record<InviteType, string> = {
   online: "Siaran langsung",
 };
 
-type StatusFilter = "all" | "belum" | "sudah" | "dibuka" | "rsvp";
+type StatusFilter = "all" | "belum" | "sudah" | "dibuka" | "rsvp" | "unanswered";
+type SortOrder = "newest" | "name" | "uninvited";
 
 const STATUS_LABEL: Record<StatusFilter, string> = {
   all: "Semua",
@@ -38,6 +41,13 @@ const STATUS_LABEL: Record<StatusFilter, string> = {
   sudah: "Sudah diundang",
   dibuka: "Sudah dibuka",
   rsvp: "Sudah konfirmasi",
+  unanswered: "Belum dibalas",
+};
+
+const SORT_LABEL: Record<SortOrder, string> = {
+  newest: "Terbaru",
+  name: "Nama A–Z",
+  uninvited: "Belum diundang dulu",
 };
 
 type FormState = {
@@ -52,6 +62,8 @@ type FormState = {
   party_max: number;
   message: string;
   notes: string;
+  alternative_channel: string;
+  reminder_note: string;
 };
 
 const emptyForm = (): FormState => ({
@@ -66,6 +78,8 @@ const emptyForm = (): FormState => ({
   party_max: 2,
   message: templateFor({ guest_group: "friend", invite_type: "venue" }),
   notes: "",
+  alternative_channel: "",
+  reminder_note: "",
 });
 
 const formFromGuest = (guest: GuestWithRsvp): FormState => ({
@@ -78,24 +92,11 @@ const formFromGuest = (guest: GuestWithRsvp): FormState => ({
   invite_type: guest.invite_type,
   party_label: guest.party_label,
   party_max: guest.party_max,
-  message: guest.message_override ?? templateFor(guest),
+  message: guest.message_override || templateFor(guest),
   notes: guest.notes ?? "",
+  alternative_channel: guest.alternative_channel ?? "",
+  reminder_note: guest.reminder_note ?? "",
 });
-
-type ApiBody = {
-  success: boolean;
-  data?: { guest?: GuestWithRsvp };
-  error?: { message?: string };
-};
-
-const send = async (url: string, method: string, body?: unknown): Promise<ApiBody> => {
-  const res = await fetch(url, {
-    method,
-    headers: body ? { "Content-Type": "application/json" } : undefined,
-    body: body ? JSON.stringify(body) : undefined,
-  });
-  return (await res.json()) as ApiBody;
-};
 
 const inputClass =
   "min-h-[48px] w-full rounded-2xl border border-border bg-surface px-4 font-sans text-base text-ink";
@@ -116,7 +117,9 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
   const [groupFilter, setGroupFilter] = useState<GuestGroup | "all">("all");
   const [typeFilter, setTypeFilter] = useState<InviteType | "all">("all");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
+  const [sortOrder, setSortOrder] = useState<SortOrder>("newest");
   const [form, setForm] = useState<FormState | null>(null);
+  const [duplicateApproval, setDuplicateApproval] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
   const [error, setError] = useState("");
@@ -125,7 +128,7 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
     () => ({
       total: guests.length,
       invited: guests.filter((g) => g.invited_at !== null).length,
-      opened: guests.filter((g) => g.opened_count > 0).length,
+      opened: guests.filter((g) => g.opened_confirmed_count > 0).length,
       answered: guests.filter((g) => g.rsvp !== null).length,
     }),
     [guests],
@@ -133,20 +136,39 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return guests.filter((g) => {
+    const filtered = guests.filter((g) => {
       if (groupFilter !== "all" && g.guest_group !== groupFilter) return false;
       if (typeFilter !== "all" && g.invite_type !== typeFilter) return false;
       if (statusFilter === "belum" && g.invited_at !== null) return false;
       if (statusFilter === "sudah" && g.invited_at === null) return false;
-      if (statusFilter === "dibuka" && g.opened_count === 0) return false;
+      if (statusFilter === "dibuka" && g.opened_confirmed_count === 0) return false;
       if (statusFilter === "rsvp" && g.rsvp === null) return false;
+      if (statusFilter === "unanswered" && (g.invited_at === null || g.rsvp !== null)) return false;
       if (q.length === 0) return true;
-      return [g.display_name, g.slug, g.whatsapp_name ?? "", g.phone ?? "", g.notes ?? ""]
+      return [
+        g.display_name,
+        g.slug,
+        g.whatsapp_name ?? "",
+        g.phone ?? "",
+        g.notes ?? "",
+        g.alternative_channel ?? "",
+        g.reminder_note ?? "",
+      ]
         .join(" ")
         .toLowerCase()
         .includes(q);
     });
-  }, [guests, query, groupFilter, typeFilter, statusFilter]);
+
+    return [...filtered].sort((a, b) => {
+      if (sortOrder === "name") return a.display_name.localeCompare(b.display_name, "id");
+      if (sortOrder === "uninvited") {
+        const invitedDifference = Number(a.invited_at !== null) - Number(b.invited_at !== null);
+        if (invitedDifference !== 0) return invitedDifference;
+        return a.display_name.localeCompare(b.display_name, "id");
+      }
+      return b.created_at.localeCompare(a.created_at);
+    });
+  }, [guests, query, groupFilter, typeFilter, statusFilter, sortOrder]);
 
   const copy = async (key: string, text: string) => {
     try {
@@ -161,6 +183,22 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
   const saveForm = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form || busyId === "form") return;
+
+    const normalized = normalizePhone(form.phone);
+    const duplicateNames = normalized
+      ? guests
+          .filter((guest) => guest.id !== form.id && guest.phone === normalized)
+          .map((guest) => guest.display_name)
+      : [];
+    const duplicateKey = `${form.id ?? "new"}:${normalized ?? ""}`;
+    if (duplicateNames.length > 0 && duplicateApproval !== duplicateKey) {
+      setDuplicateApproval(duplicateKey);
+      setError(
+        `Nomor ini juga dipakai ${duplicateNames.join(", ")}. Tekan Simpan sekali lagi jika memang benar.`,
+      );
+      return;
+    }
+
     setBusyId("form");
     setError("");
 
@@ -179,13 +217,21 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
       invite_type: form.invite_type,
       party_label: form.party_label,
       party_max: form.party_max,
-      message_override: form.message.trim() === template.trim() ? "" : form.message,
+      message_override: form.message.trim() === template.trim() ? null : form.message,
       notes: form.notes,
+      alternative_channel: form.alternative_channel,
+      reminder_note: form.reminder_note,
     };
 
     const body = form.id
-      ? await send(`/api/dashboard/guests/${form.id}`, "PATCH", payload)
-      : await send("/api/dashboard/guests", "POST", payload);
+      ? await dashboardRequest<{ guest: GuestRow }>(`/api/dashboard/guests/${form.id}`, {
+          method: "PATCH",
+          body: JSON.stringify(payload),
+        })
+      : await dashboardRequest<{ guest: GuestRow }>("/api/dashboard/guests", {
+          method: "POST",
+          body: JSON.stringify(payload),
+        });
 
     setBusyId(null);
     if (!body.success || !body.data?.guest) {
@@ -199,15 +245,20 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
         ? list.map((g) => (g.id === saved.id ? { ...saved, rsvp: g.rsvp } : g))
         : [{ ...saved, rsvp: null }, ...list],
     );
+    setDuplicateApproval(null);
     setForm(null);
   };
 
   const toggleInvited = async (guest: GuestWithRsvp) => {
     setBusyId(guest.id);
     setError("");
-    const body = await send(`/api/dashboard/guests/${guest.id}`, "PATCH", {
-      invited: guest.invited_at === null,
-    });
+    const body = await dashboardRequest<{ guest: GuestRow }>(
+      `/api/dashboard/guests/${guest.id}`,
+      {
+        method: "PATCH",
+        body: JSON.stringify({ invited: guest.invited_at === null }),
+      },
+    );
     setBusyId(null);
     if (!body.success || !body.data?.guest) {
       setError(body.error?.message ?? "Gagal memperbarui status.");
@@ -221,7 +272,9 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
     if (!window.confirm(`Hapus ${guest.display_name} dari daftar tamu?`)) return;
     setBusyId(guest.id);
     setError("");
-    const body = await send(`/api/dashboard/guests/${guest.id}`, "DELETE");
+    const body = await dashboardRequest<null>(`/api/dashboard/guests/${guest.id}`, {
+      method: "DELETE",
+    });
     setBusyId(null);
     if (!body.success) {
       setError(body.error?.message ?? "Gagal menghapus tamu.");
@@ -231,7 +284,11 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
   };
 
   const signOut = async () => {
-    await send("/api/dashboard/session", "DELETE");
+    const response = await dashboardRequest<null>("/api/dashboard/session", { method: "DELETE" });
+    if (!response.success) {
+      setError(response.error?.message ?? "Gagal keluar.");
+      return;
+    }
     window.location.reload();
   };
 
@@ -245,10 +302,30 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
             {stats.answered} konfirmasi
           </p>
         </div>
-        <button type="button" onClick={signOut} className="type-button min-h-[44px] px-4 underline">
-          Keluar
-        </button>
+        <div className="ml-auto flex flex-wrap items-center gap-2">
+          <details className="relative">
+            <summary className="type-button flex min-h-[44px] cursor-pointer list-none items-center rounded-full border border-border px-4">
+              Unduh CSV
+            </summary>
+            <div className="absolute right-0 z-20 mt-2 flex min-w-44 flex-col gap-1 rounded-2xl border border-border bg-paper p-2 shadow-float">
+              {(["guests", "rsvps", "wishes"] as const).map((table) => (
+                <a
+                  key={table}
+                  href={`/api/dashboard/export?table=${table}`}
+                  className="type-button inline-flex min-h-[44px] items-center rounded-xl px-3 hover:bg-blush/25"
+                >
+                  {table === "guests" ? "Daftar tamu" : table === "rsvps" ? "RSVP" : "Ucapan"}
+                </a>
+              ))}
+            </div>
+          </details>
+          <button type="button" onClick={signOut} className="type-button min-h-[44px] px-4 underline">
+            Keluar
+          </button>
+        </div>
       </header>
+
+      <WishesModeration />
 
       <div className="mt-6 flex flex-col gap-3">
         <input
@@ -298,9 +375,31 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
               </option>
             ))}
           </select>
+          <select
+            aria-label="Urutkan tamu"
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value as SortOrder)}
+            className="min-h-[44px] rounded-full border border-border bg-surface px-4 font-sans text-sm"
+          >
+            {(Object.keys(SORT_LABEL) as SortOrder[]).map((order) => (
+              <option key={order} value={order}>
+                {SORT_LABEL[order]}
+              </option>
+            ))}
+          </select>
           <button
             type="button"
-            onClick={() => setForm(emptyForm())}
+            onClick={() => setStatusFilter("unanswered")}
+            className="type-button min-h-[44px] rounded-full border border-border px-4"
+          >
+            Belum dibalas
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setDuplicateApproval(null);
+              setForm(emptyForm());
+            }}
             className="type-button ml-auto min-h-[44px] rounded-full bg-ink px-6 text-paper"
           >
             Tambah tamu
@@ -376,7 +475,10 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
             type="tel"
             inputMode="tel"
             value={form.phone}
-            onChange={(e) => setForm({ ...form, phone: e.target.value })}
+             onChange={(e) => {
+               setDuplicateApproval(null);
+               setForm({ ...form, phone: e.target.value });
+             }}
             placeholder="0812… atau +81 90…"
             maxLength={32}
             className={inputClass}
@@ -388,6 +490,18 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
                   ? `Tersimpan sebagai ${formatPhone(normalizePhone(form.phone))}`
                   : "Nomor ini belum terbaca sebagai nomor yang sah.")}
           </p>
+
+          <label className="type-label" htmlFor="alternative_channel">
+            Kanal lain jika tanpa WhatsApp
+          </label>
+          <input
+            id="alternative_channel"
+            value={form.alternative_channel}
+            onChange={(e) => setForm({ ...form, alternative_channel: e.target.value })}
+            placeholder="Instagram @nama, SMS, atau disampaikan langsung"
+            maxLength={120}
+            className={inputClass}
+          />
 
           <div className="flex flex-wrap gap-3">
             <div className="flex-1">
@@ -514,6 +628,18 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
             className={inputClass}
           />
 
+          <label className="type-label" htmlFor="reminder_note">
+            Catatan kirim ulang
+          </label>
+          <input
+            id="reminder_note"
+            value={form.reminder_note}
+            onChange={(e) => setForm({ ...form, reminder_note: e.target.value })}
+            placeholder="Contoh: ingatkan lagi 12 Agustus lewat Instagram"
+            maxLength={300}
+            className={inputClass}
+          />
+
           <div className="flex gap-3">
             <button
               type="submit"
@@ -524,7 +650,10 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
             </button>
             <button
               type="button"
-              onClick={() => setForm(null)}
+              onClick={() => {
+                setDuplicateApproval(null);
+                setForm(null);
+              }}
               className="type-button min-h-[48px] rounded-full border border-border px-6"
             >
               Batal
@@ -549,7 +678,7 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
                   {guest.party_label ? <p className="type-meta">{guest.party_label}</p> : null}
                   <p className="type-meta break-all">/undangan/{guest.slug}</p>
                 </div>
-                <label className="flex min-h-[44px] items-center gap-2 font-sans text-sm">
+                <label className="flex min-h-[44px] items-center gap-2 rounded-xl px-2 font-sans text-sm">
                   <input
                     type="checkbox"
                     checked={guest.invited_at !== null}
@@ -567,7 +696,15 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
                   {TYPE_LABEL[guest.invite_type]}
                 </Chip>
                 {guest.phone ? <Chip>{formatPhone(guest.phone)}</Chip> : <Chip>Tanpa nomor</Chip>}
-                {guest.opened_count > 0 ? <Chip tone="on">Dibuka {guest.opened_count}×</Chip> : null}
+                {guest.opened_confirmed_count > 0 ? (
+                  <span title={`Permintaan halaman mentah: ${guest.opened_count}× (perkiraan, termasuk pratinjau)`}>
+                    <Chip tone="on">Dibuka {guest.opened_confirmed_count}×</Chip>
+                  </span>
+                ) : guest.invited_at ? (
+                  <span title={`Permintaan halaman mentah: ${guest.opened_count}× (perkiraan, termasuk pratinjau)`}>
+                    <Chip>Belum dibuka</Chip>
+                  </span>
+                ) : null}
                 {guest.rsvp ? (
                   <Chip tone="on">
                     {guest.rsvp.kehadiran}
@@ -578,6 +715,15 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
 
               {guest.rsvp?.catatan ? <p className="type-body">“{guest.rsvp.catatan}”</p> : null}
               {guest.notes ? <p className="type-meta">Catatan: {guest.notes}</p> : null}
+              {guest.alternative_channel ? (
+                <p className="type-meta">Kanal lain: {guest.alternative_channel}</p>
+              ) : null}
+              {guest.reminder_note ? (
+                <p className="type-meta">Kirim ulang: {guest.reminder_note}</p>
+              ) : null}
+              {!guest.phone && !guest.alternative_channel ? (
+                <p className="type-meta text-alert">Belum ada kanal pengiriman.</p>
+              ) : null}
 
               <div className="flex flex-wrap gap-2">
                 {wa ? (
@@ -618,7 +764,10 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
                 </a>
                 <button
                   type="button"
-                  onClick={() => setForm(formFromGuest(guest))}
+                  onClick={() => {
+                    setDuplicateApproval(null);
+                    setForm(formFromGuest(guest));
+                  }}
                   className="type-button min-h-[44px] rounded-full border border-border px-5"
                 >
                   Ubah

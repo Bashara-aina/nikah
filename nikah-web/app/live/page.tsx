@@ -35,6 +35,7 @@ export default function LivePage() {
           alt=""
           width={1000}
           height={1000}
+          loading="eager"
           sizes="150px"
           className="h-auto w-[150px] [mask-image:radial-gradient(circle,black_62%,transparent_78%)]"
         />

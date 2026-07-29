@@ -5,7 +5,16 @@ import tsPlugin from "@typescript-eslint/eslint-plugin";
 export default [
   ...next,
   {
-    ignores: [".next/**", "node_modules/**", "public/**", "scripts/**", "*.config.mjs"],
+    ignores: [
+      ".next/**",
+      "node_modules/**",
+      "public/**",
+      "scripts/**",
+      "coverage/**",
+      "playwright-report/**",
+      "test-results/**",
+      "*.config.mjs",
+    ],
   },
   {
     plugins: {

@@ -16,6 +16,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useRef,
   useSyncExternalStore,
   type ReactNode,
@@ -38,6 +39,12 @@ type Store = {
 };
 
 export const MotionProvider = ({ children }: { children: ReactNode }) => {
+  // The store is a stable mutable cell used by useSyncExternalStore. Reading
+  // storeRef.current here is intentional — the ref is the entire storage
+  // mechanism and is never re-assigned after the first render. The
+  // react-hooks/refs rule disallows reading refs during render in general;
+  // this pattern is the documented one for useSyncExternalStore and is safe
+  // because the ref is never written to from render.
   const storeRef = useRef<Store | null>(null);
   if (storeRef.current === null) {
     storeRef.current = {
@@ -46,28 +53,30 @@ export const MotionProvider = ({ children }: { children: ReactNode }) => {
       listeners: new Set(),
     };
   }
+  // eslint-disable-next-line react-hooks/refs -- see comment on storeRef
   const store = storeRef.current;
+
+  // Detect after hydration only. Mutating the store inside `subscribe` made the
+  // first client snapshot diverge from the server snapshot ("MID") and threw a
+  // hydration error in Loading (breathing class toggled by tier).
+  useEffect(() => {
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const apply = (reduced: boolean) => {
+      store.reduced = reduced;
+      store.tier = reduced ? "REDUCED" : detectTier();
+      for (const l of store.listeners) l();
+    };
+    apply(mql.matches);
+    const handler = (e: MediaQueryListEvent) => apply(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, [store]);
 
   const subscribe = useCallback(
     (cb: () => void) => {
       store.listeners.add(cb);
-      let teardown: (() => void) | undefined;
-      if (typeof window !== "undefined") {
-        const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
-        // Initial sync (runs on first mount via the snapshot path).
-        store.reduced = mql.matches;
-        store.tier = mql.matches ? "REDUCED" : detectTier();
-        const handler = (e: MediaQueryListEvent) => {
-          store.reduced = e.matches;
-          store.tier = e.matches ? "REDUCED" : detectTier();
-          for (const l of store.listeners) l();
-        };
-        mql.addEventListener("change", handler);
-        teardown = () => mql.removeEventListener("change", handler);
-      }
       return () => {
         store.listeners.delete(cb);
-        teardown?.();
       };
     },
     [store],

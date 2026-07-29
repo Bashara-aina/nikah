@@ -21,6 +21,7 @@ import { motion, type Variants, type Easing } from "motion/react";
 import { useMotion } from "@/components/motion/MotionProvider";
 import { useSiteAudio } from "@/components/AudioProvider";
 import { useGuest } from "@/components/GuestProvider";
+import { invitationOpenedKey } from "@/lib/invitation";
 import { motionEase, motionSpring } from "@/lib/motionAdapter";
 import { dur } from "@/lib/motionTokens";
 import { siteConfig } from "@/lib/config";
@@ -77,9 +78,19 @@ export const Gate = ({ onOpen }: { onOpen: () => void }) => {
 
     // 3. Hand the beat to the parent — AnimatePresence exits this section.
     try {
-      window.sessionStorage.setItem("nikah:opened", "1");
-    } catch {
-      /* ignore */
+      window.sessionStorage.setItem(invitationOpenedKey(guest.slug), "1");
+    } catch (error) {
+      console.error("Invitation state could not be saved:", error);
+    }
+    if (guest.slug) {
+      void fetch("/api/track/open", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slug: guest.slug }),
+        keepalive: true,
+      }).catch((error: unknown) => {
+        console.error("Confirmed open could not be recorded:", error);
+      });
     }
     onOpen();
   };
@@ -135,7 +146,7 @@ export const Gate = ({ onOpen }: { onOpen: () => void }) => {
             alt=""
             width={1000}
             height={1000}
-            priority
+            loading="eager"
             sizes="(max-width: 480px) 42vw, 190px"
             className="h-auto w-[42vw] max-w-[190px] [mask-image:radial-gradient(circle,black_62%,transparent_78%)]"
           />

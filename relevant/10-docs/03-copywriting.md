@@ -202,6 +202,7 @@ teks sengaja tidak seragam.)*
 **Status:**
 > - Berhasil: Terima kasih, doamu sudah kami terima.
 > - Gagal: Ucapannya belum terkirim. Coba lagi nanti, ya.
+> - Gagal memuat: Ucapan belum bisa dimuat sekarang. Coba lagi nanti, ya.
 > - Dinding masih kosong: Belum ada ucapan. Kamu bisa jadi yang pertama.
 
 > **Catatan:** bagian Tanda Kasih / transfer / kirim hadiah dihapus —
@@ -234,6 +235,139 @@ teks sengaja tidak seragam.)*
 >
 > **Hanifah & Bashara**
 > #BASHicallyHANI's
+
+---
+
+## 11. Online Invitation — LOCKED
+
+### Closing emphasis
+> **Sampai bertemu di siaran langsung,
+> 22 Agustus 2026. 🤍**
+
+### Cara Menyaksikan
+> **Cara Menyaksikan**
+>
+> Akad kami siarkan langsung. Pilih kanal yang paling nyaman buat kamu.
+>
+> Sabtu
+> **22 Agustus 2026**
+> Akad mulai pukul 10.00 WIB
+> Waktunya WIB (GMT+7).
+>
+> *Bila tautan belum siap:* Tautannya menyusul, ya. Kami kirimkan lewat WhatsApp begitu siap.
+>
+> [ Simpan ke Kalender ]
+
+### Konfirmasi Menyaksikan
+> **Konfirmasi Menyaksikan** *(pill sticky: "Konfirmasi")*
+>
+> Beri tahu kami kalau kamu berencana menonton, supaya kami tahu siapa saja yang ikut dari jauh.
+>
+> Rencana kamu: ( ) Menyaksikan Daring ( ) Masih Diusahakan ( ) Tidak Hadir
+>
+> Berhasil: Terima kasih, kabarmu sudah kami terima.
+
+### FAQ online
+> **Siarannya bisa ditonton di mana?**
+> Di YouTube, Zoom, Instagram, dan Facebook. Tautannya kami pasang di halaman ini begitu siap.
+>
+> **Jam berapa mulainya?**
+> Akad mulai pukul 10.00 WIB. Sebaiknya bergabung sedikit lebih awal.
+>
+> **Kalau tautannya belum muncul?**
+> Berarti masih kami siapkan. Halaman ini terisi sendiri begitu tautannya jadi, jadi simpan saja tautan undangan ini.
+>
+> **Boleh titip doa?**
+> Boleh sekali. Ada kolom ucapan di halaman ini, dan semuanya kami baca.
+
+### Label aksesibilitas
+> Cara menyaksikan siaran langsung
+
+## 12. WhatsApp Templates — LOCKED
+
+### Venue · Keluarga Bashara
+> Assalamualaikum warahmatullahi wabarakatuh.
+>
+> Kepada {nama},
+>
+> Dengan memohon rahmat Allah SWT, saya Bashara bersama Hanifah bermaksud melangsungkan pernikahan kami pada {tanggal} di Bandung.
+>
+> Merupakan kebahagiaan bagi kami apabila berkenan hadir dan memberikan doa restu. Detail acara, lokasi, dan konfirmasi kehadiran ada di undangan berikut:
+> {link}
+>
+> Atas perhatiannya kami ucapkan terima kasih.
+> Wassalamualaikum warahmatullahi wabarakatuh.
+>
+> Hanifah & Bashara
+
+### Venue · Keluarga Hanifah
+> Assalamualaikum warahmatullahi wabarakatuh.
+>
+> Kepada {nama},
+>
+> Dengan memohon rahmat Allah SWT, saya Hanifah bersama Bashara bermaksud melangsungkan pernikahan kami pada {tanggal} di Bandung.
+>
+> Merupakan kebahagiaan bagi kami apabila berkenan hadir dan memberikan doa restu. Detail acara, lokasi, dan konfirmasi kehadiran ada di undangan berikut:
+> {link}
+>
+> Atas perhatiannya kami ucapkan terima kasih.
+> Wassalamualaikum warahmatullahi wabarakatuh.
+>
+> Hanifah & Bashara
+
+### Venue · Teman
+> Assalamualaikum, {nama}!
+>
+> Insyaallah kami menikah pada {tanggal} di Bandung. Kami senang sekali kalau kamu bisa datang.
+>
+> Semua detailnya ada di undangan ini, lengkap dengan lokasi dan konfirmasi kehadiran:
+> {link}
+>
+> Ditunggu kabarnya, ya. Terima kasih!
+>
+> Hanifah & Bashara
+
+### Online · Keluarga Bashara
+> Assalamualaikum warahmatullahi wabarakatuh.
+>
+> Kepada {nama},
+>
+> Dengan memohon rahmat Allah SWT, saya Bashara bersama Hanifah bermaksud melangsungkan akad pernikahan kami pada {tanggal}.
+>
+> Acaranya kami siarkan langsung, dan kami mengundang untuk menyaksikan serta mendoakan kami dari mana pun berada. Tautan siaran dan detailnya ada di sini:
+> {link}
+>
+> Doa restunya sangat berarti bagi kami.
+> Wassalamualaikum warahmatullahi wabarakatuh.
+>
+> Hanifah & Bashara
+
+### Online · Keluarga Hanifah
+> Assalamualaikum warahmatullahi wabarakatuh.
+>
+> Kepada {nama},
+>
+> Dengan memohon rahmat Allah SWT, saya Hanifah bersama Bashara bermaksud melangsungkan akad pernikahan kami pada {tanggal}.
+>
+> Acaranya kami siarkan langsung, dan kami mengundang untuk menyaksikan serta mendoakan kami dari mana pun berada. Tautan siaran dan detailnya ada di sini:
+> {link}
+>
+> Doa restunya sangat berarti bagi kami.
+> Wassalamualaikum warahmatullahi wabarakatuh.
+>
+> Hanifah & Bashara
+
+### Online · Teman
+> Assalamualaikum, {nama}!
+>
+> Insyaallah kami menikah pada {tanggal}. Akadnya kami siarkan langsung, dan kami ingin kamu ikut menyaksikan dari mana pun kamu berada.
+>
+> Tautan siaran dan cara menontonnya ada di sini:
+> {link}
+>
+> Doa dan ucapanmu kami tunggu, ya. Terima kasih!
+>
+> Hanifah & Bashara
 
 ---
 

@@ -52,7 +52,7 @@ export const Watch = () => {
         />
         {/* Sits where the arch is widest; the weekday and date are separate
             lines by design rather than a wrap. */}
-        <div className="absolute inset-x-[21%] top-[24%] flex flex-col items-center gap-1">
+        <div className="absolute inset-x-[18%] top-[22%] flex flex-col items-center gap-1 rounded-2xl bg-paper/90 px-2 py-2 shadow-petal">
           <p className="type-prose text-ink">{copy.watch.dayLine}</p>
           <p className="type-prose mb-2 text-ink">{copy.watch.dateLine}</p>
           <div aria-hidden className="h-px w-12 bg-gold/70" />

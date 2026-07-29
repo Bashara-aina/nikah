@@ -28,7 +28,7 @@ export const copy = {
     invitation:
       "Ada satu hari yang sudah lama kami tunggu. Kami ingin kamu ada di sana.",
     cta: "Buka Undangan",
-    /** Fallback when the link carries no `?to=` name. */
+    /** Fallback when no personal guest row resolves. */
     guestFallback: "Bapak/Ibu/Saudara/i",
   },
 
@@ -166,6 +166,7 @@ export const copy = {
     openNote: "Ucapan yang masuk bisa dibaca semua tamu.",
     success: "Terima kasih, doamu sudah kami terima.",
     error: "Ucapannya belum terkirim. Coba lagi nanti, ya.",
+    loadError: "Ucapan belum bisa dimuat sekarang. Coba lagi nanti, ya.",
     empty: "Belum ada ucapan. Kamu bisa jadi yang pertama.",
   },
 
@@ -201,8 +202,7 @@ export const copy = {
   },
 
   /**
-   * Online-invitation copy. NOT yet in `relevant/10-docs/03-copywriting.md` —
-   * pending the couple's sign-off, then mirror it there.
+   * Online-invitation copy, locked in `relevant/10-docs/03-copywriting.md`.
    *
    * Rule for this block: it never mentions the venue, the guest list, or a
    * reason. The online invitation is a complete invitation to witness the akad

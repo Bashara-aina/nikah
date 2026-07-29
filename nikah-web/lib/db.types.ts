@@ -37,8 +37,12 @@ export type GuestRow = {
   party_max: number;
   message_override: string | null;
   notes: string | null;
+  alternative_channel: string | null;
+  reminder_note: string | null;
   invited_at: string | null;
   opened_count: number;
+  opened_confirmed_count: number;
+  opened_confirmed_at: string | null;
   opened_first_at: string | null;
   opened_last_at: string | null;
   created_at: string;
@@ -47,9 +51,16 @@ export type GuestRow = {
 
 export type GuestInsert = Omit<
   GuestRow,
-  "id" | "created_at" | "updated_at" | "opened_count" | "opened_first_at" | "opened_last_at"
+  | "id"
+  | "created_at"
+  | "updated_at"
+  | "opened_count"
+  | "opened_confirmed_count"
+  | "opened_confirmed_at"
+  | "opened_first_at"
+  | "opened_last_at"
 > &
-  Partial<Pick<GuestRow, "id" | "opened_count">>;
+  Partial<Pick<GuestRow, "id" | "opened_count" | "opened_confirmed_count">>;
 
 export type GuestUpdate = Partial<GuestInsert>;
 
@@ -71,10 +82,20 @@ export type WishRow = {
   guest_id: string | null;
   nama: string;
   pesan: string;
+  hidden: boolean;
   created_at: string;
 };
 
-export type WishInsert = Omit<WishRow, "id" | "created_at"> & Partial<Pick<WishRow, "id">>;
+export type WishInsert = Omit<WishRow, "id" | "created_at" | "hidden"> &
+  Partial<Pick<WishRow, "id" | "hidden">>;
+
+export type AuthAttemptRow = {
+  ip: string;
+  attempted_at: string;
+};
+
+export type AuthAttemptInsert = Omit<AuthAttemptRow, "attempted_at"> &
+  Partial<Pick<AuthAttemptRow, "attempted_at">>;
 
 /**
  * A guest plus their latest RSVP — what the dashboard list renders. Declared
@@ -90,10 +111,19 @@ export type Database = {
       guests: { Row: GuestRow; Insert: GuestInsert; Update: GuestUpdate; Relationships: [] };
       rsvps: { Row: RsvpRow; Insert: RsvpInsert; Update: Partial<RsvpInsert>; Relationships: [] };
       wishes: { Row: WishRow; Insert: WishInsert; Update: Partial<WishInsert>; Relationships: [] };
+      auth_attempts: {
+        Row: AuthAttemptRow;
+        Insert: AuthAttemptInsert;
+        Update: Partial<AuthAttemptInsert>;
+        Relationships: [];
+      };
     };
-    Views: Record<never, never>;
+    Views: {
+      latest_rsvps: { Row: RsvpRow; Relationships: [] };
+    };
     Functions: {
       track_guest_open: { Args: { guest_slug: string }; Returns: undefined };
+      confirm_guest_open: { Args: { guest_slug: string }; Returns: undefined };
     };
     Enums: { guest_group: GuestGroup; invite_type: InviteType };
     CompositeTypes: Record<never, never>;

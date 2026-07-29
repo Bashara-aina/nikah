@@ -9,7 +9,9 @@
  * Node crypto is used deliberately: auth is checked inside server components
  * and route handlers (Node runtime), not in Edge middleware.
  */
-import { createHmac, timingSafeEqual } from "node:crypto";
+import "server-only";
+
+import { createHash, createHmac, timingSafeEqual } from "node:crypto";
 import { cookies } from "next/headers";
 
 export const SESSION_COOKIE = "nikah_dashboard";
@@ -24,10 +26,9 @@ const sign = (payload: string): string =>
 
 /** Compares without leaking length or position through timing. */
 const safeEqual = (a: string, b: string): boolean => {
-  const bufA = Buffer.from(a);
-  const bufB = Buffer.from(b);
-  if (bufA.length !== bufB.length) return false;
-  return timingSafeEqual(bufA, bufB);
+  const digestA = createHash("sha256").update(a).digest();
+  const digestB = createHash("sha256").update(b).digest();
+  return timingSafeEqual(digestA, digestB);
 };
 
 export const passphraseMatches = (candidate: string): boolean => {
@@ -45,7 +46,9 @@ export const issueSession = (): { value: string; maxAge: number } => {
 
 export const verifySession = (token: string | undefined): boolean => {
   if (!token || secret().length === 0) return false;
-  const [expiry, signature] = token.split(".");
+  const parts = token.split(".");
+  if (parts.length !== 2) return false;
+  const [expiry, signature] = parts;
   if (!expiry || !signature) return false;
   if (!safeEqual(signature, sign(expiry))) return false;
   const expiresAt = Number(expiry);

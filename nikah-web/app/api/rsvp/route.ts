@@ -48,8 +48,10 @@ const validate = (raw: unknown): RsvpPayload | null => {
   };
 };
 
+export const runtime = "nodejs";
+
 export async function POST(req: Request): Promise<NextResponse> {
-  if (rateLimited(clientIp(req))) {
+  if (rateLimited("rsvp", clientIp(req))) {
     return NextResponse.json(
       { success: false, error: { code: "RATE_LIMITED", message: "Terlalu banyak percobaan" } },
       { status: 429 },
@@ -116,7 +118,7 @@ export async function POST(req: Request): Promise<NextResponse> {
     kehadiran: validated.kehadiran,
     jumlah: Math.min(validated.jumlah, partyMax),
     catatan: validated.catatan,
-    user_agent: req.headers.get("user-agent") ?? "",
+    user_agent: req.headers.get("user-agent"),
   });
 
   if (error) {

@@ -6,15 +6,15 @@ This file is authoritative for code in this subtree. Deeper `AGENTS.md` files wi
 
 Before writing any UI code in `nikah-web/`, read all of these in order:
 
-1. `docs/01-concept-brief.md` — vision, palette, tone.
-2. `docs/02-site-structure.md` — page sections + content order.
-3. `docs/03-copywriting.md` — all copy is locked here; do not invent new copy.
-4. `docs/06-build-notes.md` — build phases, performance budget.
-5. `docs/08-motion-principles.md` — **motion tokens** are in `lib/motionTokens.ts`, the spec is here. No magic numbers.
-6. `docs/09-hero-choreography.md` — Hero layer stack + assemble timeline.
-7. `docs/10-section-choreography.md` — per-section entrance / idle / exit.
-8. `docs/11-build-architecture.md` — folder layout, hooks, MotionProvider contract.
-9. `docs/12-asset-motion-map.md` — which asset gets fal.ai video vs CSS vs GSAP.
+1. `../relevant/10-docs/01-concept-brief.md` — vision, palette, tone.
+2. `../relevant/10-docs/02-site-structure.md` — page sections + content order.
+3. `../relevant/10-docs/03-copywriting.md` — all copy is locked here; do not invent new copy.
+4. `../relevant/10-docs/06-build-notes.md` — build phases, performance budget.
+5. `../relevant/10-docs/08-motion-principles.md` — **motion tokens** are in `lib/motionTokens.ts`, the spec is here. No magic numbers.
+6. `../relevant/10-docs/09-hero-choreography.md` — Hero layer stack + assemble timeline.
+7. `../relevant/10-docs/10-section-choreography.md` — per-section entrance / idle / exit.
+8. `../relevant/10-docs/11-build-architecture.md` — folder layout, hooks, MotionProvider contract.
+9. `../relevant/10-docs/12-asset-motion-map.md` — which asset gets fal.ai video vs CSS vs GSAP.
 
 ## Project rules (locked)
 
@@ -94,8 +94,8 @@ npm run build        # next build (catches RSC boundary mistakes)
 npm run dev          # localhost:3000 — Gate → Hero sequence fires
 ```
 
-No automated tests yet (per project rule `clean-code.mdc`). Adding a test runner is a separate chore.
+Automated pure-function tests run with `npm test`; browser smoke runs with `npm run test:e2e`.
 
 ## Don't drift
 
-If a doc contradicts this file, prefer the doc with the more specific scope (e.g. `docs/10` §N for a specific section's choreography). When in doubt, ask.
+If a doc contradicts this file, prefer the doc with the more specific scope (e.g. `../relevant/10-docs/10` §N for a specific section's choreography). When in doubt, ask.

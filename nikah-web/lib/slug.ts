@@ -18,7 +18,8 @@ export const slugify = (name: string): string =>
     .replace(/[̀-ͯ]/g, "")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")
-    .slice(0, 60);
+    .slice(0, 60)
+    .replace(/-+$/g, "");
 
 export const isValidSlug = (slug: string): boolean =>
   slug.length > 0 && slug.length <= 80 && SLUG_PATTERN.test(slug);

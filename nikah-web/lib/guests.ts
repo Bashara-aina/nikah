@@ -5,105 +5,16 @@
  * Validation lives beside the queries so the dashboard API routes and any
  * future script share one definition of a legal guest record.
  */
+import "server-only";
+
 import { supabaseAdmin } from "./supabaseAdmin";
-import {
-  GUEST_GROUPS,
-  INVITE_TYPES,
-  type GuestGroup,
-  type GuestRow,
-  type GuestWithRsvp,
-  type InviteType,
-} from "./db.types";
-import { normalizePhone } from "./phone";
+import type { GuestRow, GuestWithRsvp } from "./db.types";
+import { GuestError, type GuestInput } from "./guestValidation";
 import { isValidSlug, slugify } from "./slug";
 
+export { GuestError, validateGuestInput } from "./guestValidation";
 export { isValidSlug, slugify };
-export type { GuestWithRsvp };
-
-export type GuestInput = {
-  slug: string;
-  display_name: string;
-  whatsapp_name: string | null;
-  phone: string | null;
-  guest_group: GuestGroup;
-  invite_type: InviteType;
-  party_label: string;
-  party_max: number;
-  message_override: string | null;
-  notes: string | null;
-};
-
-export class GuestError extends Error {
-  constructor(
-    readonly code: "INVALID_INPUT" | "SLUG_TAKEN" | "NOT_FOUND" | "DB_ERROR",
-    message: string,
-  ) {
-    super(message);
-    this.name = "GuestError";
-  }
-}
-
-const cleanText = (value: unknown, max: number): string =>
-  typeof value === "string"
-    ? value
-        .replace(/[\u0000-\u001F\u007F]/g, " ")
-        .replace(/<[^>]*>/g, "")
-        .trim()
-        .slice(0, max)
-    : "";
-
-/** Throws `GuestError("INVALID_INPUT")` with a message meant for the dashboard UI. */
-export const validateGuestInput = (raw: unknown): GuestInput => {
-  if (typeof raw !== "object" || raw === null) {
-    throw new GuestError("INVALID_INPUT", "Data tidak terbaca.");
-  }
-  const r = raw as Record<string, unknown>;
-
-  const display_name = cleanText(r.display_name, 120);
-  if (display_name.length === 0) {
-    throw new GuestError("INVALID_INPUT", "Nama tamu wajib diisi.");
-  }
-
-  const slugRaw = cleanText(r.slug, 80).toLowerCase();
-  const slug = slugRaw.length > 0 ? slugRaw : slugify(display_name);
-  if (!isValidSlug(slug)) {
-    throw new GuestError(
-      "INVALID_INPUT",
-      "Slug hanya boleh huruf kecil, angka, dan tanda hubung.",
-    );
-  }
-
-  const guest_group = GUEST_GROUPS.find((g) => g === r.guest_group);
-  if (!guest_group) throw new GuestError("INVALID_INPUT", "Kelompok tamu belum dipilih.");
-
-  const invite_type = INVITE_TYPES.find((t) => t === r.invite_type);
-  if (!invite_type) throw new GuestError("INVALID_INPUT", "Jenis undangan belum dipilih.");
-
-  const phoneRaw = cleanText(r.phone, 32);
-  const phone = phoneRaw.length > 0 ? normalizePhone(phoneRaw) : null;
-  if (phoneRaw.length > 0 && phone === null) {
-    throw new GuestError("INVALID_INPUT", "Nomor WhatsApp tidak valid.");
-  }
-
-  const partyMaxRaw = Number(r.party_max);
-  const party_max =
-    Number.isFinite(partyMaxRaw) && Number.isInteger(partyMaxRaw)
-      ? Math.min(10, Math.max(1, partyMaxRaw))
-      : 2;
-
-  return {
-    slug,
-    display_name,
-    whatsapp_name: cleanText(r.whatsapp_name, 120) || null,
-    phone,
-    guest_group,
-    invite_type,
-    party_label: cleanText(r.party_label, 60),
-    party_max,
-    message_override: cleanText(r.message_override, 1500) || null,
-    notes: cleanText(r.notes, 500) || null,
-  };
-};
+export type { GuestInput, GuestWithRsvp };
 
 /** Postgres unique-violation on `guests.slug`. */
 const isSlugConflict = (code: string | undefined): boolean => code === "23505";
@@ -113,20 +24,15 @@ export const listGuests = async (): Promise<GuestWithRsvp[]> => {
 
   const [guests, rsvps] = await Promise.all([
     db.from("guests").select("*").order("created_at", { ascending: false }),
-    db
-      .from("rsvps")
-      .select("guest_id, kehadiran, jumlah, catatan, created_at")
-      .not("guest_id", "is", null)
-      .order("created_at", { ascending: false }),
+    db.from("latest_rsvps").select("guest_id, kehadiran, jumlah, catatan, created_at"),
   ]);
 
   if (guests.error) throw new GuestError("DB_ERROR", guests.error.message);
   if (rsvps.error) throw new GuestError("DB_ERROR", rsvps.error.message);
 
-  // Rows arrive newest-first, so the first hit per guest is their latest RSVP.
   const latest = new Map<string, GuestWithRsvp["rsvp"]>();
   for (const row of rsvps.data ?? []) {
-    if (row.guest_id && !latest.has(row.guest_id)) {
+    if (row.guest_id) {
       latest.set(row.guest_id, {
         kehadiran: row.kehadiran,
         jumlah: row.jumlah,
@@ -199,7 +105,17 @@ export const setInvited = async (id: string, invited: boolean): Promise<GuestRow
 };
 
 export const deleteGuest = async (id: string): Promise<void> => {
-  const { error } = await supabaseAdmin().from("guests").delete().eq("id", id);
+  const { error, count } = await supabaseAdmin()
+    .from("guests")
+    .delete({ count: "exact" })
+    .eq("id", id);
+  if (error) throw new GuestError("DB_ERROR", error.message);
+  if (count === 0) throw new GuestError("NOT_FOUND", "Tamu tidak ditemukan.");
+};
+
+export const confirmOpen = async (slug: string): Promise<void> => {
+  if (!isValidSlug(slug)) throw new GuestError("INVALID_INPUT", "Slug tidak valid.");
+  const { error } = await supabaseAdmin().rpc("confirm_guest_open", { guest_slug: slug });
   if (error) throw new GuestError("DB_ERROR", error.message);
 };
 

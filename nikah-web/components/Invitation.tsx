@@ -36,7 +36,7 @@ import { DraperyDivider } from "@/components/ui/DraperyDivider";
 import { MusicToggle } from "@/components/ui/MusicToggle";
 import { StickyRsvp } from "@/components/ui/StickyRsvp";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
-import type { InvitationGuest } from "@/lib/invitation";
+import { invitationOpenedKey, type InvitationGuest } from "@/lib/invitation";
 
 type Phase = "loading" | "gate" | "open";
 
@@ -44,6 +44,7 @@ export const Invitation = ({ guest }: { guest: InvitationGuest }) => {
   const [phase, setPhase] = useState<Phase>("loading");
   const { unlock } = useSiteAudio();
   const unlockRef = useRef(unlock);
+  const openedKey = invitationOpenedKey(guest.slug);
 
   // Keep the ref in sync outside render (react-hooks/refs) so AudioProvider
   // identity churn cannot reset the phase timer below.
@@ -54,7 +55,7 @@ export const Invitation = ({ guest }: { guest: InvitationGuest }) => {
   useEffect(() => {
     let opened = false;
     try {
-      opened = window.sessionStorage.getItem("nikah:opened") === "1";
+      opened = window.sessionStorage.getItem(openedKey) === "1";
     } catch {
       /* storage unavailable */
     }
@@ -71,7 +72,7 @@ export const Invitation = ({ guest }: { guest: InvitationGuest }) => {
       }
     }, opened ? 0 : 1600);
     return () => window.clearTimeout(id);
-  }, []);
+  }, [openedKey]);
 
   return (
     <GuestProvider guest={guest}>

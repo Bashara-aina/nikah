@@ -28,12 +28,13 @@ export const Cta = ({
 }) => {
   if (pending || !href) {
     return (
-      <span
-        aria-disabled
+      <button
+        type="button"
+        disabled
         className={`${BASE} border border-border bg-surface/60 text-ink-soft opacity-70`}
       >
         {children}
-      </span>
+      </button>
     );
   }
 

@@ -49,7 +49,7 @@ relevant/01-…09-…  ──(promote via npm run remediate-assets)──▶  ni
 ```bash
 cd nikah-web
 npm install
-npm run dev          # http://localhost:3000/?to=Nama%20Tamu
+npm run dev          # http://localhost:3000
 ```
 
 Quality gates (run from `nikah-web/`):
@@ -57,6 +57,7 @@ Quality gates (run from `nikah-web/`):
 ```bash
 npm run type-check   # tsc --noEmit
 npm run lint         # eslint . --ext .ts,.tsx
+npm test             # Vitest pure-function suite
 npm run build        # next build
 ```
 
@@ -66,5 +67,4 @@ See `nikah-web/README.md` and `nikah-web/AGENTS.md` for app-specific rules, and
 ## Human follow-ups
 
 - **Vercel:** change the project **Root Directory** from `asset` to `nikah-web`.
-- **Secrets:** `nikah-web/.env` (git-ignored) holds `FAL_KEY`, `APPS_SCRIPT_URL`,
-  `NEXT_PUBLIC_SITE_URL`. Not committed — provision per environment.
+- **Secrets:** `nikah-web/.env` (git-ignored) holds `FAL_KEY` for scripts plus `SUPABASE_URL`, `SUPABASE_SECRET_KEY`, `DASHBOARD_PASSPHRASE`, and `NEXT_PUBLIC_SITE_URL` for the app. Provision them per environment.

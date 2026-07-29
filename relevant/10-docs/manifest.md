@@ -3,7 +3,10 @@
 **Slice:** all markdown + scratch files under `nikah-web/files/docs/` (plus flagged stray files).
 **Verdict summary:** 66 KEEP · 7 SKIP (3 outdated docs + 4 scratch groups). Reference images (`stitch/*.jpg|png`, `ry0u7z_*.png`) and `.DS_Store` were out of scope for a docs slice and not copied.
 
-Source root for all paths below: `/Users/basharaaina/Projects/nikah/nikah-web/files/docs/` unless otherwise noted.
+**Canonical documentation:** this directory. The stale `nikah-web/files/docs/` mirror was removed.
+**Canonical asset sources:** curated originals live in `relevant/01-…09-…`; production-ready app inputs live in `nikah-web/assets/`. The duplicate `nikah-web/content/` tree was removed.
+
+Source root for the historical triage paths below was `/Users/basharaaina/Projects/nikah/nikah-web/files/docs/`.
 
 | doc path | verdict | category | reason |
 | :-- | :-- | :-- | :-- |

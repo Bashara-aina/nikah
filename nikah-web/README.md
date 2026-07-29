@@ -6,13 +6,12 @@ This folder **`nikah-web/`** is the live Next.js invitation app (package name `n
 
 | | |
 |---|---|
-| **Run** | `npm install && npm run dev` → http://localhost:3000/?to=Nama%20Tamu |
+| **Run** | `npm install && npm run dev` → http://localhost:3000 |
 | **Assets source** | `nikah-web/assets/` (promoted from `../relevant/`) |
 | **Public mirror** | `nikah-web/public/assets/` via `npm run copy-assets` (also on predev/prebuild) |
-| **Plans** | `../relevant/plans/` + `../relevant/FABLE-5-ULTIMATE-BUILD-PROMPT.md` |
-| **Handoff** | `../relevant/plans/HUMAN-HANDOFF.md` · deltas in `DELTA.md` |
-| **Guest links** | `npm run guest-links -- guests.csv > links.csv` (see `guests.example.csv`) |
-| **Secrets** | `nikah-web/.env` — `FAL_KEY` (scripts only), `APPS_SCRIPT_URL`, `NEXT_PUBLIC_SITE_URL` |
+| **Plans** | `../relevant/plans/roadmap/` |
+| **Guest links** | Create guests in `/dashboard`; links use `/undangan/<slug>` |
+| **Secrets** | `nikah-web/.env` — `FAL_KEY` (scripts only), Supabase server vars, `DASHBOARD_PASSPHRASE`, `NEXT_PUBLIC_SITE_URL` |
 
 Do **not** invent bank/livestream values — leave menyusul until the couple fills `lib/config.ts`.
 

@@ -15,6 +15,7 @@ import { isValidSlug } from "@/lib/guests";
 
 /** Enough to fill the wall without shipping an unbounded list to a phone. */
 const WALL_LIMIT = 200;
+const NO_STORE = { "Cache-Control": "no-store, max-age=0" };
 
 const cleanText = (v: unknown, max: number): string =>
   typeof v === "string"
@@ -28,7 +29,7 @@ const cleanText = (v: unknown, max: number): string =>
 const notConfigured = (): NextResponse =>
   NextResponse.json(
     { success: false, error: { code: "NOT_CONFIGURED", message: "Wishes backend belum terpasang" } },
-    { status: 503 },
+    { status: 503, headers: NO_STORE },
   );
 
 export async function GET(): Promise<NextResponse> {
@@ -37,6 +38,7 @@ export async function GET(): Promise<NextResponse> {
   const { data, error } = await supabaseAdmin()
     .from("wishes")
     .select("nama, pesan, created_at")
+    .eq("hidden", false)
     .order("created_at", { ascending: false })
     .limit(WALL_LIMIT);
 
@@ -44,7 +46,7 @@ export async function GET(): Promise<NextResponse> {
     console.error(`Wishes read failed: ${error.message}`);
     return NextResponse.json(
       { success: false, error: { code: "READ_FAILED", message: "Ucapan belum bisa dimuat" } },
-      { status: 500 },
+      { status: 500, headers: NO_STORE },
     );
   }
 
@@ -53,11 +55,13 @@ export async function GET(): Promise<NextResponse> {
     pesan: w.pesan,
     timestamp: w.created_at,
   }));
-  return NextResponse.json({ success: true, data: { wishes } });
+  return NextResponse.json({ success: true, data: { wishes } }, { headers: NO_STORE });
 }
 
+export const runtime = "nodejs";
+
 export async function POST(req: Request): Promise<NextResponse> {
-  if (rateLimited(clientIp(req))) {
+  if (rateLimited("wishes", clientIp(req))) {
     return NextResponse.json(
       { success: false, error: { code: "RATE_LIMITED", message: "Terlalu banyak percobaan" } },
       { status: 429 },

@@ -11,6 +11,8 @@ import { supabaseConfigured } from "@/lib/supabaseAdmin";
 import { GuestError, createGuest, listGuests, validateGuestInput } from "@/lib/guests";
 import { fromGuestError, invalidJson, notConfigured, unauthorized } from "@/lib/dashboardApi";
 
+export const runtime = "nodejs";
+
 export async function GET(): Promise<NextResponse> {
   if (!(await hasDashboardSession())) return unauthorized();
   if (!supabaseConfigured()) return notConfigured();

@@ -32,6 +32,9 @@ export const PUBLIC_GUEST: InvitationGuest = {
   partyMax: 2,
 };
 
+export const invitationOpenedKey = (slug: string | null): string =>
+  `nikah:opened:${slug ?? "public"}`;
+
 export const toInvitationGuest = (row: GuestRow): InvitationGuest => ({
   slug: row.slug,
   displayName: row.display_name,

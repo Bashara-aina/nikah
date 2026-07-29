@@ -59,10 +59,9 @@ alwaysApply: false
 
 ## Testing
 
-- **Current state:** This codebase does **not** have a test runner configured (no `vitest`, `jest`, or `playwright` in `package.json`; no test files under `app/` or `lib/`). The "every feature ships with a unit test" directive from upstream awesome-cursorrules is **not yet enforceable** here.
-- When a test runner is added, prefer Vitest (TS-native, ESM-friendly) and Playwright for E2E. New features added after that point should ship with at least one unit test.
-- Until then, do not propose adding a test runner in a feature PR — open a separate chore to set up the test infra first.
-- Keep tests readable and maintainable when they exist. Test edge cases and error conditions.
+- **Current state:** Vitest covers pure TypeScript modules and Playwright provides browser smoke coverage.
+- New features should ship with focused tests for pure logic and critical browser flows.
+- Keep tests readable and maintainable. Test edge cases and error conditions.
 
 ## Version Control
 

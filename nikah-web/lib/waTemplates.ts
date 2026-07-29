@@ -116,7 +116,7 @@ export const templateFor = (guest: Pick<MessageGuest, "guest_group" | "invite_ty
  * have one, otherwise their group template, with placeholders resolved.
  */
 export const renderMessage = (guest: MessageGuest): string =>
-  (guest.message_override ?? templateFor(guest))
+  (guest.message_override || templateFor(guest))
     .replaceAll("{nama}", guest.whatsapp_name?.trim() || guest.display_name)
     .replaceAll("{link}", guestLink(guest.slug))
     .replaceAll("{tanggal}", siteConfig.event.dateLabel);

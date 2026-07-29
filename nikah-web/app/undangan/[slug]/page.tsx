@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import { after } from "next/server";
 import { Invitation } from "@/components/Invitation";
 import { getGuestBySlug, trackOpen } from "@/lib/guests";
@@ -18,6 +19,9 @@ import { PUBLIC_GUEST, toInvitationGuest } from "@/lib/invitation";
  */
 export const dynamic = "force-dynamic";
 
+const CRAWLER =
+  /whatsapp|facebookexternalhit|twitterbot|telegrambot|slackbot|discordbot|bot|crawler|preview/i;
+
 export default async function GuestInvitationPage({
   params,
 }: {
@@ -32,9 +36,8 @@ export default async function GuestInvitationPage({
     const row = await getGuestBySlug(slug);
     if (row) {
       guest = toInvitationGuest(row);
-      // Runs after the response is flushed — the open counter never delays or
-      // breaks the invitation itself.
-      after(() => trackOpen(slug));
+      const userAgent = (await headers()).get("user-agent") ?? "";
+      if (!CRAWLER.test(userAgent)) after(() => trackOpen(slug));
     }
   } catch (error) {
     // A database hiccup must not hand a guest an error page; log it and serve

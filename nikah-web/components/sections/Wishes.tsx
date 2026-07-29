@@ -19,6 +19,7 @@ export const Wishes = () => {
   const guest = useGuest();
   const [wishes, setWishes] = useState<Wish[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const [loadFailed, setLoadFailed] = useState(false);
   const [nama, setNama] = useState("");
   const [pesan, setPesan] = useState("");
   const [website, setWebsite] = useState(""); // honeypot
@@ -27,14 +28,21 @@ export const Wishes = () => {
   useEffect(() => {
     let cancelled = false;
     fetch("/api/wishes", { cache: "no-store" })
-      .then((res) => res.json() as Promise<{ success: boolean; data?: { wishes?: Wish[] } }>)
-      .then((body) => {
-        if (!cancelled && body.success && Array.isArray(body.data?.wishes)) {
+      .then(async (res) => ({
+        ok: res.ok,
+        body: (await res.json()) as { success: boolean; data?: { wishes?: Wish[] } },
+      }))
+      .then(({ ok, body }) => {
+        if (cancelled) return;
+        if (ok && body.success && Array.isArray(body.data?.wishes)) {
           setWishes(body.data.wishes);
+          return;
         }
+        setLoadFailed(true);
       })
-      .catch(() => {
-        /* wall stays empty — honest state below */
+      .catch((error: unknown) => {
+        console.error("Wishes wall could not be loaded:", error);
+        if (!cancelled) setLoadFailed(true);
       })
       .finally(() => {
         if (!cancelled) setLoaded(true);
@@ -146,9 +154,9 @@ export const Wishes = () => {
 
       {/* Wall */}
       <div className="mx-auto mt-10 flex max-w-sm flex-col gap-4">
-        {wishes.map((w, i) => (
+        {wishes.map((w) => (
           <figure
-            key={`${w.nama}-${i}`}
+            key={`${w.timestamp ?? "new"}-${w.nama}-${w.pesan}`}
             className="animate-[fade-in_600ms_ease-out] break-words rounded-2xl border border-border bg-surface/80 px-5 py-4 shadow-petal"
           >
             <blockquote className="type-prose">{w.pesan}</blockquote>
@@ -168,7 +176,9 @@ export const Wishes = () => {
               sizes="176px"
               className="h-auto w-44 max-w-[75%] opacity-90"
             />
-            <p className="type-lede mt-5 text-muted">{copy.wishes.empty}</p>
+            <p className="type-lede mt-5 text-muted">
+              {loadFailed ? copy.wishes.loadError : copy.wishes.empty}
+            </p>
           </div>
         ) : null}
       </div>
