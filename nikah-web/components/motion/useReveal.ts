@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useMotion } from "./MotionProvider";
-import { dur, stagger as staggerToken, cubicBezierString } from "@/lib/motionTokens";
+import { dur, stagger as staggerToken, gsapEase } from "@/lib/motionTokens";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -40,8 +40,11 @@ export const useReveal = (
         opacity: 0,
         y,
         duration: dur.enter,
-        ease: cubicBezierString("enter"),
+        ease: gsapEase("enter"),
         stagger: stagger ? staggerToken.base : 0,
+        // Clear inline transform/opacity once settled — a leftover identity
+        // matrix creates a stacking context that breaks mix-blend children.
+        clearProps: "opacity,transform",
         scrollTrigger: {
           trigger: el,
           start,

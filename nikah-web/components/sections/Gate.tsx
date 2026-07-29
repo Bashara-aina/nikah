@@ -1,177 +1,32 @@
 "use client";
 
 /**
- * Gate — opening storybook page.
+ * L2 — Gate (storybook cover). The single ritual unlock (L0 envelope collapsed
+ * into gate-first — see relevant/plans/DELTA.md).
  *
  * Motion allocation:
- *   - `motion.h1` / `motion.p` / `motion.button` drive the children entrance
- *     with values from `motionTokens.ts` (cubic-bezier "enter" easing).
- *   - The page-turn / curtain swap to Hero is an `AnimatePresence` with the
- *     floral border using a shared `layoutId` so the asset animates between
- *     pages rather than fading abruptly.
- *
- * GSAP allocation: none on this screen — the gate is a pure declaration layer
- * so the entrance reads soft, and the Hero timeline below it owns the next beat.
+ *   - Motion drives the children entrance stagger + AnimatePresence exit
+ *     (the parent Invitation unmounts the Gate on open).
+ *   - CSS owns the floral border sway/breath (HIGH/MID only).
+ *   - GSAP owns nothing here — audio fade lives in AudioProvider.
  *
  * On tap "Buka Undangan":
- *   1. Request gyro permission (iOS 13+) — the useGyro hook listens for this.
- *   2. Fade in La Vie en Rose audio (GSAP fade 0→0.5 over `audio.fadeInMs`).
- *   3. Flip `open` → `AnimatePresence` exits the gate and the Hero assembles.
+ *   1. iOS 13+ gyro permission (inside the gesture).
+ *   2. `unlock()` — La Vie en Rose fade-in via AudioProvider.
+ *   3. `onOpen()` — parent flips phase; AnimatePresence exits the gate.
  */
 import { useState } from "react";
-import { AnimatePresence, motion, type Variants, type Easing } from "motion/react";
-import { gsap } from "gsap";
+import Image from "next/image";
+import { motion, type Variants, type Easing } from "motion/react";
 import { useMotion } from "@/components/motion/MotionProvider";
-import { motionSpring, cubicBezierString } from "@/lib/motionAdapter";
-import { siteConfig } from "@/lib/config";
-import { guestNameFromSearchParams } from "@/lib/guest";
+import { useSiteAudio } from "@/components/AudioProvider";
+import { motionEase, motionSpring } from "@/lib/motionAdapter";
 import { dur } from "@/lib/motionTokens";
+import { siteConfig } from "@/lib/config";
+import { copy } from "@/lib/copy";
+import { guestNameFromSearchParams } from "@/lib/guest";
 
-const ENTER_EASING: Easing = cubicBezierString("enter") as Easing;
-
-export const Gate = () => {
-  const { tier } = useMotion();
-  const [open, setOpen] = useState<boolean>(false);
-  // Read the URL once on mount; if `?to=` is present the guest name is decoded
-  // here, otherwise the default is used. SSR-safe: `window` is checked first.
-  const [guestName] = useState<string>(() => {
-    if (typeof window === "undefined") return "Bapak/Ibu/Saudara/i";
-    const params = new URLSearchParams(window.location.search);
-    return guestNameFromSearchParams(Object.fromEntries(params));
-  });
-
-  const handleOpen = async () => {
-    // 1. iOS 13+ gyro permission — useGyro will pick up the granted state.
-    const orientationWithPermission = (
-      DeviceOrientationEvent as unknown as {
-        requestPermission?: () => Promise<"granted" | "denied">;
-      }
-    ).requestPermission;
-    if (typeof orientationWithPermission === "function") {
-      try {
-        await orientationWithPermission();
-      } catch {
-        /* user denied — gyro hook will be a no-op */
-      }
-    }
-
-    // 2. Audio fade-in. Skip if no src.
-    const audio = document.querySelector<HTMLAudioElement>("audio.site-audio");
-    if (audio) {
-      audio.volume = 0;
-      try {
-        await audio.play();
-        gsap.to(audio, {
-          volume: siteConfig.audio.fadeTarget,
-          duration: siteConfig.audio.fadeInMs / 1000,
-          ease: cubicBezierString("enter"),
-        });
-      } catch {
-        /* autoplay blocked — user gesture might not have been registered */
-      }
-    }
-
-    // 3. Flip state — AnimatePresence handles the page-turn exit.
-    setOpen(true);
-  };
-
-  const reduced = tier === "REDUCED";
-  const containerAnim = reduced ? undefined : "visible";
-  const containerInitial = reduced ? false : "hidden";
-
-  return (
-    <AnimatePresence mode="wait">
-      {!open ? (
-        <motion.section
-          key="gate"
-          id="gate"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Buka undangan"
-          data-tier={tier}
-          initial={{ opacity: reduced ? 1 : 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: reduced ? 1 : 1.04 }}
-          transition={{ duration: reduced ? 0 : dur.base, ease: ENTER_EASING }}
-          className="fixed inset-0 z-modal flex items-center justify-center bg-paper px-6 text-center"
-        >
-          {/* Floral border — shared `layoutId` with the Hero page-turn. */}
-          <motion.div
-            layoutId="gate-border"
-            aria-hidden
-            className="pointer-events-none absolute inset-4 rounded-[3rem] border border-blush/40 sm:inset-8"
-          />
-
-          <motion.div
-            initial={containerInitial}
-            animate={containerAnim}
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: {
-                  delayChildren: 0.15,
-                  staggerChildren: 0.12,
-                },
-              },
-            }}
-            className="relative z-10 flex max-w-prose flex-col items-center"
-          >
-            <motion.p
-              variants={reduced ? undefined : item}
-              className="font-serif text-base italic text-ink/70"
-            >
-              The Wedding of
-            </motion.p>
-            <motion.h1
-              variants={reduced ? undefined : item}
-              className="mt-2 font-serif text-4xl font-medium tracking-editorial text-ink sm:text-5xl"
-            >
-              {siteConfig.couple.groom} &amp; {siteConfig.couple.bride}
-            </motion.h1>
-
-            <motion.div
-              variants={reduced ? undefined : item}
-              className="my-8 h-px w-24 bg-gold/60"
-              aria-hidden
-            />
-
-            <motion.p
-              variants={reduced ? undefined : item}
-              className="font-sans text-xs uppercase tracking-[0.3em] text-ink/60"
-            >
-              Kepada yang terkasih,
-            </motion.p>
-            <motion.p
-              variants={reduced ? undefined : item}
-              className="mt-2 font-serif text-2xl font-medium text-ink sm:text-3xl"
-            >
-              {guestName}
-            </motion.p>
-            <motion.p
-              variants={reduced ? undefined : item}
-              className="mt-6 max-w-md font-serif text-base italic leading-relaxed text-ink/80"
-            >
-              Dengan penuh syukur, kami mengundangmu untuk menjadi bagian dari
-              hari bahagia kami.
-            </motion.p>
-
-            <motion.button
-              variants={reduced ? undefined : item}
-              onClick={handleOpen}
-              transition={motionSpring("gentle")}
-              whileHover={reduced ? undefined : { scale: 1.03 }}
-              whileTap={reduced ? undefined : { scale: 0.98 }}
-              className="mt-10 inline-flex min-h-[44px] items-center rounded-full border border-ink/30 bg-cream px-8 py-3 font-sans text-sm uppercase tracking-[0.25em] text-ink shadow-sm transition-colors hover:bg-blush/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
-            >
-              Buka Undangan
-            </motion.button>
-          </motion.div>
-        </motion.section>
-      ) : null}
-    </AnimatePresence>
-  );
-};
+const ENTER_EASING: Easing = motionEase("enter");
 
 const item: Variants = {
   hidden: { opacity: 0, y: 16 },
@@ -180,4 +35,176 @@ const item: Variants = {
     y: 0,
     transition: { duration: dur.base, ease: ENTER_EASING },
   },
+};
+
+export const Gate = ({ onOpen }: { onOpen: () => void }) => {
+  const { tier } = useMotion();
+  const { unlock } = useSiteAudio();
+  const [opening, setOpening] = useState(false);
+  const [guestName] = useState<string>(() => {
+    if (typeof window === "undefined") return "Bapak/Ibu/Saudara/i";
+    const params = new URLSearchParams(window.location.search);
+    return guestNameFromSearchParams(Object.fromEntries(params));
+  });
+
+  const reduced = tier === "REDUCED";
+  const swaying = tier === "HIGH" || tier === "MID";
+
+  const handleOpen = async () => {
+    if (opening) return;
+    setOpening(true);
+
+    // 1. iOS 13+ gyro permission — must happen inside the tap gesture.
+    // Cap wait so a stuck permission dialog cannot freeze the unlock ritual.
+    const requestPermission = (
+      DeviceOrientationEvent as unknown as {
+        requestPermission?: () => Promise<"granted" | "denied">;
+      }
+    ).requestPermission;
+    if (typeof requestPermission === "function") {
+      try {
+        await Promise.race([
+          requestPermission(),
+          new Promise<void>((resolve) => {
+            window.setTimeout(resolve, 1200);
+          }),
+        ]);
+      } catch {
+        /* denied — gyro parallax stays off */
+      }
+    }
+
+    // 2. Audio unlock + fade (AudioProvider owns the tween).
+    unlock();
+
+    // 3. Hand the beat to the parent — AnimatePresence exits this section.
+    try {
+      window.sessionStorage.setItem("nikah:opened", "1");
+    } catch {
+      /* ignore */
+    }
+    onOpen();
+  };
+
+  return (
+    <motion.section
+      key="gate"
+      id="gate"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Buka undangan"
+      data-tier={tier}
+      initial={{ opacity: reduced ? 1 : 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0, scale: reduced ? 1 : 1.04 }}
+      transition={{ duration: reduced ? 0 : dur.enter, ease: ENTER_EASING }}
+      className="fixed inset-0 z-modal flex items-center justify-center overflow-hidden bg-paper"
+    >
+      {/* Floral border frame — keeper art, breathes gently on capable tiers. */}
+      <div className="pointer-events-none absolute inset-0 mx-auto w-full max-w-[480px]">
+        <Image
+          src="/assets/illustrations/gate-floral-border.webp"
+          alt=""
+          fill
+          priority
+          sizes="(max-width: 480px) 100vw, 480px"
+          className={`object-contain object-center opacity-[0.92] ${swaying ? "breathing-element" : ""}`}
+          style={{ ["--breath-dur" as string]: "7200ms" }}
+        />
+      </div>
+
+      <motion.div
+        initial={reduced ? false : "hidden"}
+        animate="visible"
+        variants={{
+          hidden: { opacity: 0 },
+          visible: {
+            opacity: 1,
+            transition: { delayChildren: 0.2, staggerChildren: 0.12 },
+          },
+        }}
+        className="relative z-10 flex w-full max-w-[420px] flex-col items-center px-10 py-12 text-center"
+      >
+        {/* Paper veil under copy — florals stay visible; italic lede stays readable. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-6 bottom-10 top-[38%] rounded-[2rem] bg-paper/75"
+        />
+        {/* Monogram wreath — alpha keeper; soft edge mask only (no multiply). */}
+        <motion.div variants={reduced ? undefined : item} className="relative">
+          <Image
+            src="/assets/illustrations/gate-monogram-frame.webp"
+            alt=""
+            width={1000}
+            height={1000}
+            priority
+            sizes="(max-width: 480px) 42vw, 190px"
+            className="h-auto w-[42vw] max-w-[190px] [mask-image:radial-gradient(circle,black_62%,transparent_78%)]"
+          />
+          <span
+            aria-hidden
+            className="absolute inset-0 flex items-center justify-center font-serif text-3xl font-medium tracking-widest text-ink"
+          >
+            H&thinsp;&amp;&thinsp;B
+          </span>
+        </motion.div>
+
+        <motion.p
+          variants={reduced ? undefined : item}
+          className="relative type-kicker mt-5 text-ink"
+        >
+          {copy.gate.kicker}
+        </motion.p>
+        <motion.h1
+          variants={reduced ? undefined : item}
+          className="relative type-display mt-2"
+        >
+          {siteConfig.couple.short}
+        </motion.h1>
+
+        <motion.div
+          variants={reduced ? undefined : item}
+          aria-hidden
+          className="relative my-5 h-px w-20 bg-gold/70"
+        />
+
+        <motion.p
+          variants={reduced ? undefined : item}
+          className="relative type-label"
+        >
+          {copy.gate.dear}
+        </motion.p>
+        <motion.p
+          variants={reduced ? undefined : item}
+          className="relative type-name mt-2"
+        >
+          {guestName}
+        </motion.p>
+        <motion.p
+          variants={reduced ? undefined : item}
+          className="relative type-lede mx-auto mt-5 text-ink"
+        >
+          {copy.gate.invitation}
+        </motion.p>
+
+        <motion.button
+          variants={reduced ? undefined : item}
+          onClick={handleOpen}
+          disabled={opening}
+          transition={motionSpring("gentle")}
+          whileHover={reduced ? undefined : { scale: 1.03 }}
+          whileTap={reduced ? undefined : { scale: 0.97 }}
+          className="relative mt-8 inline-flex min-h-[48px] items-center gap-2 rounded-full border border-dusty/50 bg-surface px-9 py-3 font-sans text-sm uppercase tracking-[0.25em] text-ink shadow-petal transition-colors hover:bg-blush/25 active:scale-[0.97] disabled:opacity-70"
+        >
+          {opening ? (
+            <span
+              aria-hidden
+              className="h-4 w-4 animate-spin rounded-full border-2 border-ink/30 border-t-ink"
+            />
+          ) : null}
+          {copy.gate.cta}
+        </motion.button>
+      </motion.div>
+    </motion.section>
+  );
 };

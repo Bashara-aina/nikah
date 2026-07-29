@@ -65,3 +65,10 @@ Recovered/
 archieved/
 # Source assets not for direct consumption
 assets/_source/
+
+# Generated asset mirror (copy-assets.mjs on predev/prebuild)
+nikah-web/public/assets/
+
+# Cursor local noise
+.cursor/debug-*.log
+.cursor/**/__pycache__/

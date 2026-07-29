@@ -8,14 +8,17 @@
   --color-cream: oklch(0.965 0.018 80);
   --color-surface: oklch(0.995 0.005 80);
   --color-border: oklch(0.88 0.014 80);
-  --color-ink: oklch(0.28 0.02 50);
-  --color-muted: oklch(0.55 0.018 60);
+  --color-ink: oklch(0.26 0.022 50);
+  /* Darker muted — small caps labels must stay readable on paper in sunlight. */
+  --color-muted: oklch(0.38 0.022 55);
   --color-blush: oklch(0.86 0.04 25);
   --color-sage: oklch(0.78 0.04 150);
   --color-gold: oklch(0.82 0.08 75);
 
   /* Storybook accents added per REF-01. */
   --color-dusty: oklch(0.74 0.06 12);
+  /* Deep rose — dusty's readable sibling for informative text on paper. */
+  --color-dusty-deep: oklch(0.5 0.09 12);
   --color-peach: oklch(0.86 0.07 55);
   --color-navy:  oklch(0.34 0.04 255);
   --color-sky:   oklch(0.93 0.03 230);
@@ -53,12 +56,15 @@
   --color-cream: oklch(0.965 0.018 80);
   --color-surface: oklch(0.995 0.005 80);
   --color-border: oklch(0.88 0.014 80);
-  --color-ink: oklch(0.28 0.02 50);
-  --color-muted: oklch(0.55 0.018 60);
+  --color-ink: oklch(0.26 0.022 50);
+  /* Darker muted — small caps labels must stay readable on paper in sunlight. */
+  --color-muted: oklch(0.38 0.022 55);
   --color-blush: oklch(0.86 0.04 25);
   --color-sage: oklch(0.78 0.04 150);
   --color-gold: oklch(0.82 0.08 75);
   --color-dusty: oklch(0.74 0.06 12);
+  /* Deep rose — dusty's readable sibling for informative text on paper. */
+  --color-dusty-deep: oklch(0.5 0.09 12);
   --color-peach: oklch(0.86 0.07 55);
   --color-navy:  oklch(0.34 0.04 255);
   --color-sky:   oklch(0.93 0.03 230);
@@ -98,7 +104,12 @@
 
   h1, h2, h3 {
     text-wrap: balance;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.022em;
+  }
+
+  /* Optical sizing for long Indonesian display names (Cormorant). */
+  .font-serif {
+    font-optical-sizing: auto;
   }
 
   /* Focus visible — required ring for accessibility (ui-ux-pro-max priority 1). */
@@ -169,8 +180,108 @@
   100% { transform: translate(-20px, -80px); opacity: 0; }
 }
 
+@keyframes petal-drift {
+  0%   { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+  8%   { opacity: 0.9; }
+  50%  { transform: translate(-26px, 380px) rotate(160deg); }
+  92%  { opacity: 0.9; }
+  100% { transform: translate(14px, 760px) rotate(320deg); opacity: 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .breathing-element { animation: breathing var(--breath-dur, 5200ms) ease-in-out infinite; }
 
 .utility-shadow-petal { box-shadow: var(--shadow-petal); }
 .utility-shadow-card  { box-shadow: var(--shadow-card); }
 .utility-shadow-float { box-shadow: var(--shadow-float); }
+
+/* Editorial type roles — invite hierarchy, not SaaS scale.
+ * Prefer these over ad-hoc text-* stacks so sections stay coherent. */
+@layer components {
+  .type-display {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(2rem, 1.55rem + 2vw, 2.65rem);
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+
+  .type-display-sm {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(1.55rem, 1.25rem + 1.2vw, 2rem);
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+
+  .type-name {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(1.65rem, 1.2rem + 1.8vw, 2.15rem);
+    line-height: 1.15;
+    letter-spacing: -0.018em;
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+
+  .type-lede {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.05rem, 0.95rem + 0.45vw, 1.2rem);
+    line-height: 1.65;
+    letter-spacing: -0.01em;
+    /* Near-full ink — thin italic strokes fail first on busy florals / sky. */
+    color: color-mix(in oklch, var(--color-ink) 96%, transparent);
+    max-width: 36ch;
+    text-wrap: pretty;
+  }
+
+  .type-body {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: clamp(0.9375rem, 0.9rem + 0.2vw, 1.0625rem);
+    line-height: 1.7;
+    color: color-mix(in oklch, var(--color-ink) 92%, transparent);
+    max-width: 42ch;
+    text-wrap: pretty;
+  }
+
+  .type-label {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.6875rem;
+    line-height: 1.4;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .type-meta {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    color: var(--color-muted);
+    max-width: 40ch;
+  }
+
+  .type-kicker {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.6875rem;
+    line-height: 1.35;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    /* Was 68% — ~3.8:1 on hero sky; small caps need ≥4.5:1. */
+    color: color-mix(in oklch, var(--color-ink) 92%, transparent);
+  }
+}

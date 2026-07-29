@@ -22,19 +22,21 @@ import {
 } from "./motionTokens";
 import type { Easing, Transition, Variants } from "motion/react";
 
-/** Cast a CSS cubic-bezier string into Motion's `Easing` type. */
-const asMotionEasing = (s: string): Easing => s as Easing;
-
 /**
- * Motion transition object from a token name. `duration` is in seconds.
- * Use `cubic-bezier` strings (CSS-native) since Motion supports both formats.
+ * Motion's `Easing` accepts a bezier tuple — string `cubic-bezier(...)` forms
+ * are CSS/GSAP-only and throw in motion/react v12. Always hand Motion the
+ * numeric tuple.
  */
+export const motionEase = (name: EasingName = "enter"): Easing =>
+  cubicBezier(name) as unknown as Easing;
+
+/** Motion transition object from a token name. `duration` is in seconds. */
 export const motionTransition = (
   durationName: DurationName,
   easingName: EasingName = "enter",
 ): Transition => ({
   duration: dur[durationName],
-  ease: asMotionEasing(cubicBezierString(easingName)),
+  ease: motionEase(easingName),
 });
 
 /** Spring preset by name. */
@@ -52,7 +54,7 @@ export const revealVariants = (opts?: {
     opacity: 1,
     transition: {
       duration: dur.enter,
-      ease: asMotionEasing(cubicBezierString("enter")),
+      ease: motionEase("enter"),
       delayChildren: opts?.delayChildren ?? 0.05,
       staggerChildren: opts?.staggerChildren ?? stagger.base,
       delay: opts?.delay ?? 0,
@@ -67,7 +69,7 @@ export const revealChildVariants = (opts?: { y?: number; duration?: number }): V
     y: 0,
     transition: {
       duration: opts?.duration ?? dur.base,
-      ease: asMotionEasing(cubicBezierString("enter")),
+      ease: motionEase("enter"),
     },
   },
 });

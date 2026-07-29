@@ -40,11 +40,15 @@ export const cubicBezierString = (name: EasingName): string => {
   return `cubic-bezier(${a}, ${b}, ${c}, ${d})`;
 };
 
-/** GSAP accepts the shorthand directly; alias kept for symmetry. */
+/**
+ * GSAP ease for a token name. GSAP core cannot parse `cubic-bezier()` strings
+ * (that needs CustomEase), so bezier-tuple tokens map to their closest named
+ * GSAP ease — `enter` [0.22, 1, 0.36, 1] ≈ `power3.out`.
+ */
 export const gsapEase = (name: EasingName): string => {
   const e = easing[name];
   if (typeof e === "string") return e;
-  return `cubic-bezier(${e[0]}, ${e[1]}, ${e[2]}, ${e[3]})`;
+  return "power3.out";
 };
 
 /** Durations in seconds. Millisecond equivalents noted in JSDoc for docs. */

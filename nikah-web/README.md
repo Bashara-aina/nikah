@@ -1,4 +1,26 @@
 # Nikah Web — Master README
+
+## Current state (2026-07-18) — start here
+
+This folder **`nikah-web/`** is the live Next.js invitation app (package name `nikah-web`).
+
+| | |
+|---|---|
+| **Run** | `npm install && npm run dev` → http://localhost:3000/?to=Nama%20Tamu |
+| **Assets source** | `nikah-web/assets/` (promoted from `../relevant/`) |
+| **Public mirror** | `nikah-web/public/assets/` via `npm run copy-assets` (also on predev/prebuild) |
+| **Plans** | `../relevant/plans/` + `../relevant/FABLE-5-ULTIMATE-BUILD-PROMPT.md` |
+| **Handoff** | `../relevant/plans/HUMAN-HANDOFF.md` · deltas in `DELTA.md` |
+| **Guest links** | `npm run guest-links -- guests.csv > links.csv` (see `guests.example.csv`) |
+| **Secrets** | `nikah-web/.env` — `FAL_KEY` (scripts only), `APPS_SCRIPT_URL`, `NEXT_PUBLIC_SITE_URL` |
+
+Do **not** invent bank/livestream values — leave menyusul until the couple fills `lib/config.ts`.
+
+The sections below are **historical** (pre-reorg / pre-`relevant/` triage). Prefer `../relevant/plans/` over the old `correct/` + mass-fal instructions.
+
+---
+
+# Nikah Web — Master README (archive notes)
 ## ⚠️ READ THIS FIRST BEFORE TOUCHING ANYTHING
 
 This is the wedding invitation website for **Bashara & Hanifah**, 22 August 2026.

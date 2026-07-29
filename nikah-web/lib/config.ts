@@ -1,9 +1,11 @@
 /**
- * Site config — single source of truth for dates, names, venues, RSVP deadline,
- * bank accounts, livestream, etc. All UI strings come from `docs/03-copywriting.md`;
- * values below are placeholders that match the structure of `docs/05-data-fields.md`.
+ * Site config — single source of truth for dates, names, venue, RSVP deadline,
+ * bank accounts, livestream, etc. All UI strings come from `lib/copy.ts`
+ * (locked in `relevant/10-docs/03-copywriting.md`); values below follow
+ * `docs/05-data-fields.md` structure.
  *
- * Keep this file the only place these values live. UI components import from here.
+ * Bank / livestream / gift-address values are intentionally empty until the
+ * couple provides them (REF-04 §5) — the UI renders honest "menyusul" states.
  */
 
 export const siteConfig = {
@@ -11,32 +13,50 @@ export const siteConfig = {
   couple: {
     bride: "Hanifah Syifa Azzahra Bay",
     groom: "Bashara Aina",
-    short: "Bashara & Hanifah",
-    hashtag: "#BASHicallyHANIs",
+    /** Display order is bride-first (H & B). */
+    short: "Hanifah & Bashara",
+    hashtag: "#BASHicallyHANI's",
+    parents: {
+      bride: "Anak dari Achmad Fuad Bay dan Eulis Galih",
+      groom: "Anak dari Adlinsyah dan Hartanti Rahayuningsih",
+    },
   },
   event: {
     date: "2026-08-22",
     dateLabel: "22 Agustus 2026",
-    timeStart: "10:00",
-    timeEnd: "13:00",
+    /** Akad start, local WIB. */
+    startIso: "2026-08-22T10:00:00+07:00",
+    endIso: "2026-08-22T13:00:00+07:00",
+    timeStart: "10.00",
+    timeEnd: "13.00",
     timezone: "Asia/Jakarta",
-    venueName: "Venue TBD",
-    venueAddress: "Address TBD",
-    mapsUrl: "https://maps.app.goo.gl/TBD",
+    venueName: "Widuri Restaurant",
+    venueFloor: "Lantai 2",
+    venueAddress:
+      "Jl. Ciliwung No.19, Cihapit, Kec. Bandung Wetan, Kota Bandung, Jawa Barat 40114",
+    /** Derived from the locked address — search link, not an invented place ID. */
+    mapsUrl:
+      "https://www.google.com/maps/search/?api=1&query=" +
+      encodeURIComponent(
+        "Widuri Restaurant, Jl. Ciliwung No.19, Cihapit, Bandung Wetan, Kota Bandung",
+      ),
   },
   rsvp: {
+    /** D-7 before the wedding per locked copy. */
     deadline: "2026-08-15",
-    appsScriptUrl: process.env.APPS_SCRIPT_URL ?? "",
+    deadlineLabel: "15 Agustus 2026",
+    maxParty: 4,
   },
   audio: {
     src: "/assets/audio/la-vie-en-rose.mp3",
     fadeInMs: 1200,
-    fadeTarget: 0.5,
+    fadeTarget: 0.3,
   },
-  dressCode: "TBD",
   bank: {
-    id: { bank: "TBD", accountNumber: "TBD", accountName: "TBD" },
-    jp: { bank: "TBD", accountNumber: "TBD", accountName: "TBD" },
+    /** Values pending from the couple — empty string = render "menyusul". */
+    id: { bank: "", accountNumber: "", accountName: "" },
+    jp: { bank: "", accountNumber: "", accountName: "" },
+    giftAddress: "",
   },
   livestream: {
     youtube: "",
@@ -47,3 +67,17 @@ export const siteConfig = {
 } as const;
 
 export type SiteConfig = typeof siteConfig;
+
+/** Google Calendar template URL derived from locked event facts. */
+export const calendarUrl = (): string => {
+  const fmt = (iso: string) =>
+    new Date(iso).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+  const params = new URLSearchParams({
+    action: "TEMPLATE",
+    text: `Pernikahan ${siteConfig.couple.short}`,
+    dates: `${fmt(siteConfig.event.startIso)}/${fmt(siteConfig.event.endIso)}`,
+    details: siteConfig.couple.hashtag,
+    location: `${siteConfig.event.venueName} ${siteConfig.event.venueFloor}, ${siteConfig.event.venueAddress}`,
+  });
+  return `https://calendar.google.com/calendar/render?${params.toString()}`;
+};

@@ -12,10 +12,14 @@
     "lint": "eslint . --ext .ts,.tsx",
     "type-check": "tsc --noEmit",
     "copy-assets": "node scripts/copy-assets.mjs",
+    "remediate-assets": "node scripts/remediate-assets.mjs",
+    "guest-links": "node --env-file=.env scripts/generate-guest-links.mjs",
     "gen:list": "node --env-file=.env scripts/generate-assets.mjs --list",
     "gen:dry": "node --env-file=.env scripts/generate-assets.mjs --phase=0 --dry-run",
     "gen:0": "node --env-file=.env scripts/generate-assets.mjs --phase=0",
+    "gen:0b": "node --env-file=.env scripts/generate-assets.mjs --phase=0b",
     "gen:1": "node --env-file=.env scripts/generate-assets.mjs --phase=1",
+    "gen:2": "node --env-file=.env scripts/generate-assets.mjs --phase=2",
     "gen:4": "node --env-file=.env scripts/generate-assets.mjs --phase=4",
     "gen:6": "node --env-file=.env scripts/generate-assets.mjs --phase=6"
   },
@@ -30,12 +34,13 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.1",
-    "@typescript-eslint/eslint-plugin": "^8.61.1",
     "@types/node": "^22.10.0",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.61.1",
     "eslint": "^9.0.0",
     "eslint-config-next": "^16.2.9",
+    "sharp": "^0.35.3",
     "tailwindcss": "^4.3.1",
     "typescript": "^5.7.0"
   }

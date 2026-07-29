@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Mirrors /assets/* (monorepo root, source of truth) into nikah-web/public/assets/*.
+ * Mirrors nikah-web/assets/* (source of truth) into nikah-web/public/assets/*.
  * Runs on predev / prebuild. Keeps `public/assets/` regenerable and never hand-edited.
  */
 import { cp, mkdir, rm, stat } from "node:fs/promises";
@@ -11,8 +11,7 @@ import { fileURLToPath } from "node:url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const repoRoot = path.resolve(__dirname, "..", "..");
-const src = path.join(repoRoot, "assets");
+const src = path.join(__dirname, "..", "assets");
 const dest = path.join(__dirname, "..", "public", "assets");
 
 async function main() {
