@@ -18,9 +18,11 @@ export const dynamic = "force-dynamic";
 
 /** Any dead end here gets an explanation and a next step, never a 500 page. */
 const Notice = ({ heading, children }: { heading: string; children: ReactNode }) => (
-  <main className="mx-auto flex min-h-[100svh] max-w-sm flex-col justify-center px-8 text-center">
-    <h1 className="type-display">{heading}</h1>
-    <p className="type-body mt-4">{children}</p>
+  <main className="mx-auto flex min-h-[100svh] max-w-sm flex-col justify-center px-8">
+    <div className="rounded-3xl border border-border bg-surface/70 p-6 text-center shadow-petal">
+      <h1 className="type-display">{heading}</h1>
+      <p className="type-body mt-4">{children}</p>
+    </div>
   </main>
 );
 
