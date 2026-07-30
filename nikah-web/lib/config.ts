@@ -17,8 +17,8 @@ export const siteConfig = {
     short: "Hanifah & Bashara",
     hashtag: "#BASHicallyHANI's",
     parents: {
-      bride: "Anak dari Achmad Fuad Bay dan Eulis Galih",
-      groom: "Anak dari Adlinsyah dan Hartanti Rahayuningsih",
+      bride: "Anak dari Achmad Fuad Bay dan Eulis G.",
+      groom: "Anak dari Adlinsyah dan Hartanti R.",
     },
   },
   event: {
