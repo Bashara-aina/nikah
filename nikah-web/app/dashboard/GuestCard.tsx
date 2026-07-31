@@ -2,8 +2,16 @@
 
 import type { GuestWithRsvp } from "@/lib/db.types";
 import { formatPhone, whatsappLink } from "@/lib/phone";
+import { rsvpState } from "@/lib/rsvpSummary";
 import { guestLink, renderMessage } from "@/lib/waTemplates";
-import { Chip, GROUP_LABEL, TYPE_LABEL, formatDay } from "./dashboardShared";
+import {
+  AttendanceBadge,
+  Chip,
+  GROUP_LABEL,
+  TYPE_LABEL,
+  formatDateTime,
+  formatDay,
+} from "./dashboardShared";
 
 type GuestCardProps = {
   guest: GuestWithRsvp;
@@ -36,6 +44,7 @@ export const GuestCard = ({
   const wa = whatsappLink(guest.phone, message);
   const link = guestLink(guest.slug);
   const invited = guest.invited_at !== null;
+  const state = rsvpState(guest);
 
   return (
     <li className="flex flex-col gap-3 rounded-3xl border border-border bg-surface/70 p-5">
@@ -88,15 +97,37 @@ export const GuestCard = ({
             <Chip>Belum dibuka</Chip>
           </span>
         ) : null}
-        {guest.rsvp ? (
-          <Chip tone="on">
-            {guest.rsvp.kehadiran}
-            {guest.invite_type === "venue" ? ` · ${guest.rsvp.jumlah} orang` : ""}
-          </Chip>
-        ) : null}
       </div>
 
-      {guest.rsvp?.catatan ? <p className="type-body">“{guest.rsvp.catatan}”</p> : null}
+      {/* RSVP gets its own block rather than a chip in the row above. "Has this
+          person answered yet" is the question the couple opens this page to
+          settle, and a missing chip is not an answer — the empty state has to
+          say so out loud, and say whose move it is. */}
+      {guest.rsvp ? (
+        <div className="rounded-2xl border border-border bg-paper/60 p-4">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+            <span className="type-label">Sudah RSVP</span>
+            <AttendanceBadge
+              kehadiran={guest.rsvp.kehadiran}
+              jumlah={guest.invite_type === "venue" ? guest.rsvp.jumlah : undefined}
+            />
+          </div>
+          {guest.rsvp.catatan ? (
+            <p className="type-body mt-2">“{guest.rsvp.catatan}”</p>
+          ) : null}
+          <p className="type-meta mt-1">Dijawab {formatDateTime(guest.rsvp.created_at)}</p>
+        </div>
+      ) : (
+        <div className="rounded-2xl border border-dashed border-border p-4">
+          <p className="type-label">Belum RSVP</p>
+          <p className="type-meta mt-1">
+            {state === "waiting"
+              ? `Undangan terkirim ${formatDay(guest.invited_at)} — menunggu balasan.`
+              : "Undangannya belum dikirim."}
+          </p>
+        </div>
+      )}
+
       {guest.notes ? <p className="type-meta">Catatan: {guest.notes}</p> : null}
       {guest.alternative_channel ? (
         <p className="type-meta">Kanal lain: {guest.alternative_channel}</p>

@@ -15,12 +15,41 @@ type DashboardStatsProps = {
   onSelect: (filter: StatusFilter) => void;
 };
 
+const Tile = ({
+  item,
+  selected,
+  onSelect,
+}: {
+  item: StatKey;
+  selected: boolean;
+  onSelect: (filter: StatusFilter) => void;
+}) => (
+  <button
+    type="button"
+    title={item.hint}
+    aria-pressed={selected}
+    onClick={() => onSelect(item.id)}
+    className={`flex min-h-[64px] flex-col justify-center rounded-2xl border px-3 py-2 text-left transition-colors ${
+      selected
+        ? "border-dusty bg-blush/40 text-ink"
+        : "border-border bg-surface/80 text-ink-soft hover:bg-cream"
+    }`}
+  >
+    <span className="font-sans text-xl font-medium tabular-nums text-ink">{item.value}</span>
+    <span className="type-meta mt-0.5 leading-tight">{item.label}</span>
+  </button>
+);
+
+/**
+ * The only status control on the page — these tiles both report and filter.
+ *
+ * They used to sit in one horizontal scroller where "Sudah dikirim" and "Sudah
+ * RSVP" looked like alternatives, though the second is a subset of the first.
+ * Splitting them under two headings says what each number counts: how far the
+ * couple has got with sending, and how far the guests have got with answering.
+ */
 export const DashboardStats = ({ stats, active, onSelect }: DashboardStatsProps) => {
-  // These tiles are the only status control on the page. They used to sit above
-  // a second row of pills carrying the same six labels, so every status could be
-  // set two ways and the two rows disagreed about which was active.
-  const items: StatKey[] = [
-    { id: "all", label: "Semua", value: stats.total, hint: "Tampilkan semua tamu" },
+  const delivery: StatKey[] = [
     {
       id: "belum",
       label: "Belum dikirim",
@@ -34,37 +63,52 @@ export const DashboardStats = ({ stats, active, onSelect }: DashboardStatsProps)
       hint: "Sudah ditandai diundang",
     },
     { id: "dibuka", label: "Sudah dibuka", value: stats.opened, hint: "Sudah membuka undangan" },
+  ];
+
+  const replies: StatKey[] = [
+    { id: "rsvp", label: "Sudah RSVP", value: stats.answered, hint: "Sudah mengisi RSVP" },
     {
       id: "unanswered",
-      label: "Menunggu balasan",
+      label: "Belum RSVP",
       value: stats.unanswered,
-      hint: "Sudah dikirim, belum RSVP",
+      hint: "Sudah dikirim, belum mengisi RSVP",
     },
-    { id: "rsvp", label: "Konfirmasi", value: stats.answered, hint: "Sudah RSVP" },
   ];
 
   return (
-    <div className="mt-5 flex gap-2 overflow-x-auto pb-1" role="group" aria-label="Ringkasan status">
-      {items.map((item) => {
-        const selected = active === item.id;
-        return (
-          <button
-            key={item.id}
-            type="button"
-            title={item.hint}
-            aria-pressed={selected}
-            onClick={() => onSelect(item.id)}
-            className={`flex min-h-[64px] min-w-[6.5rem] shrink-0 flex-col justify-center rounded-2xl border px-4 py-2 text-left transition-colors ${
-              selected
-                ? "border-dusty bg-blush/40 text-ink"
-                : "border-border bg-surface/80 text-ink-soft hover:bg-cream"
-            }`}
-          >
-            <span className="font-sans text-xl font-medium tabular-nums text-ink">{item.value}</span>
-            <span className="type-meta mt-0.5 leading-tight">{item.label}</span>
-          </button>
-        );
-      })}
+    <div className="mt-5 flex flex-col gap-3" role="group" aria-label="Ringkasan status">
+      <button
+        type="button"
+        title="Tampilkan semua tamu"
+        aria-pressed={active === "all"}
+        onClick={() => onSelect("all")}
+        className={`flex min-h-[48px] items-center justify-between rounded-2xl border px-4 transition-colors ${
+          active === "all"
+            ? "border-dusty bg-blush/40 text-ink"
+            : "border-border bg-surface/80 text-ink-soft hover:bg-cream"
+        }`}
+      >
+        <span className="type-button">Semua tamu</span>
+        <span className="font-sans text-xl font-medium tabular-nums text-ink">{stats.total}</span>
+      </button>
+
+      <div>
+        <p className="type-label">Pengiriman undangan</p>
+        <div className="mt-2 grid grid-cols-3 gap-2">
+          {delivery.map((item) => (
+            <Tile key={item.id} item={item} selected={active === item.id} onSelect={onSelect} />
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <p className="type-label">Balasan RSVP</p>
+        <div className="mt-2 grid grid-cols-2 gap-2">
+          {replies.map((item) => (
+            <Tile key={item.id} item={item} selected={active === item.id} onSelect={onSelect} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { GuestGroup, GuestWithRsvp, InviteType } from "@/lib/db.types";
+import type { Attendance, GuestGroup, GuestWithRsvp, InviteType } from "@/lib/db.types";
 import { templateFor } from "@/lib/waTemplates";
 
 export const GROUP_LABEL: Record<GuestGroup, string> = {
@@ -13,9 +13,52 @@ export const TYPE_LABEL: Record<InviteType, string> = {
   online: "Siaran langsung",
 };
 
+/** Tile-width wording. Badges keep the guest's answer verbatim. */
+export const ATTENDANCE_SHORT: Record<Attendance, string> = {
+  Hadir: "Hadir",
+  "Tidak Hadir": "Tidak hadir",
+  "Masih Diusahakan": "Diusahakan",
+  "Menyaksikan Daring": "Daring",
+};
+
+/**
+ * One colour per answer, so a screenful of replies reads before it is read.
+ * Every badge keeps `text-ink` on a light tint rather than colouring the text —
+ * `sage` and `gold` are too light to carry 4.5:1 as a foreground.
+ */
+const ATTENDANCE_STYLE: Record<Attendance, { dot: string; badge: string }> = {
+  Hadir: { dot: "bg-sage", badge: "border-sage/70 bg-sage/25" },
+  "Menyaksikan Daring": { dot: "bg-sky", badge: "border-sky/80 bg-sky/40" },
+  "Masih Diusahakan": { dot: "bg-gold", badge: "border-gold/70 bg-gold/25" },
+  "Tidak Hadir": { dot: "bg-dusty", badge: "border-border bg-cream" },
+};
+
+export const AttendanceDot = ({ kehadiran }: { kehadiran: Attendance }) => (
+  <span aria-hidden className={`h-2 w-2 shrink-0 rounded-full ${ATTENDANCE_STYLE[kehadiran].dot}`} />
+);
+
+/** The guest's answer, plus the head count when the venue asked for one. */
+export const AttendanceBadge = ({
+  kehadiran,
+  jumlah,
+}: {
+  kehadiran: Attendance;
+  jumlah?: number;
+}) => (
+  <span
+    className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 font-sans text-xs text-ink ${ATTENDANCE_STYLE[kehadiran].badge}`}
+  >
+    <AttendanceDot kehadiran={kehadiran} />
+    {kehadiran}
+    {jumlah !== undefined ? (
+      <span className="tabular-nums text-ink-soft">· {jumlah} orang</span>
+    ) : null}
+  </span>
+);
+
 export type StatusFilter = "all" | "belum" | "sudah" | "dibuka" | "rsvp" | "unanswered";
 export type SortOrder = "newest" | "name" | "uninvited";
-export type DashboardTab = "tamu" | "ucapan";
+export type DashboardTab = "tamu" | "rsvp" | "ucapan";
 
 /** Status wording lives on the stat tiles in `DashboardStats`, the one control
  *  that sets this filter. */
@@ -105,11 +148,14 @@ export const formatDay = (iso: string | null): string =>
     ? new Date(iso).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" })
     : "";
 
-export type DashboardStatsData = {
-  total: number;
-  invited: number;
-  uninvited: number;
-  opened: number;
-  answered: number;
-  unanswered: number;
-};
+/** `12 Agu 2026, 19.04` — a reply's time matters, an invitation's date does not. */
+export const formatDateTime = (iso: string): string =>
+  new Date(iso).toLocaleString("id-ID", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+export type { GuestCounts as DashboardStatsData } from "@/lib/rsvpSummary";
