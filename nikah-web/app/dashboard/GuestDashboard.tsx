@@ -5,8 +5,16 @@
  * actions. Data mutations stay on the existing /api/dashboard routes.
  */
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { GuestGroup, GuestRow, GuestWithRsvp, InviteType, WishRow } from "@/lib/db.types";
+import type {
+  DashboardRsvp,
+  GuestGroup,
+  GuestRow,
+  GuestWithRsvp,
+  InviteType,
+  WishRow,
+} from "@/lib/db.types";
 import { dashboardRequest } from "@/lib/dashboardClient";
+import { countGuests } from "@/lib/rsvpSummary";
 import { templateFor } from "@/lib/waTemplates";
 import { slugify } from "@/lib/slug";
 import { DashboardHeader } from "./DashboardHeader";
@@ -14,6 +22,7 @@ import { DashboardStats } from "./DashboardStats";
 import { GuestCard } from "./GuestCard";
 import { GuestFilters } from "./GuestFilters";
 import { GuestForm } from "./GuestForm";
+import { RsvpResults } from "./RsvpResults";
 import { WishesModeration } from "./WishesModeration";
 import { ConfirmDialog, ToastHost, useToasts } from "./ui";
 import {
@@ -24,6 +33,23 @@ import {
   type SortOrder,
   type StatusFilter,
 } from "./dashboardShared";
+
+/** Kept out of the component so the mount effects only set state in a callback. */
+const fetchReplies = async (): Promise<{ replies: DashboardRsvp[]; error: string }> => {
+  const response = await dashboardRequest<{ rsvps: DashboardRsvp[] }>("/api/dashboard/rsvps");
+  if (response.success && response.data?.rsvps) {
+    return { replies: response.data.rsvps, error: "" };
+  }
+  return { replies: [], error: response.error?.message ?? "RSVP belum bisa dimuat." };
+};
+
+const fetchWishes = async (): Promise<{ wishes: WishRow[]; error: string }> => {
+  const response = await dashboardRequest<{ wishes: WishRow[] }>("/api/dashboard/wishes");
+  if (response.success && response.data?.wishes) {
+    return { wishes: response.data.wishes, error: "" };
+  }
+  return { wishes: [], error: response.error?.message ?? "Ucapan belum bisa dimuat." };
+};
 
 export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp[] }) => {
   const [guests, setGuests] = useState<GuestWithRsvp[]>(initialGuests);
@@ -41,6 +67,9 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
   const [waPromptId, setWaPromptId] = useState<string | null>(null);
   const [wishes, setWishes] = useState<WishRow[] | null>(null);
   const [wishesError, setWishesError] = useState("");
+  const [replies, setReplies] = useState<DashboardRsvp[] | null>(null);
+  const [repliesError, setRepliesError] = useState("");
+  const [refreshing, setRefreshing] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
   const { toasts, push, dismiss } = useToasts();
 
@@ -61,36 +90,22 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
 
   useEffect(() => {
     let cancelled = false;
-    const loadWishes = async () => {
-      const response = await dashboardRequest<{ wishes: WishRow[] }>("/api/dashboard/wishes");
+    void fetchWishes().then((result) => {
       if (cancelled) return;
-      if (response.success && response.data?.wishes) {
-        setWishes(response.data.wishes);
-        setWishesError("");
-        return;
-      }
-      setWishesError(response.error?.message ?? "Ucapan belum bisa dimuat.");
-      setWishes([]);
-    };
-    void loadWishes();
+      setWishes(result.wishes);
+      setWishesError(result.error);
+    });
+    void fetchReplies().then((result) => {
+      if (cancelled) return;
+      setReplies(result.replies);
+      setRepliesError(result.error);
+    });
     return () => {
       cancelled = true;
     };
   }, []);
 
-  const stats = useMemo(() => {
-    const invited = guests.filter((g) => g.invited_at !== null).length;
-    const answered = guests.filter((g) => g.rsvp !== null).length;
-    const unanswered = guests.filter((g) => g.invited_at !== null && g.rsvp === null).length;
-    return {
-      total: guests.length,
-      invited,
-      uninvited: guests.length - invited,
-      opened: guests.filter((g) => g.opened_confirmed_count > 0).length,
-      answered,
-      unanswered,
-    };
-  }, [guests]);
+  const stats = useMemo(() => countGuests(guests), [guests]);
 
   const wishVisibleCount = wishes?.filter((wish) => !wish.hidden).length ?? null;
 
@@ -130,17 +145,34 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
     });
   }, [guests, query, groupFilter, typeFilter, statusFilter, sortOrder]);
 
-  const reloadWishes = async () => {
+  // One refresh for the whole page. Guests, replies, and wishes are three reads
+  // that answer one question between them — a guest marked "belum RSVP" beside
+  // the answer they just sent is worse than a page that is uniformly a minute
+  // old, and a per-tab reload button makes that mismatch easy to reach.
+  const refreshAll = async () => {
+    if (refreshing) return;
+    setRefreshing(true);
+    setReplies(null);
+    setRepliesError("");
     setWishes(null);
     setWishesError("");
-    const response = await dashboardRequest<{ wishes: WishRow[] }>("/api/dashboard/wishes");
-    if (response.success && response.data?.wishes) {
-      setWishes(response.data.wishes);
-      setWishesError("");
-      return;
+
+    const [guestList, replyResult, wishResult] = await Promise.all([
+      dashboardRequest<{ guests: GuestWithRsvp[] }>("/api/dashboard/guests"),
+      fetchReplies(),
+      fetchWishes(),
+    ]);
+
+    if (guestList.success && guestList.data?.guests) {
+      setGuests(guestList.data.guests);
+    } else {
+      push(guestList.error?.message ?? "Daftar tamu gagal disegarkan.", "bad");
     }
-    setWishes([]);
-    setWishesError(response.error?.message ?? "Ucapan belum bisa dimuat.");
+    setReplies(replyResult.replies);
+    setRepliesError(replyResult.error);
+    setWishes(wishResult.wishes);
+    setWishesError(wishResult.error);
+    setRefreshing(false);
   };
 
   const copy = async (key: string, text: string) => {
@@ -288,7 +320,12 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
 
   return (
     <main className="mx-auto w-full max-w-3xl px-5 py-10 pb-16">
-      <DashboardHeader stats={stats} onSignOut={signOut} />
+      <DashboardHeader
+        stats={stats}
+        onSignOut={signOut}
+        onRefresh={refreshAll}
+        refreshing={refreshing}
+      />
 
       <div
         className="mt-6 flex gap-1 rounded-full border border-border bg-surface/70 p-1"
@@ -298,6 +335,7 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
         {(
           [
             { id: "tamu" as const, label: "Tamu", count: stats.total },
+            { id: "rsvp" as const, label: "RSVP", count: stats.answered },
             { id: "ucapan" as const, label: "Ucapan", count: wishVisibleCount },
           ] as const
         ).map((item) => {
@@ -413,11 +451,18 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
             </div>
           ) : null}
         </>
+      ) : tab === "rsvp" ? (
+        <RsvpResults
+          guests={guests}
+          replies={replies}
+          loadError={repliesError}
+          onRetry={refreshAll}
+        />
       ) : (
         <WishesModeration
           wishes={wishes}
           loadError={wishesError}
-          onReload={reloadWishes}
+          onRetry={refreshAll}
           onWishesChange={setWishes}
         />
       )}

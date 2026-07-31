@@ -105,6 +105,21 @@ export type GuestWithRsvp = GuestRow & {
   rsvp: Pick<RsvpRow, "kehadiran" | "jumlah" | "catatan" | "created_at"> | null;
 };
 
+/**
+ * One RSVP reply as the dashboard reads it. `guest` is null for replies that
+ * arrived without a personal link — a forwarded invitation, or a guest deleted
+ * after answering (`rsvps.guest_id` is `on delete set null`). `superseded` marks
+ * a reply the same guest has since replaced, kept so the couple can see that an
+ * answer changed rather than wondering whether they misread it.
+ */
+export type DashboardRsvp = Pick<
+  RsvpRow,
+  "id" | "guest_id" | "nama" | "kehadiran" | "jumlah" | "catatan" | "created_at"
+> & {
+  guest: Pick<GuestRow, "display_name" | "slug" | "guest_group" | "invite_type"> | null;
+  superseded: boolean;
+};
+
 export type Database = {
   public: {
     Tables: {

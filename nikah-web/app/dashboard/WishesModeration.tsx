@@ -7,14 +7,15 @@ import { dashboardRequest } from "@/lib/dashboardClient";
 type WishesModerationProps = {
   wishes: WishRow[] | null;
   loadError: string;
-  onReload: () => void;
+  /** Refreshes the whole page; the header owns the everyday reload. */
+  onRetry: () => void;
   onWishesChange: (wishes: WishRow[]) => void;
 };
 
 export const WishesModeration = ({
   wishes,
   loadError,
-  onReload,
+  onRetry,
   onWishesChange,
 }: WishesModerationProps) => {
   const [busyId, setBusyId] = useState<string | null>(null);
@@ -48,26 +49,12 @@ export const WishesModeration = ({
 
   return (
     <section className="mt-6" aria-label="Moderasi ucapan">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <h2 className="type-name">Moderasi ucapan</h2>
-          <p className="type-meta mt-1">
-            {wishes
-              ? `${visibleCount} tampil di situs${hiddenCount > 0 ? ` · ${hiddenCount} disembunyikan` : ""}`
-              : "Kelola ucapan yang tampil di undangan."}
-          </p>
-        </div>
-        <button
-          type="button"
-          onClick={() => {
-            setMessage("");
-            onReload();
-          }}
-          className="type-button min-h-[44px] rounded-full border border-border px-4"
-        >
-          Muat ulang
-        </button>
-      </div>
+      <h2 className="type-display-sm">Moderasi ucapan</h2>
+      <p className="type-meta mt-1">
+        {wishes
+          ? `${visibleCount} tampil di situs${hiddenCount > 0 ? ` · ${hiddenCount} disembunyikan` : ""}`
+          : "Kelola ucapan yang tampil di undangan."}
+      </p>
 
       {loading ? (
         <p className="type-body mt-6 text-center text-ink-soft">Memuat ucapan…</p>
@@ -80,7 +67,7 @@ export const WishesModeration = ({
             type="button"
             onClick={() => {
               setMessage("");
-              onReload();
+              onRetry();
             }}
             className="type-button mt-3 min-h-[44px] rounded-full border border-border bg-paper px-5"
           >
