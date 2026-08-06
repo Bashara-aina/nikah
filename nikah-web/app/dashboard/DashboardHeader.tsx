@@ -125,6 +125,32 @@ export const DashboardHeader = ({
             total={stats.total}
             bar="bg-ink"
           />
+          {/* Guest tiles above count invitations; these count people — party_max
+              for what was sent, jumlah for what came back on the form. */}
+          <div
+            className="grid grid-cols-2 gap-2"
+            role="group"
+            aria-label="Ringkasan jumlah orang"
+          >
+            <div className="rounded-2xl border border-border bg-surface/80 px-4 py-3">
+              <p className="font-sans text-2xl font-medium tabular-nums text-ink">
+                {stats.paxInvited}
+              </p>
+              <p className="type-meta mt-0.5 leading-tight">Pax diundang</p>
+              <p className="type-meta mt-1 leading-tight">
+                Dari {stats.invited} undangan terkirim
+              </p>
+            </div>
+            <div className="rounded-2xl border border-border bg-surface/80 px-4 py-3">
+              <p className="font-sans text-2xl font-medium tabular-nums text-ink">
+                {stats.paxRsvp}
+              </p>
+              <p className="type-meta mt-0.5 leading-tight">Pax RSVP</p>
+              <p className="type-meta mt-1 leading-tight">
+                Dari {stats.answered} tamu yang sudah mengisi
+              </p>
+            </div>
+          </div>
         </div>
       ) : null}
     </header>

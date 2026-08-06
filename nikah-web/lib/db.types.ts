@@ -8,6 +8,13 @@
 export type GuestGroup = "groom_family" | "bride_family" | "friend";
 export type InviteType = "venue" | "online";
 
+/** One-tap dashboard checklist flags (each stamps a matching `*_at` column). */
+export const GUEST_FLAGS = ["invited", "attended", "souvenir"] as const;
+export type GuestFlag = (typeof GUEST_FLAGS)[number];
+
+export const isGuestFlag = (value: string): value is GuestFlag =>
+  (GUEST_FLAGS as readonly string[]).includes(value);
+
 export const GUEST_GROUPS: readonly GuestGroup[] = [
   "groom_family",
   "bride_family",
@@ -40,6 +47,10 @@ export type GuestRow = {
   alternative_channel: string | null;
   reminder_note: string | null;
   invited_at: string | null;
+  /** Set when the guest arrives at the venue (day-of checklist). */
+  attended_at: string | null;
+  /** Set when the guest collects their souvenir (day-of checklist). */
+  souvenir_at: string | null;
   opened_count: number;
   opened_confirmed_count: number;
   opened_confirmed_at: string | null;
@@ -59,8 +70,19 @@ export type GuestInsert = Omit<
   | "opened_confirmed_at"
   | "opened_first_at"
   | "opened_last_at"
+  | "attended_at"
+  | "souvenir_at"
 > &
-  Partial<Pick<GuestRow, "id" | "opened_count" | "opened_confirmed_count">>;
+  Partial<
+    Pick<
+      GuestRow,
+      | "id"
+      | "opened_count"
+      | "opened_confirmed_count"
+      | "attended_at"
+      | "souvenir_at"
+    >
+  >;
 
 export type GuestUpdate = Partial<GuestInsert>;
 

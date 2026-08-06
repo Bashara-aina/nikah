@@ -1,6 +1,6 @@
 "use client";
 
-import type { GuestWithRsvp } from "@/lib/db.types";
+import type { GuestFlag, GuestWithRsvp } from "@/lib/db.types";
 import { formatPhone, whatsappLink } from "@/lib/phone";
 import { rsvpState } from "@/lib/rsvpSummary";
 import { guestLink, renderMessage } from "@/lib/waTemplates";
@@ -18,7 +18,7 @@ type GuestCardProps = {
   busy: boolean;
   copied: string | null;
   showWaPrompt: boolean;
-  onToggleInvited: () => void;
+  onToggleFlag: (flag: GuestFlag) => void;
   onMarkInvited: () => void;
   onDismissWaPrompt: () => void;
   onWaClick: () => void;
@@ -27,12 +27,45 @@ type GuestCardProps = {
   onRemove: () => void;
 };
 
+const FlagCheck = ({
+  label,
+  checked,
+  stampedAt,
+  busy,
+  onChange,
+  ariaLabel,
+}: {
+  label: string;
+  checked: boolean;
+  stampedAt: string | null;
+  busy: boolean;
+  onChange: () => void;
+  ariaLabel: string;
+}) => (
+  <label className="flex min-h-[44px] shrink-0 items-center gap-2 rounded-xl px-2 font-sans text-sm">
+    <input
+      type="checkbox"
+      checked={checked}
+      disabled={busy}
+      onChange={onChange}
+      aria-label={ariaLabel}
+      className="h-5 w-5 accent-[color:var(--color-dusty-deep,#8a6f7b)]"
+    />
+    <span>
+      {label}
+      {checked && stampedAt ? (
+        <span className="type-meta block leading-tight">{formatDay(stampedAt)}</span>
+      ) : null}
+    </span>
+  </label>
+);
+
 export const GuestCard = ({
   guest,
   busy,
   copied,
   showWaPrompt,
-  onToggleInvited,
+  onToggleFlag,
   onMarkInvited,
   onDismissWaPrompt,
   onWaClick,
@@ -43,7 +76,9 @@ export const GuestCard = ({
   const message = renderMessage(guest);
   const wa = whatsappLink(guest.phone, message);
   const link = guestLink(guest.slug);
-  const invited = guest.invited_at !== null;
+  const invited = guest.invited_at != null;
+  const attended = guest.attended_at != null;
+  const souvenir = guest.souvenir_at != null;
   const state = rsvpState(guest);
 
   return (
@@ -54,24 +89,33 @@ export const GuestCard = ({
           {guest.party_label ? <p className="type-meta">{guest.party_label}</p> : null}
           <p className="type-meta break-all">/undangan/{guest.slug}</p>
         </div>
-        {/* The couple sends from WhatsApp by hand, so this is a claim they make,
-            not something the click can prove. The date makes the claim auditable. */}
-        <label className="flex min-h-[44px] shrink-0 items-center gap-2 rounded-xl px-2 font-sans text-sm">
-          <input
-            type="checkbox"
+        {/* Day-of ops: send → arrive → souvenir. Dates make each claim auditable. */}
+        <div className="flex flex-col items-stretch gap-1 sm:items-end">
+          <FlagCheck
+            label="Sudah diundang"
             checked={invited}
-            disabled={busy}
-            onChange={onToggleInvited}
-            aria-label={`Tandai ${guest.display_name} sudah diundang`}
-            className="h-5 w-5 accent-[color:var(--color-dusty-deep,#8a6f7b)]"
+            stampedAt={guest.invited_at}
+            busy={busy}
+            onChange={() => onToggleFlag("invited")}
+            ariaLabel={`Tandai ${guest.display_name} sudah diundang`}
           />
-          <span>
-            Sudah diundang
-            {invited && guest.invited_at ? (
-              <span className="type-meta block leading-tight">{formatDay(guest.invited_at)}</span>
-            ) : null}
-          </span>
-        </label>
+          <FlagCheck
+            label="Kedatangan"
+            checked={attended}
+            stampedAt={guest.attended_at}
+            busy={busy}
+            onChange={() => onToggleFlag("attended")}
+            ariaLabel={`Tandai ${guest.display_name} sudah datang`}
+          />
+          <FlagCheck
+            label="Souvenir"
+            checked={souvenir}
+            stampedAt={guest.souvenir_at}
+            busy={busy}
+            onChange={() => onToggleFlag("souvenir")}
+            ariaLabel={`Tandai ${guest.display_name} sudah ambil souvenir`}
+          />
+        </div>
       </div>
 
       <div className="flex flex-wrap gap-2">

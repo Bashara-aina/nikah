@@ -26,6 +26,8 @@ const COLUMNS: Record<ExportTable, readonly string[]> = {
     "alternative_channel",
     "reminder_note",
     "invited_at",
+    "attended_at",
+    "souvenir_at",
     "opened_count",
     "opened_confirmed_count",
     "opened_confirmed_at",

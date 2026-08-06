@@ -65,6 +65,9 @@ export const RsvpResults = ({ guests, replies, loadError, onRetry }: RsvpResults
       <p className="type-meta mt-1">
         {`${counts.answered} dari ${counts.total} tamu sudah menjawab · ${counts.unanswered} masih ditunggu`}
       </p>
+      <p className="type-meta mt-1">
+        {`Pax diundang ${counts.paxInvited} · Pax RSVP ${counts.paxRsvp}`}
+      </p>
 
       {loadError ? (
         <div className="mt-6 rounded-2xl bg-blush/40 p-5 text-center">
