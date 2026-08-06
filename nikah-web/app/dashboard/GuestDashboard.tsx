@@ -7,6 +7,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type {
   DashboardRsvp,
+  GuestFlag,
   GuestGroup,
   GuestRow,
   GuestWithRsvp,
@@ -49,6 +50,38 @@ const fetchWishes = async (): Promise<{ wishes: WishRow[]; error: string }> => {
     return { wishes: response.data.wishes, error: "" };
   }
   return { wishes: [], error: response.error?.message ?? "Ucapan belum bisa dimuat." };
+};
+
+const flagIsSet = (guest: GuestWithRsvp, flag: GuestFlag): boolean => {
+  switch (flag) {
+    case "invited":
+      return guest.invited_at != null;
+    case "attended":
+      return guest.attended_at != null;
+    case "souvenir":
+      return guest.souvenir_at != null;
+    default: {
+      const _exhaustive: never = flag;
+      return _exhaustive;
+    }
+  }
+};
+
+const flagToast = (name: string, flag: GuestFlag, value: boolean): string => {
+  switch (flag) {
+    case "invited":
+      return value ? `${name} ditandai diundang.` : `Tanda diundang dilepas dari ${name}.`;
+    case "attended":
+      return value ? `${name} ditandai datang.` : `Tanda kedatangan dilepas dari ${name}.`;
+    case "souvenir":
+      return value
+        ? `${name} ditandai ambil souvenir.`
+        : `Tanda souvenir dilepas dari ${name}.`;
+    default: {
+      const _exhaustive: never = flag;
+      return _exhaustive;
+    }
+  }
 };
 
 export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp[] }) => {
@@ -262,13 +295,13 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
     push(form.id ? `${saved.display_name} diperbarui.` : `${saved.display_name} ditambahkan.`);
   };
 
-  const setInvited = async (guest: GuestWithRsvp, invited: boolean) => {
+  const setFlag = async (guest: GuestWithRsvp, flag: GuestFlag, value: boolean) => {
     setBusyId(guest.id);
     const body = await dashboardRequest<{ guest: GuestRow }>(
       `/api/dashboard/guests/${guest.id}`,
       {
         method: "PATCH",
-        body: JSON.stringify({ invited }),
+        body: JSON.stringify({ [flag]: value }),
       },
     );
     setBusyId(null);
@@ -278,16 +311,14 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
     }
     const saved = body.data.guest;
     setGuests((list) => list.map((g) => (g.id === saved.id ? { ...saved, rsvp: g.rsvp } : g)));
-    setWaPromptId((current) => (current === guest.id ? null : current));
-    push(
-      invited
-        ? `${guest.display_name} ditandai diundang.`
-        : `Tanda diundang dilepas dari ${guest.display_name}.`,
-    );
+    if (flag === "invited") {
+      setWaPromptId((current) => (current === guest.id ? null : current));
+    }
+    push(flagToast(guest.display_name, flag, value));
   };
 
-  const toggleInvited = async (guest: GuestWithRsvp) => {
-    await setInvited(guest, guest.invited_at === null);
+  const toggleFlag = async (guest: GuestWithRsvp, flag: GuestFlag) => {
+    await setFlag(guest, flag, !flagIsSet(guest, flag));
   };
 
   const confirmRemove = async () => {
@@ -401,8 +432,8 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
                 busy={busyId === guest.id}
                 copied={copied}
                 showWaPrompt={waPromptId === guest.id}
-                onToggleInvited={() => toggleInvited(guest)}
-                onMarkInvited={() => setInvited(guest, true)}
+                onToggleFlag={(flag) => toggleFlag(guest, flag)}
+                onMarkInvited={() => setFlag(guest, "invited", true)}
                 onDismissWaPrompt={() => setWaPromptId(null)}
                 onWaClick={() => {
                   if (guest.invited_at === null) setWaPromptId(guest.id);

@@ -69,7 +69,15 @@ export type GuestCounts = {
   opened: number;
   answered: number;
   unanswered: number;
+  /** Heads covered by invitations already marked sent (venue = party_max, online = 1). */
+  paxInvited: number;
+  /** Heads reported on filled RSVPs — sum of `jumlah` across answered guests. */
+  paxRsvp: number;
 };
+
+/** Online invites are one seat; venue invites reserve `party_max` seats. */
+const invitationPax = (guest: GuestWithRsvp): number =>
+  guest.invite_type === "online" ? 1 : guest.party_max;
 
 export const countGuests = (guests: readonly GuestWithRsvp[]): GuestCounts => {
   const counts: GuestCounts = {
@@ -79,14 +87,23 @@ export const countGuests = (guests: readonly GuestWithRsvp[]): GuestCounts => {
     opened: 0,
     answered: 0,
     unanswered: 0,
+    paxInvited: 0,
+    paxRsvp: 0,
   };
 
   for (const guest of guests) {
     const state = rsvpState(guest);
-    if (guest.invited_at !== null) counts.invited += 1;
-    else counts.uninvited += 1;
+    if (guest.invited_at !== null) {
+      counts.invited += 1;
+      counts.paxInvited += invitationPax(guest);
+    } else {
+      counts.uninvited += 1;
+    }
     if (guest.opened_confirmed_count > 0) counts.opened += 1;
-    if (state === "answered") counts.answered += 1;
+    if (state === "answered") {
+      counts.answered += 1;
+      counts.paxRsvp += guest.rsvp?.jumlah ?? 0;
+    }
     if (state === "waiting") counts.unanswered += 1;
   }
 

@@ -1,9 +1,9 @@
 /**
- * Single guest — PATCH to edit or to flip the "sudah diundang" checkbox,
+ * Single guest — PATCH to edit or to flip a checklist checkbox,
  * DELETE to remove. Session-guarded.
  *
- * PATCH accepts either a full guest body, or `{ invited: boolean }` on its own,
- * which is the one-tap checkbox in the list.
+ * PATCH accepts either a full guest body, or a one-key checkbox payload:
+ * `{ invited: boolean }`, `{ attended: boolean }`, or `{ souvenir: boolean }`.
  *
  * Envelope: `{ success, data?, error?, meta? }`.
  * Codes: 200 ok · 400 invalid · 401 no session · 404 unknown id ·
@@ -13,12 +13,15 @@ import { NextResponse } from "next/server";
 import { hasDashboardSession } from "@/lib/auth";
 import { supabaseConfigured } from "@/lib/supabaseAdmin";
 import {
+  GUEST_FLAGS,
   GuestError,
   deleteGuest,
-  setInvited,
+  isGuestFlag,
+  setGuestFlag,
   updateGuest,
   validateGuestInput,
 } from "@/lib/guests";
+import type { GuestFlag } from "@/lib/db.types";
 import { fromGuestError, invalidJson, notConfigured, unauthorized } from "@/lib/dashboardApi";
 
 export const runtime = "nodejs";
@@ -26,6 +29,15 @@ export const runtime = "nodejs";
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 type Ctx = { params: Promise<{ id: string }> };
+
+/** Checkbox-only body: exactly one known flag key, boolean value. */
+const parseFlagPatch = (raw: Record<string, unknown>): { flag: GuestFlag; value: boolean } | null => {
+  const keys = Object.keys(raw);
+  if (keys.length !== 1) return null;
+  const key = keys[0];
+  if (!key || !isGuestFlag(key) || typeof raw[key] !== "boolean") return null;
+  return { flag: key, value: raw[key] };
+};
 
 export async function PATCH(req: Request, ctx: Ctx): Promise<NextResponse> {
   if (!(await hasDashboardSession())) return unauthorized();
@@ -44,10 +56,26 @@ export async function PATCH(req: Request, ctx: Ctx): Promise<NextResponse> {
   const raw = (body ?? {}) as Record<string, unknown>;
 
   try {
-    // Checkbox-only payload: nothing else about the guest changes.
-    if (typeof raw.invited === "boolean" && Object.keys(raw).length === 1) {
-      const guest = await setInvited(id, raw.invited);
+    const flagPatch = parseFlagPatch(raw);
+    if (flagPatch) {
+      const guest = await setGuestFlag(id, flagPatch.flag, flagPatch.value);
       return NextResponse.json({ success: true, data: { guest } });
+    }
+
+    // Reject ambiguous partials like `{ invited: true, slug: "…" }` so a typo
+    // never silently ignores the checklist and runs a full update instead.
+    const claimedFlag = GUEST_FLAGS.find((flag) => flag in raw);
+    if (claimedFlag !== undefined) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            code: "INVALID_INPUT",
+            message: `Kirim hanya { ${claimedFlag}: true|false } untuk checklist.`,
+          },
+        },
+        { status: 400 },
+      );
     }
 
     const guest = await updateGuest(id, validateGuestInput(raw));

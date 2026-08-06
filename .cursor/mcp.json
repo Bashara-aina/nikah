@@ -13,6 +13,9 @@
         "tools/birefnet-mcp-server/build/index.js"
       ],
       "cwd": "${workspaceFolder}"
+    },
+    "nikah-supabase": {
+      "url": "https://mcp.supabase.com/mcp?project_ref=xwqlmdtxzcfygnvoowhx"
     }
   }
 }

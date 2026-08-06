@@ -4,8 +4,12 @@
  * Lenis provider — smooth scroll with lerp ≈ 0.09 (per `docs/08` §5).
  * Wired to GSAP's ticker so `ScrollTrigger.update()` fires in sync. No-op
  * when tier === "REDUCED".
+ *
+ * Modals call `useLenisControl().stop()` so wheel/touch does not scroll the
+ * page behind an open dialog — `overflow: hidden` alone is not enough while
+ * Lenis owns the scroll.
  */
-import { useEffect, useRef } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef } from "react";
 import Lenis from "lenis";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -15,9 +19,35 @@ gsap.registerPlugin(ScrollTrigger);
 
 const LERP = 0.09;
 
+type LenisControl = {
+  stop: () => void;
+  start: () => void;
+};
+
+const LenisControlContext = createContext<LenisControl>({
+  stop: () => undefined,
+  start: () => undefined,
+});
+
+/** Pause / resume site smooth-scroll (nested-safe via a lock counter). */
+export const useLenisControl = (): LenisControl => useContext(LenisControlContext);
+
 export const LenisProvider = ({ children }: { children: React.ReactNode }) => {
   const { tier } = useMotion();
   const lenisRef = useRef<Lenis | null>(null);
+  const lockCount = useRef(0);
+
+  const stop = useCallback(() => {
+    lockCount.current += 1;
+    if (lockCount.current === 1) lenisRef.current?.stop();
+  }, []);
+
+  const start = useCallback(() => {
+    lockCount.current = Math.max(0, lockCount.current - 1);
+    if (lockCount.current === 0) lenisRef.current?.start();
+  }, []);
+
+  const control = useMemo(() => ({ stop, start }), [stop, start]);
 
   useEffect(() => {
     if (tier === "REDUCED") return;
@@ -31,6 +61,7 @@ export const LenisProvider = ({ children }: { children: React.ReactNode }) => {
     });
 
     lenisRef.current = lenis;
+    if (lockCount.current > 0) lenis.stop();
 
     const onRaf = (time: number) => {
       lenis.raf(time * 1000);
@@ -51,5 +82,5 @@ export const LenisProvider = ({ children }: { children: React.ReactNode }) => {
   // value lives in Lenis constructor above.
   void LERP;
 
-  return <>{children}</>;
+  return <LenisControlContext.Provider value={control}>{children}</LenisControlContext.Provider>;
 };

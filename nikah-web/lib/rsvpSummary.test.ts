@@ -17,6 +17,8 @@ const guest = (overrides: Partial<GuestWithRsvp> = {}): GuestWithRsvp => ({
   alternative_channel: null,
   reminder_note: null,
   invited_at: null,
+  attended_at: null,
+  souvenir_at: null,
   opened_count: 0,
   opened_confirmed_count: 0,
   opened_confirmed_at: null,
@@ -139,6 +141,46 @@ describe("countGuests", () => {
       opened: 1,
       answered: 1,
       unanswered: 1,
+      paxInvited: 4,
+      paxRsvp: 1,
     });
+  });
+
+  it("counts invitation pax from party_max and RSVP pax from jumlah", () => {
+    const counts = countGuests([
+      guest({
+        id: "venue-invited",
+        invite_type: "venue",
+        party_max: 4,
+        invited_at: "2026-07-02T00:00:00.000Z",
+        rsvp: {
+          kehadiran: "Hadir",
+          jumlah: 3,
+          catatan: "",
+          created_at: "2026-07-03T00:00:00.000Z",
+        },
+      }),
+      guest({
+        id: "online-invited",
+        invite_type: "online",
+        party_max: 2,
+        invited_at: "2026-07-02T00:00:00.000Z",
+        rsvp: {
+          kehadiran: "Menyaksikan Daring",
+          jumlah: 1,
+          catatan: "",
+          created_at: "2026-07-03T00:00:00.000Z",
+        },
+      }),
+      guest({
+        id: "not-sent",
+        invite_type: "venue",
+        party_max: 5,
+        invited_at: null,
+      }),
+    ]);
+
+    expect(counts.paxInvited).toBe(5);
+    expect(counts.paxRsvp).toBe(4);
   });
 });

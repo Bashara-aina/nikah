@@ -8,13 +8,15 @@
 import "server-only";
 
 import { supabaseAdmin } from "./supabaseAdmin";
-import type { GuestRow, GuestWithRsvp } from "./db.types";
+import type { GuestFlag, GuestRow, GuestWithRsvp } from "./db.types";
 import { GuestError, type GuestInput } from "./guestValidation";
 import { isValidSlug, slugify } from "./slug";
 
 export { GuestError, validateGuestInput } from "./guestValidation";
 export { isValidSlug, slugify };
 export type { GuestInput, GuestWithRsvp };
+export type { GuestFlag };
+export { GUEST_FLAGS, isGuestFlag } from "./db.types";
 
 /** Postgres unique-violation on `guests.slug`. */
 const isSlugConflict = (code: string | undefined): boolean => code === "23505";
@@ -91,11 +93,33 @@ export const updateGuest = async (id: string, input: GuestInput): Promise<GuestR
   return data;
 };
 
-/** Stamps or clears the "sudah diundang" checkbox. */
-export const setInvited = async (id: string, invited: boolean): Promise<GuestRow> => {
+/** One-tap dashboard checklists that stamp or clear a timestamptz column. */
+export const setGuestFlag = async (
+  id: string,
+  flag: GuestFlag,
+  value: boolean,
+): Promise<GuestRow> => {
+  const stamp = value ? new Date().toISOString() : null;
+  let update: Partial<Pick<GuestRow, "invited_at" | "attended_at" | "souvenir_at">>;
+  switch (flag) {
+    case "invited":
+      update = { invited_at: stamp };
+      break;
+    case "attended":
+      update = { attended_at: stamp };
+      break;
+    case "souvenir":
+      update = { souvenir_at: stamp };
+      break;
+    default: {
+      const _exhaustive: never = flag;
+      return _exhaustive;
+    }
+  }
+
   const { data, error } = await supabaseAdmin()
     .from("guests")
-    .update({ invited_at: invited ? new Date().toISOString() : null })
+    .update(update)
     .eq("id", id)
     .select("*")
     .maybeSingle();
@@ -103,6 +127,10 @@ export const setInvited = async (id: string, invited: boolean): Promise<GuestRow
   if (!data) throw new GuestError("NOT_FOUND", "Tamu tidak ditemukan.");
   return data;
 };
+
+/** @deprecated Prefer `setGuestFlag(id, "invited", invited)`. */
+export const setInvited = async (id: string, invited: boolean): Promise<GuestRow> =>
+  setGuestFlag(id, "invited", invited);
 
 export const deleteGuest = async (id: string): Promise<void> => {
   const { error, count } = await supabaseAdmin()

@@ -11,6 +11,7 @@
  */
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import type { ReactNode } from "react";
+import { useLenisControl } from "@/components/motion/Lenis";
 
 /* ---------------------------------------------------------------- toasts -- */
 
@@ -101,6 +102,7 @@ export const Modal = ({
   const titleId = useId();
   const panel = useRef<HTMLDivElement>(null);
   const opener = useRef<HTMLElement | null>(null);
+  const { stop: stopLenis, start: startLenis } = useLenisControl();
 
   useEscape(true, onClose);
 
@@ -110,14 +112,20 @@ export const Modal = ({
       ?.querySelector<HTMLElement>("input, select, textarea, button, a[href]")
       ?.focus();
 
-    // The list behind the scrim must not scroll under the sheet.
-    const previous = document.body.style.overflow;
+    // Lenis owns wheel/touch even when body overflow is hidden — pause it so
+    // the sheet's overflow-y-auto receives the gesture instead of the page.
+    stopLenis();
+    const previousBody = document.body.style.overflow;
+    const previousHtml = document.documentElement.style.overflow;
     document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = previous;
+      document.body.style.overflow = previousBody;
+      document.documentElement.style.overflow = previousHtml;
+      startLenis();
       opener.current?.focus?.();
     };
-  }, []);
+  }, [stopLenis, startLenis]);
 
   // Without a trap, Tab walks the focus ring onto the guest list behind the
   // scrim, where every click is swallowed by the overlay.
@@ -155,6 +163,7 @@ export const Modal = ({
         aria-modal="true"
         aria-labelledby={titleId}
         onKeyDown={trap}
+        data-lenis-prevent
         className="relative flex max-h-[92svh] w-full max-w-2xl flex-col overflow-hidden rounded-t-3xl border border-border bg-paper shadow-float sm:rounded-3xl"
       >
         <div className="flex items-center justify-between gap-4 border-b border-border px-5 py-4">
@@ -170,7 +179,12 @@ export const Modal = ({
             <span aria-hidden>✕</span>
           </button>
         </div>
-        <div className="flex-1 overflow-y-auto px-5 py-5">{children}</div>
+        <div
+          data-lenis-prevent
+          className="min-h-0 flex-1 overscroll-contain overflow-y-auto px-5 py-5"
+        >
+          {children}
+        </div>
         {footer ? (
           <div className="border-t border-border bg-surface/80 px-5 py-4">{footer}</div>
         ) : null}
