@@ -69,15 +69,30 @@ export type GuestCounts = {
   opened: number;
   answered: number;
   unanswered: number;
+  /** Invitations marked arrived at the venue (day-of checklist). */
+  attended: number;
+  /** Invitations that have already collected a souvenir. */
+  souvenir: number;
   /** Heads covered by invitations already marked sent (venue = party_max, online = 1). */
   paxInvited: number;
   /** Heads reported on filled RSVPs — sum of `jumlah` across answered guests. */
   paxRsvp: number;
+  /** Heads behind invitations marked arrived — RSVP `jumlah`, else invitation size. */
+  paxAttended: number;
+  /** Heads behind invitations that collected a souvenir. */
+  paxSouvenir: number;
 };
 
 /** Online invites are one seat; venue invites reserve `party_max` seats. */
 const invitationPax = (guest: GuestWithRsvp): number =>
   guest.invite_type === "online" ? 1 : guest.party_max;
+
+/**
+ * Day-of head count for one invitation. Prefer the number they wrote on the
+ * form; fall back to the reserved party size when they have not answered yet.
+ */
+const reportedPax = (guest: GuestWithRsvp): number =>
+  guest.rsvp?.jumlah ?? invitationPax(guest);
 
 export const countGuests = (guests: readonly GuestWithRsvp[]): GuestCounts => {
   const counts: GuestCounts = {
@@ -87,8 +102,12 @@ export const countGuests = (guests: readonly GuestWithRsvp[]): GuestCounts => {
     opened: 0,
     answered: 0,
     unanswered: 0,
+    attended: 0,
+    souvenir: 0,
     paxInvited: 0,
     paxRsvp: 0,
+    paxAttended: 0,
+    paxSouvenir: 0,
   };
 
   for (const guest of guests) {
@@ -105,6 +124,14 @@ export const countGuests = (guests: readonly GuestWithRsvp[]): GuestCounts => {
       counts.paxRsvp += guest.rsvp?.jumlah ?? 0;
     }
     if (state === "waiting") counts.unanswered += 1;
+    if (guest.attended_at !== null) {
+      counts.attended += 1;
+      counts.paxAttended += reportedPax(guest);
+    }
+    if (guest.souvenir_at !== null) {
+      counts.souvenir += 1;
+      counts.paxSouvenir += reportedPax(guest);
+    }
   }
 
   return counts;

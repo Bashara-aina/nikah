@@ -56,7 +56,15 @@ export const AttendanceBadge = ({
   </span>
 );
 
-export type StatusFilter = "all" | "belum" | "sudah" | "dibuka" | "rsvp" | "unanswered";
+export type StatusFilter =
+  | "all"
+  | "belum"
+  | "sudah"
+  | "dibuka"
+  | "rsvp"
+  | "unanswered"
+  | "attended"
+  | "souvenir";
 export type SortOrder = "newest" | "name" | "uninvited";
 export type DashboardTab = "tamu" | "rsvp" | "ucapan";
 

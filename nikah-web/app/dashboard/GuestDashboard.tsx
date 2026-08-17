@@ -152,6 +152,8 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
       if (statusFilter === "dibuka" && g.opened_confirmed_count === 0) return false;
       if (statusFilter === "rsvp" && g.rsvp === null) return false;
       if (statusFilter === "unanswered" && (g.invited_at === null || g.rsvp !== null)) return false;
+      if (statusFilter === "attended" && g.attended_at === null) return false;
+      if (statusFilter === "souvenir" && g.souvenir_at === null) return false;
       if (q.length === 0) return true;
       return [
         g.display_name,
@@ -460,7 +462,11 @@ export const GuestDashboard = ({ initialGuests }: { initialGuests: GuestWithRsvp
                         ? "Belum ada tamu yang membuka undangan."
                         : statusFilter === "rsvp"
                           ? "Belum ada konfirmasi kehadiran."
-                          : "Tidak ada tamu yang cocok dengan saringan ini."}
+                          : statusFilter === "attended"
+                            ? "Belum ada tamu yang ditandai datang."
+                            : statusFilter === "souvenir"
+                              ? "Belum ada tamu yang ditandai ambil souvenir."
+                              : "Tidak ada tamu yang cocok dengan saringan ini."}
               </p>
               {guests.length === 0 ? (
                 <button
