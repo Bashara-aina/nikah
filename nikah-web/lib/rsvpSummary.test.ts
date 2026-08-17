@@ -141,8 +141,12 @@ describe("countGuests", () => {
       opened: 1,
       answered: 1,
       unanswered: 1,
+      attended: 0,
+      souvenir: 0,
       paxInvited: 4,
       paxRsvp: 1,
+      paxAttended: 0,
+      paxSouvenir: 0,
     });
   });
 
@@ -182,5 +186,39 @@ describe("countGuests", () => {
 
     expect(counts.paxInvited).toBe(5);
     expect(counts.paxRsvp).toBe(4);
+  });
+
+  it("counts kedatangan and souvenir as invitations and pax", () => {
+    const counts = countGuests([
+      guest({
+        id: "arrived-with-rsvp",
+        party_max: 4,
+        invited_at: "2026-07-02T00:00:00.000Z",
+        attended_at: "2026-08-22T04:00:00.000Z",
+        souvenir_at: "2026-08-22T04:10:00.000Z",
+        rsvp: {
+          kehadiran: "Hadir",
+          jumlah: 3,
+          catatan: "",
+          created_at: "2026-07-03T00:00:00.000Z",
+        },
+      }),
+      guest({
+        id: "arrived-no-rsvp",
+        party_max: 2,
+        invited_at: "2026-07-02T00:00:00.000Z",
+        attended_at: "2026-08-22T04:05:00.000Z",
+      }),
+      guest({
+        id: "not-arrived",
+        party_max: 5,
+        invited_at: "2026-07-02T00:00:00.000Z",
+      }),
+    ]);
+
+    expect(counts.attended).toBe(2);
+    expect(counts.souvenir).toBe(1);
+    expect(counts.paxAttended).toBe(5);
+    expect(counts.paxSouvenir).toBe(3);
   });
 });

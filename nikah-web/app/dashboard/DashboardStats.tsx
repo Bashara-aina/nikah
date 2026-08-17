@@ -7,6 +7,7 @@ type StatKey = {
   label: string;
   value: number;
   hint: string;
+  detail?: string;
 };
 
 type DashboardStatsProps = {
@@ -37,6 +38,9 @@ const Tile = ({
   >
     <span className="font-sans text-xl font-medium tabular-nums text-ink">{item.value}</span>
     <span className="type-meta mt-0.5 leading-tight">{item.label}</span>
+    {item.detail ? (
+      <span className="type-meta mt-0.5 leading-tight tabular-nums">{item.detail}</span>
+    ) : null}
   </button>
 );
 
@@ -45,8 +49,8 @@ const Tile = ({
  *
  * They used to sit in one horizontal scroller where "Sudah dikirim" and "Sudah
  * RSVP" looked like alternatives, though the second is a subset of the first.
- * Splitting them under two headings says what each number counts: how far the
- * couple has got with sending, and how far the guests have got with answering.
+ * Splitting them under headings says what each number counts: sending, answering,
+ * and — on the day — who has arrived and who has collected a souvenir.
  */
 export const DashboardStats = ({ stats, active, onSelect }: DashboardStatsProps) => {
   const delivery: StatKey[] = [
@@ -72,6 +76,23 @@ export const DashboardStats = ({ stats, active, onSelect }: DashboardStatsProps)
       label: "Belum RSVP",
       value: stats.unanswered,
       hint: "Sudah dikirim, belum mengisi RSVP",
+    },
+  ];
+
+  const dayOf: StatKey[] = [
+    {
+      id: "attended",
+      label: "Sudah datang",
+      value: stats.attended,
+      hint: "Sudah ditandai kedatangan",
+      detail: `${stats.paxAttended} pax`,
+    },
+    {
+      id: "souvenir",
+      label: "Sudah souvenir",
+      value: stats.souvenir,
+      hint: "Sudah ditandai ambil souvenir",
+      detail: `${stats.paxSouvenir} pax`,
     },
   ];
 
@@ -105,6 +126,15 @@ export const DashboardStats = ({ stats, active, onSelect }: DashboardStatsProps)
         <p className="type-label">Balasan RSVP</p>
         <div className="mt-2 grid grid-cols-2 gap-2">
           {replies.map((item) => (
+            <Tile key={item.id} item={item} selected={active === item.id} onSelect={onSelect} />
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <p className="type-label">Hari H</p>
+        <div className="mt-2 grid grid-cols-2 gap-2">
+          {dayOf.map((item) => (
             <Tile key={item.id} item={item} selected={active === item.id} onSelect={onSelect} />
           ))}
         </div>

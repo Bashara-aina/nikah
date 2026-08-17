@@ -17,10 +17,25 @@ const EXPORTS = [
 ] as const;
 
 /**
- * A bar with no label only says "some of something is done". These two say
- * which something: the half the couple controls (sending) and the half they can
- * only wait on (answering), which are the two questions this page exists for.
+ * A bar with no label only says "some of something is done". Labels name the
+ * job: sending, answering, arriving, collecting a souvenir.
  */
+const PaxCard = ({
+  value,
+  label,
+  detail,
+}: {
+  value: number;
+  label: string;
+  detail: string;
+}) => (
+  <div className="rounded-2xl border border-border bg-surface/80 px-4 py-3">
+    <p className="font-sans text-2xl font-medium tabular-nums text-ink">{value}</p>
+    <p className="type-meta mt-0.5 leading-tight">{label}</p>
+    <p className="type-meta mt-1 leading-tight">{detail}</p>
+  </div>
+);
+
 const Progress = ({ label, value, total, bar }: {
   label: string;
   value: number;
@@ -132,24 +147,45 @@ export const DashboardHeader = ({
             role="group"
             aria-label="Ringkasan jumlah orang"
           >
-            <div className="rounded-2xl border border-border bg-surface/80 px-4 py-3">
-              <p className="font-sans text-2xl font-medium tabular-nums text-ink">
-                {stats.paxInvited}
-              </p>
-              <p className="type-meta mt-0.5 leading-tight">Pax diundang</p>
-              <p className="type-meta mt-1 leading-tight">
-                Dari {stats.invited} undangan terkirim
-              </p>
-            </div>
-            <div className="rounded-2xl border border-border bg-surface/80 px-4 py-3">
-              <p className="font-sans text-2xl font-medium tabular-nums text-ink">
-                {stats.paxRsvp}
-              </p>
-              <p className="type-meta mt-0.5 leading-tight">Pax RSVP</p>
-              <p className="type-meta mt-1 leading-tight">
-                Dari {stats.answered} tamu yang sudah mengisi
-              </p>
-            </div>
+            <PaxCard
+              value={stats.paxInvited}
+              label="Pax diundang"
+              detail={`Dari ${stats.invited} undangan terkirim`}
+            />
+            <PaxCard
+              value={stats.paxRsvp}
+              label="Pax RSVP"
+              detail={`Dari ${stats.answered} tamu yang sudah mengisi`}
+            />
+          </div>
+
+          <Progress
+            label="Kedatangan"
+            value={stats.attended}
+            total={stats.total}
+            bar="bg-navy"
+          />
+          <Progress
+            label="Sudah ambil souvenir"
+            value={stats.souvenir}
+            total={stats.total}
+            bar="bg-muted"
+          />
+          <div
+            className="grid grid-cols-2 gap-2"
+            role="group"
+            aria-label="Ringkasan kedatangan dan souvenir"
+          >
+            <PaxCard
+              value={stats.paxAttended}
+              label="Pax datang"
+              detail={`Dari ${stats.attended} undangan`}
+            />
+            <PaxCard
+              value={stats.paxSouvenir}
+              label="Pax souvenir"
+              detail={`Dari ${stats.souvenir} undangan`}
+            />
           </div>
         </div>
       ) : null}
