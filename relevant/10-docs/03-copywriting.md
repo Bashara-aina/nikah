@@ -50,6 +50,8 @@ digenerate:
 
 *Fallback bila link tidak membawa nama:* Bapak/Ibu/Saudara/i
 
+*Online / siaran langsung:* tombol gate = **Info Acara Kami** (bukan Buka Undangan).
+
 ---
 
 ## 2. Hero
@@ -112,7 +114,7 @@ teks sengaja tidak seragam.)*
 >
 > **Pindah ke Jakarta**
 > Lalu kami sama-sama pindah ke Jakarta. Bekerja di tempat yang sama, kuliah di
-> kelas yang sama. Semakin lama semakin jelas bahwa kami memang searah.
+> kampus yang sama. Semakin lama semakin jelas bahwa kami memang searah.
 >
 > **Berbeda Kota**
 > Tidak lama kemudian Bashara berangkat lebih dulu ke Tokyo, kuliah di SIT.
@@ -157,9 +159,7 @@ teks sengaja tidak seragam.)*
 
 **Livestream:**
 > Kalau tidak bisa datang, acaranya kami siarkan langsung.
-> [ YouTube ]  ·  [ Zoom (interaktif) ]  ·  [ Instagram ]  ·  [ Facebook ]
->
-> *Bila tautan belum diisi di `lib/config.ts`:* Tautannya menyusul, ya.
+> [ YouTube ]
 
 ---
 
@@ -223,7 +223,7 @@ teks sengaja tidak seragam.)*
 > Nuansa pastel yang lembut.
 >
 > **Kalau tidak bisa datang, bagaimana?**
-> Acaranya kami siarkan langsung lewat YouTube. Untuk yang ingin ikut lebih dekat, ada Zoom.
+> Acaranya kami siarkan langsung lewat YouTube.
 
 ---
 
@@ -240,6 +240,9 @@ teks sengaja tidak seragam.)*
 
 ## 11. Online Invitation — LOCKED
 
+### Gate CTA
+> **Info Acara Kami**
+
 ### Closing emphasis
 > **Sampai bertemu di siaran langsung,
 > 22 Agustus 2026. 🤍**
@@ -247,7 +250,7 @@ teks sengaja tidak seragam.)*
 ### Cara Menyaksikan
 > **Cara Menyaksikan**
 >
-> Akad kami siarkan langsung. Pilih kanal yang paling nyaman buat kamu.
+> Akad kami siarkan langsung di YouTube.
 >
 > Sabtu
 > **22 Agustus 2026**
@@ -258,24 +261,21 @@ teks sengaja tidak seragam.)*
 >
 > [ Simpan ke Kalender ]
 
-### Konfirmasi Menyaksikan
-> **Konfirmasi Menyaksikan** *(pill sticky: "Konfirmasi")*
->
-> Beri tahu kami kalau kamu berencana menonton, supaya kami tahu siapa saja yang ikut dari jauh.
->
-> Rencana kamu: ( ) Menyaksikan Daring ( ) Masih Diusahakan ( ) Tidak Hadir
->
-> Berhasil: Terima kasih, kabarmu sudah kami terima.
+### Konfirmasi Menyaksikan — dihapus
+> Undangan online / siaran langsung **tidak** menampilkan form konfirmasi
+> kehadiran, sticky Konfirmasi, atau salinan "Konfirmasi Menyaksikan".
+> Menyaksikan daring terbuka; tidak ada kursi yang perlu dipegang. Tamu online
+> tetap bisa kirim ucapan & doa.
 
 ### FAQ online
 > **Siarannya bisa ditonton di mana?**
-> Di YouTube, Zoom, Instagram, dan Facebook. Tautannya kami pasang di halaman ini begitu siap.
+> Di YouTube. Tautannya ada di halaman ini.
 >
 > **Jam berapa mulainya?**
 > Akad mulai pukul 10.00 WIB. Sebaiknya bergabung sedikit lebih awal.
 >
-> **Kalau tautannya belum muncul?**
-> Berarti masih kami siapkan. Halaman ini terisi sendiri begitu tautannya jadi, jadi simpan saja tautan undangan ini.
+> **Kalau tautannya belum terbuka?**
+> Buka ulang undangan ini, atau ketuk tombol YouTube di halaman ini.
 >
 > **Boleh titip doa?**
 > Boleh sekali. Ada kolom ucapan di halaman ini, dan semuanya kami baca.

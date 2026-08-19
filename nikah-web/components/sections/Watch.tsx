@@ -9,8 +9,8 @@
  * here references the venue, so the page never reads as a trimmed-down copy of
  * another invitation.
  *
- * Channels with no URL yet render as inert pills rather than disappearing —
- * the row keeps its shape when the couple fills the links in later.
+ * Empty channel URLs render as inert pills rather than disappearing. YouTube
+ * is the only channel that ships.
  */
 import Image from "next/image";
 import { Reveal } from "@/components/primitives/Reveal";

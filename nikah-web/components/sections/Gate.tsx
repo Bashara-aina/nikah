@@ -10,7 +10,7 @@
  *   - CSS owns the floral border sway/breath (HIGH/MID only).
  *   - GSAP owns nothing here — audio fade lives in AudioProvider.
  *
- * On tap "Buka Undangan":
+ * On tap the gate CTA ("Buka Undangan" / online "Info Acara Kami"):
  *   1. iOS 13+ gyro permission (inside the gesture).
  *   2. `unlock()` — La Vie en Rose fade-in via AudioProvider.
  *   3. `onOpen()` — parent flips phase; AnimatePresence exits the gate.
@@ -219,7 +219,7 @@ export const Gate = ({ onOpen }: { onOpen: () => void }) => {
               className="h-4 w-4 animate-spin rounded-full border-2 border-ink/30 border-t-ink"
             />
           ) : null}
-          {copy.gate.cta}
+          {guest.inviteType === "online" ? copy.gate.ctaOnline : copy.gate.cta}
         </motion.button>
       </motion.div>
     </motion.section>

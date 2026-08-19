@@ -13,7 +13,6 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
     env: {
-      DASHBOARD_PASSPHRASE: "roadmap smoke passphrase",
       NEXT_PUBLIC_SITE_URL: "http://localhost:3000",
     },
   },

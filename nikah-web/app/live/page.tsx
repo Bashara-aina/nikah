@@ -7,9 +7,9 @@ import { copy } from "@/lib/copy";
 /**
  * The stable livestream page.
  *
- * WhatsApp messages point here rather than at YouTube or Zoom directly,
- * because the channel links arrive late and messages already sent cannot be
- * edited. Filling `siteConfig.livestream` updates every invitation at once.
+ * WhatsApp messages point here rather than at YouTube directly, so already-sent
+ * messages never go stale. Filling `siteConfig.livestream` updates every
+ * invitation at once.
  *
  * Deliberately a plain server component: no gate, no audio, no scroll story —
  * someone opening this at 09.55 on the day wants the link, immediately.

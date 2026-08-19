@@ -28,6 +28,8 @@ export const copy = {
     invitation:
       "Ada satu hari yang sudah lama kami tunggu. Kami ingin kamu ada di sana.",
     cta: "Buka Undangan",
+    /** Online / siaran langsung — not an RSVP invitation to the venue. */
+    ctaOnline: "Info Acara Kami",
     /** Fallback when no personal guest row resolves. */
     guestFallback: "Bapak/Ibu/Saudara/i",
   },
@@ -74,7 +76,7 @@ export const copy = {
       },
       {
         title: "Pindah ke Jakarta",
-        body: "Lalu kami sama-sama pindah ke Jakarta. Bekerja di tempat yang sama, kuliah di kelas yang sama. Semakin lama semakin jelas bahwa kami memang searah.",
+        body: "Lalu kami sama-sama pindah ke Jakarta. Bekerja di tempat yang sama, kuliah di kampus yang sama. Semakin lama semakin jelas bahwa kami memang searah.",
         image: "/assets/illustrations/story/story-ch03-jakarta.webp",
       },
       {
@@ -124,9 +126,6 @@ export const copy = {
     livestreamPending: "Tautannya menyusul, ya.",
     livestreamLabels: {
       youtube: "YouTube",
-      zoom: "Zoom (interaktif)",
-      instagram: "Instagram",
-      facebook: "Facebook",
     },
   },
 
@@ -187,7 +186,7 @@ export const copy = {
       },
       {
         q: "Kalau tidak bisa datang, bagaimana?",
-        a: "Acaranya kami siarkan langsung lewat YouTube. Untuk yang ingin ikut lebih dekat, ada Zoom.",
+        a: "Acaranya kami siarkan langsung lewat YouTube.",
       },
     ],
   },
@@ -210,7 +209,7 @@ export const copy = {
    */
   watch: {
     heading: "Cara Menyaksikan",
-    lead: "Akad kami siarkan langsung. Pilih kanal yang paling nyaman buat kamu.",
+    lead: "Akad kami siarkan langsung di YouTube.",
     /** Split in two so the date stacks deliberately inside the floral arch. */
     dayLine: "Sabtu",
     dateLine: "22 Agustus 2026",
@@ -220,29 +219,20 @@ export const copy = {
     ctaCalendar: "Simpan ke Kalender",
   },
 
-  rsvpOnline: {
-    heading: "Konfirmasi Menyaksikan",
-    pill: "Konfirmasi",
-    lead: "Beri tahu kami kalau kamu berencana menonton, supaya kami tahu siapa saja yang ikut dari jauh.",
-    attendance: "Rencana kamu",
-    attendanceOptions: ["Menyaksikan Daring", "Masih Diusahakan", "Tidak Hadir"] as const,
-    success: "Terima kasih, kabarmu sudah kami terima.",
-  },
-
   faqOnline: {
     heading: "Yang Sering Ditanyakan",
     items: [
       {
         q: "Siarannya bisa ditonton di mana?",
-        a: "Di YouTube, Zoom, Instagram, dan Facebook. Tautannya kami pasang di halaman ini begitu siap.",
+        a: "Di YouTube. Tautannya ada di halaman ini.",
       },
       {
         q: "Jam berapa mulainya?",
         a: "Akad mulai pukul 10.00 WIB. Sebaiknya bergabung sedikit lebih awal.",
       },
       {
-        q: "Kalau tautannya belum muncul?",
-        a: "Berarti masih kami siapkan. Halaman ini terisi sendiri begitu tautannya jadi, jadi simpan saja tautan undangan ini.",
+        q: "Kalau tautannya belum terbuka?",
+        a: "Buka ulang undangan ini, atau ketuk tombol YouTube di halaman ini.",
       },
       {
         q: "Boleh titip doa?",

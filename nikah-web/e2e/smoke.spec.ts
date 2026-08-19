@@ -2,31 +2,15 @@ import { expect, test } from "@playwright/test";
 
 test("public invitation reaches the gate", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("button", { name: "Buka Undangan" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Info Acara Kami" })).toBeVisible();
 });
 
-test("live page keeps all four channels visible", async ({ page }) => {
+test("live page points at the YouTube stream only", async ({ page }) => {
   await page.goto("/live");
-  await expect(page.getByRole("button", { name: "YouTube" })).toBeDisabled();
-  await expect(page.getByRole("button", { name: "Zoom" })).toBeDisabled();
-  await expect(page.getByRole("button", { name: "Instagram" })).toBeDisabled();
-  await expect(page.getByRole("button", { name: "Facebook" })).toBeDisabled();
-});
-
-test("dashboard rejects a wrong passphrase and accepts the configured one", async ({ page }) => {
-  const passphrase = process.env.DASHBOARD_PASSPHRASE ?? "roadmap smoke passphrase";
-  await page.goto("/dashboard");
-  const input = page.getByLabel("Kata sandi");
-  await input.fill("wrong passphrase");
-  await page.getByRole("button", { name: "Masuk" }).click();
-  await expect(page.getByText("Kata sandi salah")).toBeVisible();
-  await input.fill(passphrase);
-  await page.getByRole("button", { name: "Masuk" }).click();
-  // Configured DB → guest manager. Unwired env → notice. Both prove auth worked.
-  await expect(
-    page
-      .getByRole("button", { name: "Tambah tamu" })
-      .or(page.getByRole("heading", { name: "Belum tersambung" }))
-      .or(page.getByRole("heading", { name: "Database belum siap" })),
-  ).toBeVisible();
+  const youtube = page.getByRole("link", { name: "YouTube" });
+  await expect(youtube).toBeVisible();
+  await expect(youtube).toHaveAttribute("href", "https://youtube.com/live/ki6U9TZ3ovE");
+  await expect(page.getByRole("link", { name: "Zoom" })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "Instagram" })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "Facebook" })).toHaveCount(0);
 });

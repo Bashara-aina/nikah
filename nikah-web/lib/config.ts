@@ -4,9 +4,13 @@
  * (locked in `relevant/10-docs/03-copywriting.md`); values below follow
  * `docs/05-data-fields.md` structure.
  *
- * Bank / livestream / gift-address values are intentionally empty until the
- * couple provides them (REF-04 §5) — the UI renders honest "menyusul" states.
+ * Bank / gift-address values are intentionally empty until the couple
+ * provides them (REF-04 §5) — the UI renders honest "menyusul" states.
+ * Livestream is YouTube only.
  */
+
+/** Public YouTube Live URL — the only livestream destination. */
+const YOUTUBE_LIVE_URL: string = "https://youtube.com/live/ki6U9TZ3ovE";
 
 export const siteConfig = {
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://nikah.example",
@@ -59,10 +63,7 @@ export const siteConfig = {
     giftAddress: "",
   },
   livestream: {
-    youtube: "",
-    zoom: "",
-    instagram: "",
-    facebook: "",
+    youtube: YOUTUBE_LIVE_URL,
   },
 } as const;
 

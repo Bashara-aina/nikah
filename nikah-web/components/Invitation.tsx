@@ -111,17 +111,17 @@ export const Invitation = ({ guest }: { guest: InvitationGuest }) => {
             <Story />
             <DraperyDivider />
             <Japan />
-            {/* The only structural fork between the two invitations: venue
-                guests get address, map, dress code and notes; online guests get
-                the livestream channels in the same slot. */}
+            {/* Structural forks: venue guests get address/map/notes + RSVP;
+                online (siaran langsung) guests get livestream channels and skip
+                attendance confirmation — watching is open, no seat to hold. */}
             {guest.inviteType === "venue" ? <EventDetails /> : <Watch />}
             <DraperyDivider />
-            <Rsvp />
+            {guest.inviteType === "venue" ? <Rsvp /> : null}
             <Wishes />
             <GiftFaq />
             <Closing />
             <MusicToggle />
-            <StickyRsvp />
+            {guest.inviteType === "venue" ? <StickyRsvp /> : null}
           </main>
         ) : null}
       </div>
